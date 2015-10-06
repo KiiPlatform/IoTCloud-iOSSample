@@ -53,7 +53,7 @@ class NotificationSettingVC: UITableViewController {
 
         if sender.on {
             if let data = NSUserDefaults.standardUserDefaults().objectForKey("deviceToken") as? NSData {
-                savedIoTAPI?.installPush(data.hexString(), development: true, completionHandler: { (_, error) -> Void in
+                savedIoTAPI?.installPush(data, development: true, completionHandler: { (_, error) -> Void in
                     if error != nil {
                         self.installationSwitch.on = false
                     }
