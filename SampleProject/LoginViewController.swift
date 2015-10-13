@@ -92,7 +92,7 @@ class LoginViewController: UIViewController {
 
     // init IoTCloudAPI after success to login/register as KiiUser
     func initIoTCloudAPI(ownerID: String, accessToken: String) {
-        let owner = Owner(ownerID: TypedID(type: "user", id: ownerID), accessToken: accessToken)
+        let owner = Owner(typedID: TypedID(type: "user", id: ownerID), accessToken: accessToken)
 
         // init iotAPI with values from Properties.plist, please make sure to put correct values
         var propertiesDict: NSDictionary?
