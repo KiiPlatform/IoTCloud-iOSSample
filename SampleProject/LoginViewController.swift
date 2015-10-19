@@ -6,7 +6,7 @@
 //  Copyright © 2015 Kii Corporation. All rights reserved.
 //
 import UIKit
-import IoTCloudSDK
+import ThingIFSDK
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var userNameTextField: UITextField!
@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
             KiiUser.authenticate(userName, withPassword: password, andBlock: { (user, error) -> Void in
                 if error == nil {
                     if let userID = user.userID, accessToken = user.accessToken {
-                        self.initIoTCloudAPI(userID, accessToken: accessToken)
+                        self.initThingIFAPI(userID, accessToken: accessToken)
                         self.showActivityView(false)
                         self.userLogined = true
                         self.performSegueWithIdentifier("userLogin", sender: nil)
@@ -63,7 +63,7 @@ class LoginViewController: UIViewController {
             newUser.performRegistrationWithBlock({ (user, error) -> Void in
                 if error == nil {
                     if let userID = user.userID, accessToken = user.accessToken {
-                        self.initIoTCloudAPI(userID, accessToken: accessToken)
+                        self.initThingIFAPI(userID, accessToken: accessToken)
                         self.userLogined = true
                         self.performSegueWithIdentifier("userRegister", sender: nil)
                     }
@@ -90,8 +90,8 @@ class LoginViewController: UIViewController {
         }
     }
 
-    // init IoTCloudAPI after success to login/register as KiiUser
-    func initIoTCloudAPI(ownerID: String, accessToken: String) {
+    // init ThingIFAPI after success to login/register as KiiUser
+    func initThingIFAPI(ownerID: String, accessToken: String) {
         let owner = Owner(typedID: TypedID(type: "user", id: ownerID), accessToken: accessToken)
 
         // init iotAPI with values from Properties.plist, please make sure to put correct values
@@ -100,7 +100,7 @@ class LoginViewController: UIViewController {
             propertiesDict = NSDictionary(contentsOfFile: path)
         }
         if let dict = propertiesDict {
-            IoTCloudAPIBuilder(appID: (dict["appID"] as! String), appKey: (dict["appKey"] as! String), site: Site.CUSTOM((dict["iotCloudAPIBaseURL"] as! String)), owner: owner).build()
+            ThingIFAPIBuilder(appID: (dict["appID"] as! String), appKey: (dict["appKey"] as! String), site: Site.CUSTOM((dict["ThingIFAPIBaseURL"] as! String)), owner: owner).build()
 
         }else {
             print("please make sure the Properties.plist file exists")

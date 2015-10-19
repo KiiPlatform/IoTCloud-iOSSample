@@ -25,12 +25,13 @@
 		7D44C18D1B8EEC3100F19FA3 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D44C18C1B8EEC3100F19FA3 /* Onboarding.storyboard */; settings = {ASSET_TAGS = (); }; };
 		7D44C18F1B8EEC9A00F19FA3 /* Commands.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D44C18E1B8EEC9A00F19FA3 /* Commands.storyboard */; settings = {ASSET_TAGS = (); }; };
 		7D45C07A1B91E84500378D6D /* IntervalStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D45C0791B91E84500378D6D /* IntervalStatusTableViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		7D719F071BABDE4D00681599 /* IoTCloudSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D719F061BABDE4D00681599 /* IoTCloudSDK.framework */; };
-		7D719F081BABDE4D00681599 /* IoTCloudSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7D719F061BABDE4D00681599 /* IoTCloudSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7D783E4D1B87157F00543A09 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D783E4C1B87157F00543A09 /* libsqlite3.tbd */; };
 		7D8FAB4D1B8EB00100D57F8E /* CommandEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8FAB4C1B8EB00100D57F8E /* CommandEditViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		7D8FAB511B8EC26900D57F8E /* TriggerCommandEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8FAB501B8EC26900D57F8E /* TriggerCommandEditViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		7D96858C1B8AF3C90017CA7D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D96858B1B8AF3C90017CA7D /* LoginViewController.swift */; };
+		7DA9D2011BD4E5850092B4BC /* ThingIFSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA9D2001BD4E5850092B4BC /* ThingIFSDK.framework */; settings = {ASSET_TAGS = (); }; };
+		7DA9D2021BD4E58B0092B4BC /* ThingIFSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA9D2001BD4E5850092B4BC /* ThingIFSDK.framework */; };
+		7DA9D2031BD4E58B0092B4BC /* ThingIFSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA9D2001BD4E5850092B4BC /* ThingIFSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7DB3F6E61B8B133D00AE8254 /* OnBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB3F6E51B8B133D00AE8254 /* OnBoardViewController.swift */; };
 		7DB3F6E81B8B243600AE8254 /* Properties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7DB3F6E71B8B243600AE8254 /* Properties.plist */; };
 		7DB3F6EC1B8B2DED00AE8254 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB3F6EB1B8B2DED00AE8254 /* TabBarViewController.swift */; };
@@ -47,13 +48,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7D8B48611B994A3A00E9A317 /* Embed Frameworks */ = {
+		7DA9D2041BD4E58C0092B4BC /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7D719F081BABDE4D00681599 /* IoTCloudSDK.framework in Embed Frameworks */,
+				7DA9D2031BD4E58B0092B4BC /* ThingIFSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,13 +82,13 @@
 		7D44C18C1B8EEC3100F19FA3 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		7D44C18E1B8EEC9A00F19FA3 /* Commands.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Commands.storyboard; sourceTree = "<group>"; };
 		7D45C0791B91E84500378D6D /* IntervalStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntervalStatusTableViewCell.swift; sourceTree = "<group>"; };
-		7D719F061BABDE4D00681599 /* IoTCloudSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IoTCloudSDK.framework; path = Carthage/Build/iOS/IoTCloudSDK.framework; sourceTree = "<group>"; };
 		7D783E491B85CD9100543A09 /* SampleProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D783E4C1B87157F00543A09 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		7D783E4F1B8715E500543A09 /* SampleProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SampleProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		7D8FAB4C1B8EB00100D57F8E /* CommandEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEditViewController.swift; sourceTree = "<group>"; };
 		7D8FAB501B8EC26900D57F8E /* TriggerCommandEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerCommandEditViewController.swift; sourceTree = "<group>"; };
 		7D96858B1B8AF3C90017CA7D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		7DA9D2001BD4E5850092B4BC /* ThingIFSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThingIFSDK.framework; path = Carthage/Build/iOS/ThingIFSDK.framework; sourceTree = "<group>"; };
 		7DB3F6E51B8B133D00AE8254 /* OnBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardViewController.swift; sourceTree = "<group>"; };
 		7DB3F6E71B8B243600AE8254 /* Properties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Properties.plist; sourceTree = "<group>"; };
 		7DB3F6EB1B8B2DED00AE8254 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -109,9 +110,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DA9D2011BD4E5850092B4BC /* ThingIFSDK.framework in Frameworks */,
 				7D783E4D1B87157F00543A09 /* libsqlite3.tbd in Frameworks */,
-				7D719F071BABDE4D00681599 /* IoTCloudSDK.framework in Frameworks */,
 				416DA61D1A42E204B57466BE /* libPods-SampleProject.a in Frameworks */,
+				7DA9D2021BD4E58B0092B4BC /* ThingIFSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +140,7 @@
 		7D108ACE1B7210C8006EA12B = {
 			isa = PBXGroup;
 			children = (
-				7D719F061BABDE4D00681599 /* IoTCloudSDK.framework */,
+				7DA9D2001BD4E5850092B4BC /* ThingIFSDK.framework */,
 				7D783E4E1B87159400543A09 /* frameworks */,
 				7D108AD91B7210C8006EA12B /* SampleProject */,
 				7D783E491B85CD9100543A09 /* SampleProject.app */,
@@ -248,9 +250,9 @@
 				7D108AD31B7210C8006EA12B /* Sources */,
 				7D108AD41B7210C8006EA12B /* Frameworks */,
 				7D108AD51B7210C8006EA12B /* Resources */,
-				7D8B48611B994A3A00E9A317 /* Embed Frameworks */,
 				FC2BC6E005DE3789C47B9E19 /* Embed Pods Frameworks */,
 				3BCCB60907E59D3A2972C70D /* Copy Pods Resources */,
+				7DA9D2041BD4E58C0092B4BC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

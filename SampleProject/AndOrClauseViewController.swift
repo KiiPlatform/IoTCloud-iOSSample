@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import IoTCloudSDK
+import ThingIFSDK
 
 protocol AndOrClauseViewControllerDelegate {
 
