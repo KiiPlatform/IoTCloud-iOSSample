@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import IoTCloudSDK
+import ThingIFSDK
 
 enum StatusType: String{
     case BoolType = "boolean"

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import IoTCloudSDK
+import ThingIFSDK
 
 struct CommandsSection {
     let state: String!

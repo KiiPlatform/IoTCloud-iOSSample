@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import IoTCloudSDK
+import ThingIFSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

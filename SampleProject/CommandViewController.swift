@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import IoTCloudSDK
+import ThingIFSDK
 
 extension CommandState {
     public func toString() -> String {

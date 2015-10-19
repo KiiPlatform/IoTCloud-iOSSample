@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import IoTCloudSDK
+import ThingIFSDK
 
 enum ClauseType: String {
     case And = "And"

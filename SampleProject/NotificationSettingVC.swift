@@ -7,18 +7,18 @@
 //
 
 import UIKit
-import IoTCloudSDK
+import ThingIFSDK
 
 class NotificationSettingVC: UITableViewController {
 
     @IBOutlet weak var alertSwitch: UISwitch!
     @IBOutlet weak var installationSwitch: UISwitch!
-    var savedIoTAPI: IoTCloudAPI?
+    var savedIoTAPI: ThingIFAPI?
     override func viewDidLoad() {
         super.viewDidLoad()
         // try to get iotAPI from NSUserDefaults
         do{
-            try savedIoTAPI = IoTCloudAPI.loadWithStoredInstance()
+            try savedIoTAPI = ThingIFAPI.loadWithStoredInstance()
         }catch(_){
             // do nothing
         }

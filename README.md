@@ -1,4 +1,4 @@
-iOS SampleProject for the [IoTCloudSDK](https://github.com/KiiPlatform/IoTCloud-iOSSDK)
+iOS SampleProject for the [ThingIFSDK](https://github.com/KiiPlatform/thing-if-iOSSDK)
 
 # Requirements
 
@@ -6,9 +6,9 @@ iOS SampleProject for the [IoTCloudSDK](https://github.com/KiiPlatform/IoTCloud-
 - Xcode 7.0+
 - swift 2.0+
 
-# Import IoTCloudSDK.framework
+# Import ThingIFSDK.framework
 
-You can use one of the following ways to get an IoTCloudSDK.framework:
+You can use one of the following ways to get an ThingIFSDK.framework:
 
 ## Use Carthage
 
@@ -21,21 +21,21 @@ You can use one of the following ways to get an IoTCloudSDK.framework:
   $ brew install carthage
   ```
 
-- Specify IoTCloudSDK it in your `Cartfile`:
+- Specify ThingIFSDK it in your `Cartfile`:
 
   ```ogdl
   github "KiiPlatform/IoTCloud-iOSSDK" >= 0.8
   ```
-- Then generate IoTCloudSDK framework by the following command:
+- Then generate ThingIFSDK framework by the following command:
   ```bash
   $ carthage update
   ```
-- After successfully generated IoTCloudSDK framework, import it to SampleProject.
+- After successfully generated ThingIFSDK framework, import it to SampleProject.
 
 ## Download from Kii Developer Portal
 
-- Download IoTCloudSDK from  [Kii Developer Portal](https://developer.kii.com/v2/downloads)
-- Import the downloaded IoTCloudSDK.framework to SampleProject.
+- Download ThingIFSDK from  [Kii Developer Portal](https://developer.kii.com/v2/downloads)
+- Import the downloaded ThingIFSDK.framework to SampleProject.
 
 # Import KiiSDK.framework
 
@@ -55,14 +55,14 @@ After above steps finished, open `./SampleProject.xcworkspace`
 
 ## Initialize SDKs
 
-Both of KiiSDK and IoTCloudSDK need the same appID and appKey. Please set the appropriate values in the file `IoTCloudSDK/Properties.plist`.
+Both of KiiSDK and ThingIFSDK need the same appID and appKey. Please set the appropriate values in the file `ThingIFSDK/Properties.plist`.
 
-- Initialize KiiSDK in `IoTCloudSDK/AppDelegate.swift`
+- Initialize KiiSDK in `ThingIFSDK/AppDelegate.swift`
   - If using one of US, JP, CN and SG, please call `Kii.beginWithID((dict["appID"] as! String), andKey: (dict["appKey"] as! String), andSite: KiiSite)` using appropriate value for the site.
-  - If using a custom base URL, please provide a value of `kiiCloudCustomURL` for KiiSDK in `IoTCloudSDK/Properties.plist`. Then call `Kii.beginWithID((dict["appID"] as! String), andKey: (dict["appKey"] as! String), andCustomURL: (dict["kiiCloudCustomURL"] as! String))`
+  - If using a custom base URL, please provide a value of `kiiCloudCustomURL` for KiiSDK in `ThingIFSDK/Properties.plist`. Then call `Kii.beginWithID((dict["appID"] as! String), andKey: (dict["appKey"] as! String), andCustomURL: (dict["kiiCloudCustomURL"] as! String))`
 
-- Initialize IotCloudSDK in  `IoTCloudSDK/LoginViewController.swift` when calling `IoTCloudAPIBuilder(appID: (dict["appID"] as! String), appKey: (dict["appKey"] as! String), site: Site, owner: Owner, tag: String? )`
+- Initialize ThingIFSDK in  `ThingIFSDK/LoginViewController.swift` when calling `IoTCloudAPIBuilder(appID: (dict["appID"] as! String), appKey: (dict["appKey"] as! String), site: Site, owner: Owner, tag: String? )`
   - If using one of US, JP, CN and SG, please use `Site.US`, `Site.JP`, `Site.CN`, or `Site.SG` for the value of site.
-  - If using custom site base URL, please provide a value of `iotCloudAPIBaseURL` for IoTCloudSDK in `IoTCloudSDK/Properties.plist`, then set the value of site with `Site.CUSTOM((dict["iotCloudAPIBaseURL"] as! String))`.
+  - If using custom site base URL, please provide a value of `iotCloudAPIBaseURL` for ThingIFSDK in `ThingIFSDK/Properties.plist`, then set the value of site with `Site.CUSTOM((dict["iotCloudAPIBaseURL"] as! String))`.
 
 # License

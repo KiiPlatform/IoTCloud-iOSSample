@@ -7,18 +7,18 @@
 //
 
 import UIKit
-import IoTCloudSDK
+import ThingIFSDK
 
 class TabBarViewController: UITabBarController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
-        var savedIoTAPI: IoTCloudAPI?
+        var savedIoTAPI: ThingIFAPI?
 
         // try to get iotAPI from NSUserDefaults
         do{
-            try savedIoTAPI = IoTCloudAPI.loadWithStoredInstance()
+            try savedIoTAPI = ThingIFAPI.loadWithStoredInstance()
         }catch(_){
             // do nothing
         }

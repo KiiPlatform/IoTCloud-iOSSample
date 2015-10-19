@@ -7,20 +7,20 @@
 //
 
 import UIKit
-import IoTCloudSDK
+import ThingIFSDK
 
 class KiiBaseTableViewController: UITableViewController {
 
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
 
-    var iotAPI: IoTCloudAPI?
+    var iotAPI: ThingIFAPI?
     var target: Target?
     var schema: IoTSchema?
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         do{
-            try iotAPI = IoTCloudAPI.loadWithStoredInstance()
+            try iotAPI = ThingIFAPI.loadWithStoredInstance()
             self.navigationItem.title = iotAPI?.target?.typedID.id
         }catch(_){
             // do nothing
@@ -55,7 +55,7 @@ class KiiBaseTableViewController: UITableViewController {
         }
     }
 
-    func showAlert(title: String, error: IoTCloudError?, completion: (() -> Void)?) {
+    func showAlert(title: String, error: ThingIFError?, completion: (() -> Void)?) {
         var errorString: String?
         if error != nil {
             switch error! {
@@ -77,7 +77,7 @@ class KiiBaseTableViewController: UITableViewController {
     }
 
     func logout(completion: ()-> Void) {
-        IoTCloudAPI.removeStoredInstances()
+        ThingIFAPI.removeStoredInstances()
         completion()
     }
 

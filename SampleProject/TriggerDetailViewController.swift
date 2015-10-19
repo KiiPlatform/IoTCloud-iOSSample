@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import IoTCloudSDK
+import ThingIFSDK
 
 struct CommandStruct {
     let schemaName: String!
