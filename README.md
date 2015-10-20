@@ -32,10 +32,6 @@ You can use one of the following ways to get an ThingIFSDK.framework:
   ```
 - After successfully generated thing-if SDK framework, import it to SampleProject.
 
-## Download from Kii Developer Portal
-
-- Download thing-if SDK from  [Kii Developer Portal](https://developer.kii.com/v2/downloads)
-- Import the downloaded ThingIFSDK.framework to SampleProject.
 
 # Import KiiSDK.framework
 
@@ -66,3 +62,5 @@ Both of KiiSDK and thing-if SDK need the same appID and appKey. Please set the a
   - If using custom site base URL, please provide a value of `iotCloudAPIBaseURL` for thing-if SDK in `ThingIFSDK/Properties.plist`, then set the value of site with `Site.CUSTOM((dict["iotCloudAPIBaseURL"] as! String))`.
 
 # License
+
+thing-if iOSSample is released under the MIT license. See LICENSE for details.
