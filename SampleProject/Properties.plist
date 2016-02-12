@@ -3,12 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>appID</key>
-	<string>50a62843</string>
+	<string>9ab34d8b</string>
 	<key>appKey</key>
-	<string>2bde7d4e3eed1ad62c306dd2144bb2b0</string>
+	<string>7a950d78956ed39f3b0815f0f001b43b</string>
 	<key>kiiCloudCustomURL</key>
-	<string>https://api-development-jp.internal.kii.com/api</string>
+	<string>https://api-jp.kii.com/api</string>
 	<key>ThingIFAPIBaseURL</key>
-	<string>https://api-development-jp.internal.kii.com</string>
+	<string>https://api-jp.kii.com</string>
 </dict>
 </plist>
