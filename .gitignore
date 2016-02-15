@@ -1,0 +1,5 @@
+xcuserdata
+Podfile.lock
+Pods/*
+Cartfile.resolved
+Carthage/*
