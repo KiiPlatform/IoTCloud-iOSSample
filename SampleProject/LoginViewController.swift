@@ -100,8 +100,11 @@ class LoginViewController: UIViewController {
             propertiesDict = NSDictionary(contentsOfFile: path)
         }
         if let dict = propertiesDict {
-            ThingIFAPIBuilder(appID: (dict["appID"] as! String), appKey: (dict["appKey"] as! String), site: Site.CUSTOM((dict["ThingIFAPIBaseURL"] as! String)), owner: owner).build()
-
+            let appID = dict["appID"] as! String
+            let appKey = dict["appKey"] as! String
+            let appHost = dict["appHost"] as! String
+            let app = AppBuilder(appID: appID, appKey: appKey, hostName: appHost).build()
+            ThingIFAPIBuilder(app: app, owner: owner).build()
         }else {
             print("please make sure the Properties.plist file exists")
         }

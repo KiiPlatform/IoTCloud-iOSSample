@@ -22,7 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             propertiesDict = NSDictionary(contentsOfFile: path)
         }
         if let dict = propertiesDict {
-            Kii.beginWithID((dict["appID"] as! String), andKey: (dict["appKey"] as! String), andCustomURL: (dict["kiiCloudCustomURL"] as! String))
+            let appHost:String = dict["appHost"] as! String;
+            let url:String = "https://" + appHost + "/api"
+            Kii.beginWithID((dict["appID"] as! String), andKey: (dict["appKey"] as! String), andCustomURL: url)
         }else {
             print("please make sure the Properties.plist file exists")
         }
