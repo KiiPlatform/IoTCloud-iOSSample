@@ -14,7 +14,7 @@
 		7D108AE21B7210C8006EA12B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D108AE11B7210C8006EA12B /* Assets.xcassets */; };
 		7D108AE51B7210C8006EA12B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D108AE31B7210C8006EA12B /* LaunchScreen.storyboard */; };
 		7D19188E1B8DB4A6007F2885 /* TriggerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D19188D1B8DB4A6007F2885 /* TriggerListViewController.swift */; };
-		7D1918901B8DC84C007F2885 /* TriggerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D19188F1B8DC84C007F2885 /* TriggerDetailViewController.swift */; };
+		7D1918901B8DC84C007F2885 /* CommandTriggerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D19188F1B8DC84C007F2885 /* CommandTriggerDetailViewController.swift */; };
 		7D3314881B91B0B500A6DDFB /* ClauseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3314871B91B0B500A6DDFB /* ClauseHelper.swift */; };
 		7D3314931B91C08B00A6DDFB /* StatusBoolTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3314921B91C08B00A6DDFB /* StatusBoolTypeTableViewCell.swift */; };
 		7D3314971B91C30B00A6DDFB /* StatusNumberTypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3314961B91C30B00A6DDFB /* StatusNumberTypeTableViewCell.swift */; };
@@ -42,6 +42,7 @@
 		7DB3F6F71B8C5B0100AE8254 /* CommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB3F6F61B8C5B0100AE8254 /* CommandViewController.swift */; };
 		7DCDBD831B90703C00AB006B /* AndOrClauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCDBD821B90703C00AB006B /* AndOrClauseViewController.swift */; };
 		7DCDBD861B90986700AB006B /* IoTSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCDBD851B90986700AB006B /* IoTSchema.swift */; };
+		A5F53FB71C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */; };
 		D5351AA91B8ED6D900E55807 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5351AA71B8ED6D900E55807 /* Notifications.storyboard */; };
 		D5351AAB1B8EDA8900E55807 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5351AAA1B8EDA8900E55807 /* NotificationViewController.swift */; };
 		D5A799A41B8EFC2B00F029F5 /* NotificationSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A799A31B8EFC2B00F029F5 /* NotificationSettingVC.swift */; };
@@ -71,7 +72,7 @@
 		7D108AE41B7210C8006EA12B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D108AE61B7210C8006EA12B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D19188D1B8DB4A6007F2885 /* TriggerListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerListViewController.swift; sourceTree = "<group>"; };
-		7D19188F1B8DC84C007F2885 /* TriggerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerDetailViewController.swift; sourceTree = "<group>"; };
+		7D19188F1B8DC84C007F2885 /* CommandTriggerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandTriggerDetailViewController.swift; sourceTree = "<group>"; };
 		7D3314871B91B0B500A6DDFB /* ClauseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClauseHelper.swift; sourceTree = "<group>"; };
 		7D3314921B91C08B00A6DDFB /* StatusBoolTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBoolTypeTableViewCell.swift; sourceTree = "<group>"; };
 		7D3314961B91C30B00A6DDFB /* StatusNumberTypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusNumberTypeTableViewCell.swift; sourceTree = "<group>"; };
@@ -99,6 +100,7 @@
 		7DB3F6F61B8C5B0100AE8254 /* CommandViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandViewController.swift; sourceTree = "<group>"; };
 		7DCDBD821B90703C00AB006B /* AndOrClauseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndOrClauseViewController.swift; sourceTree = "<group>"; };
 		7DCDBD851B90986700AB006B /* IoTSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IoTSchema.swift; sourceTree = "<group>"; };
+		A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCodeTriggerDetailViewController.swift; sourceTree = "<group>"; };
 		D5351AA81B8ED6D900E55807 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Notifications.storyboard; sourceTree = "<group>"; };
 		D5351AAA1B8EDA8900E55807 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		D5A799A31B8EFC2B00F029F5 /* NotificationSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingVC.swift; sourceTree = "<group>"; };
@@ -215,11 +217,12 @@
 			isa = PBXGroup;
 			children = (
 				7D19188D1B8DB4A6007F2885 /* TriggerListViewController.swift */,
-				7D19188F1B8DC84C007F2885 /* TriggerDetailViewController.swift */,
+				7D19188F1B8DC84C007F2885 /* CommandTriggerDetailViewController.swift */,
 				7D8FAB501B8EC26900D57F8E /* TriggerCommandEditViewController.swift */,
 				D5A799A31B8EFC2B00F029F5 /* NotificationSettingVC.swift */,
 				7D3DFB681B8EFF650055BE18 /* StatesPredicateViewController.swift */,
 				7DCDBD821B90703C00AB006B /* AndOrClauseViewController.swift */,
+				A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */,
 			);
 			name = TriggerVC;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				7D96858C1B8AF3C90017CA7D /* LoginViewController.swift in Sources */,
 				7D8FAB511B8EC26900D57F8E /* TriggerCommandEditViewController.swift in Sources */,
 				7D19188E1B8DB4A6007F2885 /* TriggerListViewController.swift in Sources */,
+				A5F53FB71C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift in Sources */,
 				7D8FAB4D1B8EB00100D57F8E /* CommandEditViewController.swift in Sources */,
 				7D3DFB671B8EFA460055BE18 /* CommandNewViewController.swift in Sources */,
 				7D108ADD1B7210C8006EA12B /* ViewController.swift in Sources */,
@@ -379,7 +383,7 @@
 				7DB3F6F41B8C1DD400AE8254 /* CommandsListViewController.swift in Sources */,
 				7D45C07A1B91E84500378D6D /* IntervalStatusTableViewCell.swift in Sources */,
 				7DB3F6F21B8BFDA900AE8254 /* KiiBaseTableViewController.swift in Sources */,
-				7D1918901B8DC84C007F2885 /* TriggerDetailViewController.swift in Sources */,
+				7D1918901B8DC84C007F2885 /* CommandTriggerDetailViewController.swift in Sources */,
 				D5A799A41B8EFC2B00F029F5 /* NotificationSettingVC.swift in Sources */,
 				7D3314971B91C30B00A6DDFB /* StatusNumberTypeTableViewCell.swift in Sources */,
 				7DB3F6E61B8B133D00AE8254 /* OnBoardViewController.swift in Sources */,

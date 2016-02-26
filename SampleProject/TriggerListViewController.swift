@@ -9,9 +9,10 @@
 import UIKit
 import ThingIFSDK
 
-class TriggerListViewController: KiiBaseTableViewController {
+class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
     var triggers = [Trigger]()
+    var nextSegue = "createCommandTrigger"
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -22,6 +23,81 @@ class TriggerListViewController: KiiBaseTableViewController {
 
     }
 
+    //MARK: Picker delegation methods
+    func selectAction(sender: UIButton){
+        self.dismissViewControllerAnimated(true, completion: nil);
+        self.performSegueWithIdentifier(self.nextSegue, sender: self)
+    }
+    func cancelSelection(sender: UIButton){
+        self.dismissViewControllerAnimated(true, completion: nil);
+    }
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 2
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if row == 0 {
+            return "Command Trigger"
+        } else {
+            return "ServerCode Trigger"
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if row == 0 {
+            self.nextSegue = "createCommandTrigger"
+        } else {
+            self.nextSegue = "createServerCodeTrigger"
+        }
+    }
+
+    @IBAction func tapAddButton(sender: AnyObject) {
+        
+        let alertController = UIAlertController(title: "", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let pickerFrame = CGRectMake(17, 52, 270, 100)
+        let picker = UIPickerView(frame: pickerFrame)
+        picker.showsSelectionIndicator = true
+        picker.dataSource = self
+        picker.delegate = self
+        alertController.view.addSubview(picker)
+        
+        //Create the toolbar view - the view witch will hold our 2 buttons
+        let toolFrame = CGRectMake(17, 5, 270, 45)
+        let toolView: UIView = UIView(frame: toolFrame)
+        
+        //add buttons to the view
+        let buttonCancelFrame: CGRect = CGRectMake(0, 7, 100, 30) //size & position of the button as placed on the toolView
+        
+        //Create the cancel button & set its title
+        let buttonCancel: UIButton = UIButton(frame: buttonCancelFrame)
+        buttonCancel.setTitle("Cancel", forState: UIControlState.Normal)
+        buttonCancel.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        toolView.addSubview(buttonCancel) //add it to the toolView
+        
+        //Add the target - target, function to call, the event witch will trigger the function call
+        buttonCancel.addTarget(self, action: "cancelSelection:", forControlEvents: UIControlEvents.TouchDown)
+        
+        //add buttons to the view
+        let buttonOkFrame: CGRect = CGRectMake(170, 7, 100, 30) //size & position of the button as placed on the toolView
+        
+        //Create the Select button & set the title
+        let buttonOk: UIButton = UIButton(frame: buttonOkFrame)
+        buttonOk.setTitle("Select", forState: UIControlState.Normal)
+        buttonOk.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        toolView.addSubview(buttonOk) //add to the subview
+        
+        buttonOk.addTarget(self, action: "selectAction:", forControlEvents: UIControlEvents.TouchDown)
+        
+        //add the toolbar to the alert controller
+        alertController.view.addSubview(toolView)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     //MARK: Table view delegation methods
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return triggers.count
@@ -121,7 +197,7 @@ class TriggerListViewController: KiiBaseTableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 
         if segue.identifier == "showExistingTriggerDetail" {
-            if let triggerDetailVC = segue.destinationViewController as? TriggerDetailViewController {
+            if let triggerDetailVC = segue.destinationViewController as? CommandTriggerDetailViewController {
                 if let selectedCell = sender as? UITableViewCell {
                     if let indexPath = self.tableView.indexPathForCell(selectedCell){
                         let selectedTrigger = self.triggers[indexPath.row]

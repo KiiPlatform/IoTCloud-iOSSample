@@ -15,7 +15,7 @@ struct CommandStruct {
     let actions: [Dictionary<String, AnyObject>]!
 }
 
-class TriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEditViewControllerDelegate, StatesPredicateViewControllerDelegate {
+class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEditViewControllerDelegate, StatesPredicateViewControllerDelegate {
 
     @IBOutlet weak var commandDetailLabel: UILabel!
 
