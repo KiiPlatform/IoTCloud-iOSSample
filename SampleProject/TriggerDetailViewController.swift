@@ -58,7 +58,7 @@ class TriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEdi
     override func viewDidLoad() {
         super.viewDidLoad()
         if trigger != nil {
-            commandStructToSave = CommandStruct(schemaName: self.trigger!.command.schemaName, schemaVersion: self.trigger!.command.schemaVersion, actions: self.trigger!.command.actions)
+            commandStructToSave = CommandStruct(schemaName: self.trigger!.command!.schemaName, schemaVersion: self.trigger!.command!.schemaVersion, actions: self.trigger!.command!.actions)
         }
     }
 
@@ -67,7 +67,7 @@ class TriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEdi
             if let destVC = segue.destinationViewController as? TriggerCommandEditViewController {
                 if self.commandStructToSave == nil {
                     if self.trigger != nil {
-                    destVC.commandStruct = CommandStruct(schemaName: self.trigger!.command.schemaName, schemaVersion: self.trigger!.command.schemaVersion, actions: self.trigger!.command.actions)
+                    destVC.commandStruct = CommandStruct(schemaName: self.trigger!.command!.schemaName, schemaVersion: self.trigger!.command!.schemaVersion, actions: self.trigger!.command!.actions)
                     }
                 }else {
                     destVC.commandStruct = commandStructToSave
