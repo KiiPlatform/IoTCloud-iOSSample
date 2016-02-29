@@ -11,16 +11,18 @@ import ThingIFSDK
 
 class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    var triggers = [Trigger]()
+    var commandTriggers = [Trigger]()
+    var serverCodeTriggers = [Trigger]()
     var nextSegue = "createCommandTrigger"
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        triggers.removeAll()
+        commandTriggers.removeAll()
+        serverCodeTriggers.removeAll()
+        
         self.tableView.reloadData()
         self.showActivityView(true)
         getTriggers(nil)
-
     }
 
     //MARK: Picker delegation methods
@@ -100,13 +102,31 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
     
     //MARK: Table view delegation methods
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return triggers.count
+        if section == 0 {
+            return commandTriggers.count
+        } else {
+            return serverCodeTriggers.count
+        }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("TriggerCell", forIndexPath: indexPath)
+        var cell: UITableViewCell
+        if indexPath.section == 0 {
+            cell = tableView.dequeueReusableCellWithIdentifier("CommandTriggerCell", forIndexPath: indexPath)
+//            if cell == nil {
+//                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CommandTriggerCell")
+//            }
+        } else {
+            cell = tableView.dequeueReusableCellWithIdentifier("ServerCodeTriggerCell", forIndexPath: indexPath)
+        }
 
-        let trigger = triggers[indexPath.row]
+        var trigger: Trigger
+        if indexPath.section == 0 {
+            trigger = commandTriggers[indexPath.row]
+        } else {
+            trigger = serverCodeTriggers[indexPath.row]
+        }
+        
         cell.textLabel?.text = trigger.triggerID
         if trigger.enabled {
             cell.detailTextLabel?.text = "enabled"
@@ -122,7 +142,12 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
 
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         var enableActionTitle: String!
-        let trigger = triggers[indexPath.row]
+        var trigger: Trigger
+        if indexPath.section == 0 {
+            trigger = commandTriggers[indexPath.row]
+        } else {
+            trigger = serverCodeTriggers[indexPath.row]
+        }
         if trigger.enabled {
             enableActionTitle = "Disable"
         }else {
@@ -134,7 +159,11 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
                 self.iotAPI!.enableTrigger(trigger.triggerID, enable: !trigger.enabled, completionHandler: { (trigger, error) -> Void in
                     if error == nil {
                         // update triggers array
-                        self.triggers[indexPath.row] = trigger!
+                        if indexPath.section == 0 {
+                            self.commandTriggers[indexPath.row] = trigger!
+                        } else {
+                            self.serverCodeTriggers[indexPath.row] = trigger!
+                        }
                         self.tableView.reloadData()
                     }else {
                         self.showAlert("\(enableActionTitle) Trigger Failed", error: error, completion: nil)
@@ -151,7 +180,11 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
                 // request to delete trigger
                 self.iotAPI!.deleteTrigger( trigger.triggerID, completionHandler: { (trigger, error) -> Void in
                     if error == nil { // if delete trigger successfully in server, then delete it from table view
-                        self.triggers.removeAtIndex(indexPath.row)
+                        if indexPath.section == 0 {
+                            self.commandTriggers.removeAtIndex(indexPath.row)
+                        } else {
+                            self.serverCodeTriggers.removeAtIndex(indexPath.row)
+                        }
                         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
                     }else{
                         self.showAlert("Delete Trigger Failed", error: error, completion: nil)
@@ -177,9 +210,13 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
             iotAPI!.listTriggers(nil, paginationKey: nextPaginationKey, completionHandler: { (triggers, paginationKey, error) -> Void in
                 self.showActivityView(false)
                 if triggers != nil {
-
-                    self.triggers += triggers!
-
+                    for trigger in triggers! {
+                        if trigger.command != nil {
+                            self.commandTriggers.append(trigger)
+                        } else {
+                            self.serverCodeTriggers.append(trigger)
+                        }
+                    }
                     // paginationKey is nil, then there is not more triggers, reload table
                     if paginationKey == nil {
                         self.tableView.reloadData()
@@ -200,7 +237,12 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
             if let triggerDetailVC = segue.destinationViewController as? CommandTriggerDetailViewController {
                 if let selectedCell = sender as? UITableViewCell {
                     if let indexPath = self.tableView.indexPathForCell(selectedCell){
-                        let selectedTrigger = self.triggers[indexPath.row]
+                        var selectedTrigger: Trigger
+                        if indexPath.section == 0 {
+                            selectedTrigger = self.commandTriggers[indexPath.row]
+                        } else {
+                            selectedTrigger = self.serverCodeTriggers[indexPath.row]
+                        }
                         triggerDetailVC.trigger = selectedTrigger
                     }
                 }
