@@ -11,7 +11,7 @@ import ThingIFSDK
 
 class ServerCodeTriggerDetailViewController: KiiBaseTableViewController, TriggerServerCodeEditViewControllerDelegate, StatesPredicateViewControllerDelegate {
 
-    
+    var trigger: Trigger?
     
     //MARK: delegate function of TriggerCommandEditViewControllerDelegate, called when save command
     func saveCommands(serverCode: ServerCode) {

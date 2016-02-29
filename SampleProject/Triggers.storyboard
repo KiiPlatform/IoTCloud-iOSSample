@@ -43,9 +43,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="UaW-KF-Oas" kind="show" id="ueb-tr-52H"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -74,9 +71,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="Nb2-cL-oo5" kind="showDetail" action="showViewController:sender:" id="8j6-vR-3I0"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -104,6 +98,8 @@
                         <outlet property="activityIndicatorView" destination="KSA-ul-CWn" id="LWt-GO-g0V"/>
                         <segue destination="UaW-KF-Oas" kind="show" identifier="createCommandTrigger" id="oaM-n3-GiY"/>
                         <segue destination="Nb2-cL-oo5" kind="show" identifier="createServerCodeTrigger" id="IQJ-gh-hXB"/>
+                        <segue destination="UaW-KF-Oas" kind="show" identifier="showExistingCommandTriggerDetail" id="rRR-Dm-jka"/>
+                        <segue destination="Nb2-cL-oo5" kind="show" identifier="showExistingServerCodeTriggerDetail" id="3BB-mk-aPL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qhb-KB-m95" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -953,7 +949,7 @@
                             <tableViewSection id="lEN-dv-2wg">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TriggerCommandCell" textLabel="Xfj-3c-VgV" detailTextLabel="KNh-aq-tP3" rowHeight="70" style="IBUITableViewCellStyleSubtitle" id="tgp-dU-s71">
-                                        <rect key="frame" x="0.0" y="35" width="600" height="70"/>
+                                        <rect key="frame" x="0.0" y="99" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tgp-dU-s71" id="DMp-Y3-G5B">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
@@ -977,7 +973,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TriggerPredicateCell" textLabel="w2z-6V-d9L" detailTextLabel="2hn-c8-JGt" rowHeight="70" style="IBUITableViewCellStyleSubtitle" id="g65-qR-f8c">
-                                        <rect key="frame" x="0.0" y="105" width="600" height="70"/>
+                                        <rect key="frame" x="0.0" y="169" width="600" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g65-qR-f8c" id="fmM-OQ-3Ly">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="69"/>
@@ -1026,7 +1022,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ueb-tr-52H"/>
-        <segue reference="8j6-vR-3I0"/>
+        <segue reference="rRR-Dm-jka"/>
+        <segue reference="3BB-mk-aPL"/>
     </inferredMetricsTieBreakers>
 </document>
