@@ -110,14 +110,17 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: UITableViewCell
+        var cell: UITableViewCell?
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("CommandTriggerCell", forIndexPath: indexPath)
-//            if cell == nil {
-//                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CommandTriggerCell")
-//            }
+            cell = tableView.dequeueReusableCellWithIdentifier("CommandTriggerCell")
+            if cell == nil {
+                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CommandTriggerCell")
+            }
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("ServerCodeTriggerCell", forIndexPath: indexPath)
+            cell = tableView.dequeueReusableCellWithIdentifier("ServerCodeTriggerCell")
+            if cell == nil {
+                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "ServerCodeTriggerCell")
+            }
         }
 
         var trigger: Trigger
@@ -127,13 +130,13 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
             trigger = serverCodeTriggers[indexPath.row]
         }
         
-        cell.textLabel?.text = trigger.triggerID
+        cell!.textLabel?.text = trigger.triggerID
         if trigger.enabled {
-            cell.detailTextLabel?.text = "enabled"
+            cell!.detailTextLabel?.text = "enabled"
         }else {
-            cell.detailTextLabel?.text = "disabled"
+            cell!.detailTextLabel?.text = "disabled"
         }
-        return cell
+        return cell!
     }
 
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -193,6 +196,10 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
             }
         });
         return [deleteRowAction, enableAction]
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
     }
 
     //MARK: IBAction methods
