@@ -11,6 +11,7 @@ import ThingIFSDK
 
 class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
+    private let sections: NSArray = ["Command Triggers", "ServerCode Triggers"]
     var commandTriggers = [Trigger]()
     var serverCodeTriggers = [Trigger]()
     var nextSegue = "createCommandTrigger"
@@ -101,11 +102,20 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
     }
     
     //MARK: Table view delegation methods
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return sections.count
+    }
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sections[section] as? String
+    }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return commandTriggers.count
-        } else {
+        } else if section == 1 {
             return serverCodeTriggers.count
+        } else {
+            return 0
         }
     }
 
@@ -199,10 +209,11 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
         if indexPath.section == 0 {
-            self.performSegueWithIdentifier("showExistingCommandTriggerDetail", sender: self)
+            self.performSegueWithIdentifier("showExistingCommandTriggerDetail", sender: cell)
         } else {
-            self.performSegueWithIdentifier("showExistingServerCodeTriggerDetail", sender: self)
+            self.performSegueWithIdentifier("showExistingServerCodeTriggerDetail", sender: cell)
         }
     }
     
