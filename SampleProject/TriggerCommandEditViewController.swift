@@ -12,9 +12,6 @@ import ThingIFSDK
 protocol TriggerCommandEditViewControllerDelegate {
     func saveCommands(schemaName: String, schemaVersion: Int, actions: [Dictionary<String, AnyObject>])
 }
-protocol TriggerServerCodeEditViewControllerDelegate {
-    func saveCommands(serverCode: ServerCode)
-}
 
 class TriggerCommandEditViewController: CommandEditViewController {
 

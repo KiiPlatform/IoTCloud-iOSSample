@@ -42,6 +42,8 @@
 		7DB3F6F71B8C5B0100AE8254 /* CommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB3F6F61B8C5B0100AE8254 /* CommandViewController.swift */; };
 		7DCDBD831B90703C00AB006B /* AndOrClauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCDBD821B90703C00AB006B /* AndOrClauseViewController.swift */; };
 		7DCDBD861B90986700AB006B /* IoTSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCDBD851B90986700AB006B /* IoTSchema.swift */; };
+		A55734911C84504F005F8111 /* TriggerServerCodeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55734901C84504F005F8111 /* TriggerServerCodeEditViewController.swift */; };
+		A5C99DD51C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */; };
 		A5F53FB71C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */; };
 		D5351AA91B8ED6D900E55807 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5351AA71B8ED6D900E55807 /* Notifications.storyboard */; };
 		D5351AAB1B8EDA8900E55807 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5351AAA1B8EDA8900E55807 /* NotificationViewController.swift */; };
@@ -100,6 +102,8 @@
 		7DB3F6F61B8C5B0100AE8254 /* CommandViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandViewController.swift; sourceTree = "<group>"; };
 		7DCDBD821B90703C00AB006B /* AndOrClauseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndOrClauseViewController.swift; sourceTree = "<group>"; };
 		7DCDBD851B90986700AB006B /* IoTSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IoTSchema.swift; sourceTree = "<group>"; };
+		A55734901C84504F005F8111 /* TriggerServerCodeEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerServerCodeEditViewController.swift; sourceTree = "<group>"; };
+		A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerServerCodeParameterEditViewController.swift; sourceTree = "<group>"; };
 		A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCodeTriggerDetailViewController.swift; sourceTree = "<group>"; };
 		D5351AA81B8ED6D900E55807 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Notifications.storyboard; sourceTree = "<group>"; };
 		D5351AAA1B8EDA8900E55807 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +227,8 @@
 				7D3DFB681B8EFF650055BE18 /* StatesPredicateViewController.swift */,
 				7DCDBD821B90703C00AB006B /* AndOrClauseViewController.swift */,
 				A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */,
+				A55734901C84504F005F8111 /* TriggerServerCodeEditViewController.swift */,
+				A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */,
 			);
 			name = TriggerVC;
 			sourceTree = "<group>";
@@ -377,6 +383,7 @@
 				7D19188E1B8DB4A6007F2885 /* TriggerListViewController.swift in Sources */,
 				A5F53FB71C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift in Sources */,
 				7D8FAB4D1B8EB00100D57F8E /* CommandEditViewController.swift in Sources */,
+				A55734911C84504F005F8111 /* TriggerServerCodeEditViewController.swift in Sources */,
 				7D3DFB671B8EFA460055BE18 /* CommandNewViewController.swift in Sources */,
 				7D108ADD1B7210C8006EA12B /* ViewController.swift in Sources */,
 				7D3314931B91C08B00A6DDFB /* StatusBoolTypeTableViewCell.swift in Sources */,
@@ -386,6 +393,7 @@
 				7D1918901B8DC84C007F2885 /* CommandTriggerDetailViewController.swift in Sources */,
 				D5A799A41B8EFC2B00F029F5 /* NotificationSettingVC.swift in Sources */,
 				7D3314971B91C30B00A6DDFB /* StatusNumberTypeTableViewCell.swift in Sources */,
+				A5C99DD51C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift in Sources */,
 				7DB3F6E61B8B133D00AE8254 /* OnBoardViewController.swift in Sources */,
 				7DB3F6EC1B8B2DED00AE8254 /* TabBarViewController.swift in Sources */,
 				7D108ADB1B7210C8006EA12B /* AppDelegate.swift in Sources */,
