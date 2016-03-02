@@ -8,6 +8,21 @@ protocol TriggerServerCodeEditViewControllerDelegate {
 struct ParameterStruct {
     var key: String
     var value: AnyObject
+    var isString: Bool {
+        return value is NSString
+    }
+    var isBool: Bool {
+        if let num = value as? NSNumber {
+            return num.isBool()
+        }
+        return false
+    }
+    var isNumber: Bool {
+        if let num = value as? NSNumber {
+            return num.isInt()
+        }
+        return false
+    }
 }
 
 class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerServerCodeParameterEditViewControllerDelegate {
@@ -18,9 +33,11 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if let params = serverCode?.parameters {
-            for (key, value) in params {
-                parameters.append(ParameterStruct(key: key, value: value))
+        if parameters.isEmpty {
+            if let params = serverCode?.parameters {
+                for (key, value) in params {
+                    parameters.append(ParameterStruct(key: key, value: value))
+                }
             }
         }
     }
@@ -54,7 +71,7 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
     //MARK: Table view delegation methods
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // TODO: +Parameters
-        return 4 + (serverCode?.parameters?.count ?? 0)
+        return 4 + (parameters.count ?? 0)
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
@@ -96,6 +113,16 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
             if cell == nil {
                 cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NewParameterCell")
             }
+            let parameter = parameters[indexPath.row - 4]
+            var parameterString = parameter.key + " = "
+            if parameter.isString {
+                parameterString += parameter.value as! String
+            } else if parameter.isNumber {
+                parameterString += String(parameter.value as! NSNumber)
+            } else if parameter.isBool {
+                parameterString += String(parameter.value as! Bool)
+            }
+            cell?.textLabel?.text = parameterString
         }
         return cell!
     }
@@ -106,6 +133,8 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
     
     func saveParameter(parameters: [ParameterStruct]) {
         self.parameters = parameters
+        tableView.reloadData()
+        self.refreshControl?.endRefreshing()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

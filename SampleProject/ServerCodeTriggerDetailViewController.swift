@@ -22,6 +22,8 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController, Trigger
         super.viewWillAppear(animated)
         if trigger != nil {
             self.navigationItem.title = trigger!.triggerID
+            serverCodeToSave = trigger!.serverCode
+            statePredicateToSave = trigger!.predicate as? StatePredicate
         }else {
             self.navigationItem.title = "Create New Trigger"
         }
@@ -76,6 +78,38 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController, Trigger
     
     func saveStatePredicate(newPredicate: StatePredicate) {
         self.statePredicateToSave = newPredicate
+    }
+
+    @IBAction func tapSaveTrigger(sender: AnyObject) {
+        self.saveTrigger()
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    func saveTrigger() {
+        if iotAPI != nil && target != nil && serverCodeToSave != nil && statePredicateToSave != nil {
+            if trigger == nil {
+                iotAPI!.postNewTrigger(serverCodeToSave!, predicate: statePredicateToSave!, completionHandler: { (newTrigger, error) -> Void in
+                    if newTrigger != nil {
+                        self.trigger = newTrigger
+                        self.serverCodeToSave = newTrigger!.serverCode
+                        self.statePredicateToSave = newTrigger?.predicate as? StatePredicate
+                    }else {
+                        self.showAlert("Create Trigger Failed", error: error, completion: nil)
+                    }
+                })
+            } else {
+                iotAPI!.patchTrigger(trigger!.triggerID, serverCode: serverCodeToSave!, predicate: statePredicateToSave!, completionHandler: { (newTrigger, error) -> Void in
+                    if newTrigger != nil {
+                        self.trigger = newTrigger
+                        self.serverCodeToSave = newTrigger!.serverCode
+                        self.statePredicateToSave = newTrigger?.predicate as? StatePredicate
+                    }else {
+                        self.showAlert("Update Trigger Failed", error: error, completion: nil)
+                    }
+                })
+            }
+        }
+        
     }
 
 }

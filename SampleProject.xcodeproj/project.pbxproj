@@ -42,6 +42,7 @@
 		7DB3F6F71B8C5B0100AE8254 /* CommandViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB3F6F61B8C5B0100AE8254 /* CommandViewController.swift */; };
 		7DCDBD831B90703C00AB006B /* AndOrClauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCDBD821B90703C00AB006B /* AndOrClauseViewController.swift */; };
 		7DCDBD861B90986700AB006B /* IoTSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DCDBD851B90986700AB006B /* IoTSchema.swift */; };
+		A52ECA321C86E6E700E9044F /* NSNumber+checkTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52ECA311C86E6E700E9044F /* NSNumber+checkTypes.swift */; };
 		A55734911C84504F005F8111 /* TriggerServerCodeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55734901C84504F005F8111 /* TriggerServerCodeEditViewController.swift */; };
 		A5C99DD51C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */; };
 		A5F53FB71C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */; };
@@ -102,6 +103,7 @@
 		7DB3F6F61B8C5B0100AE8254 /* CommandViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandViewController.swift; sourceTree = "<group>"; };
 		7DCDBD821B90703C00AB006B /* AndOrClauseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndOrClauseViewController.swift; sourceTree = "<group>"; };
 		7DCDBD851B90986700AB006B /* IoTSchema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IoTSchema.swift; sourceTree = "<group>"; };
+		A52ECA311C86E6E700E9044F /* NSNumber+checkTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNumber+checkTypes.swift"; sourceTree = "<group>"; };
 		A55734901C84504F005F8111 /* TriggerServerCodeEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerServerCodeEditViewController.swift; sourceTree = "<group>"; };
 		A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerServerCodeParameterEditViewController.swift; sourceTree = "<group>"; };
 		A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCodeTriggerDetailViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				D5351AAA1B8EDA8900E55807 /* NotificationViewController.swift */,
 				7DCDBD851B90986700AB006B /* IoTSchema.swift */,
 				7D3314871B91B0B500A6DDFB /* ClauseHelper.swift */,
+				A52ECA311C86E6E700E9044F /* NSNumber+checkTypes.swift */,
 			);
 			path = SampleProject;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				A55734911C84504F005F8111 /* TriggerServerCodeEditViewController.swift in Sources */,
 				7D3DFB671B8EFA460055BE18 /* CommandNewViewController.swift in Sources */,
 				7D108ADD1B7210C8006EA12B /* ViewController.swift in Sources */,
+				A52ECA321C86E6E700E9044F /* NSNumber+checkTypes.swift in Sources */,
 				7D3314931B91C08B00A6DDFB /* StatusBoolTypeTableViewCell.swift in Sources */,
 				7DB3F6F41B8C1DD400AE8254 /* CommandsListViewController.swift in Sources */,
 				7D45C07A1B91E84500378D6D /* IntervalStatusTableViewCell.swift in Sources */,
