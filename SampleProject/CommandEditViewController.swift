@@ -11,9 +11,6 @@ import ThingIFSDK
 
 class CommandEditViewController: KiiBaseTableViewController, UIPickerViewDataSource, UIPickerViewDelegate, StatusTableViewCellDelegate {
 
-    @IBOutlet weak var schemaNameTextField: UITextField!
-    @IBOutlet weak var schemaVersionTextField: UITextField!
-
     var commandStruct: CommandStruct?
 
     struct SectionStruct {

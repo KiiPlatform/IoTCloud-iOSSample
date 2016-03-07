@@ -10,9 +10,9 @@ import UIKit
 import ThingIFSDK
 
 protocol TriggerCommandEditViewControllerDelegate {
-
     func saveCommands(schemaName: String, schemaVersion: Int, actions: [Dictionary<String, AnyObject>])
 }
+
 class TriggerCommandEditViewController: CommandEditViewController {
 
     var delegate: TriggerCommandEditViewControllerDelegate?
