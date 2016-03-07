@@ -43,6 +43,17 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
     }
     
     @IBAction func tapNewParameter(sender: AnyObject) {
+        var fields = Dictionary<String, String>()
+        for rowIndex in 0...self.tableView.numberOfRowsInSection(0) {
+            let indexPath : NSIndexPath = NSIndexPath(forItem: rowIndex, inSection: 0);
+            let cell : UITableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath);
+            if let textField = cell?.viewWithTag(200) as? UITextField {
+                fields[cell!.reuseIdentifier!] = textField.text!
+            }
+        }
+        self.serverCode!.endpoint = fields["EndpointCell"]!
+        self.serverCode!.executorAccessToken = fields["ExecutorAccessTokenCell"]!
+        self.serverCode!.targetAppID = fields["TargetAppIDCell"]!
         self.performSegueWithIdentifier("editServerCodeParameter", sender: self)
     }
     
