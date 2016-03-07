@@ -143,6 +143,10 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
     
     func saveParameter(parameters: [ParameterStruct]) {
         self.parameters = parameters
+        serverCode?.parameters?.removeAll()
+        for newParameter in parameters {
+            serverCode?.parameters?[newParameter.key] = newParameter.value
+        }
         tableView.reloadData()
         self.refreshControl?.endRefreshing()
     }

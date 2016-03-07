@@ -167,5 +167,11 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
         }
         return cell!
     }
-
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler:{action, indexpath in
+            self.parameters.removeAtIndex(indexPath.row - 1)
+            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        });
+        return [deleteRowAction]
+    }
 }
