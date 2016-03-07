@@ -17,7 +17,7 @@ struct ParameterStruct {
         }
         return false
     }
-    var isNumber: Bool {
+    var isInt: Bool {
         if let num = value as? NSNumber {
             return num.isInt()
         }
@@ -70,7 +70,6 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
     
     //MARK: Table view delegation methods
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // TODO: +Parameters
         return 4 + (parameters.count ?? 0)
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -117,7 +116,7 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
             var parameterString = parameter.key + " = "
             if parameter.isString {
                 parameterString += parameter.value as! String
-            } else if parameter.isNumber {
+            } else if parameter.isInt {
                 parameterString += String(parameter.value as! NSNumber)
             } else if parameter.isBool {
                 parameterString += String(parameter.value as! Bool)

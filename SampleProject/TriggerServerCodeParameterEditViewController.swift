@@ -60,7 +60,7 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
             if let textFieldKey = cell?.viewWithTag(200) as? UITextField {
                 parameters[rowIndex - 1].key = textFieldKey.text!
                 if let textFieldValue = cell?.viewWithTag(201) as? UITextField {
-                    if parameters[rowIndex - 1].isNumber {
+                    if parameters[rowIndex - 1].isInt {
                         parameters[rowIndex - 1].value = Int(textFieldValue.text!)!
                     } else {
                         parameters[rowIndex - 1].value = textFieldValue.text!
@@ -150,7 +150,7 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
                         switchValue.on = value
                     }
                 }
-            } else if parameter.isNumber {
+            } else if parameter.isInt {
                 cell = tableView.dequeueReusableCellWithIdentifier("NumberParameterCell")
                 if cell == nil {
                     cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NumberParameterCell")
