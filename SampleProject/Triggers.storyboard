@@ -93,6 +93,7 @@
                         <segue destination="Nb2-cL-oo5" kind="show" identifier="createServerCodeTrigger" id="IQJ-gh-hXB"/>
                         <segue destination="UaW-KF-Oas" kind="show" identifier="showExistingCommandTriggerDetail" id="rRR-Dm-jka"/>
                         <segue destination="Nb2-cL-oo5" kind="show" identifier="showExistingServerCodeTriggerDetail" id="3BB-mk-aPL"/>
+                        <segue destination="W9z-bF-ejs" kind="show" identifier="showServerCodeResults" id="ysU-c3-HEP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qhb-KB-m95" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1276,10 +1277,65 @@
             </objects>
             <point key="canvasLocation" x="5648" y="2359"/>
         </scene>
+        <!--TriggerID-->
+        <scene sceneID="0Ol-tR-gQx">
+            <objects>
+                <tableViewController id="W9z-bF-ejs" customClass="TriggeredServerCodeResultViewController" customModule="SampleProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="TMC-kQ-dq7">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="Doe-Ut-42R">
+                            <rect key="frame" x="0.0" y="136" width="600" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ServerCodeResultCell" textLabel="VS0-le-6qP" detailTextLabel="eqB-aN-bxz" style="IBUITableViewCellStyleSubtitle" id="laK-HF-gUW">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="laK-HF-gUW" id="L9e-8d-nU3">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VS0-le-6qP">
+                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eqB-aN-bxz">
+                                            <rect key="frame" x="15" y="25" width="41" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="W9z-bF-ejs" id="2ij-VB-WeI"/>
+                            <outlet property="delegate" destination="W9z-bF-ejs" id="chx-Ds-7tH"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="TriggerID" id="v3q-Fi-aMf"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="Doe-Ut-42R" id="Oxh-Xu-BfD"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vjk-EL-q0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3808" y="1588"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="zoa-Cj-a5W"/>
-        <segue reference="3BB-mk-aPL"/>
-        <segue reference="rRR-Dm-jka"/>
+        <segue reference="IQJ-gh-hXB"/>
+        <segue reference="oaM-n3-GiY"/>
+        <segue reference="OwP-8d-8zw"/>
     </inferredMetricsTieBreakers>
 </document>

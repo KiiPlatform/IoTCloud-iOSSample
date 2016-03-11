@@ -39,10 +39,10 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController, Trigger
         }
         
         if statePredicateToSave != nil {
-            statePredicateDetailLabel.text = statePredicateToSave!.triggersWhen.toString()
+            statePredicateDetailLabel.text = statePredicateToSave!.triggersWhen.rawValue
         }else {
             if let statePredicate = trigger?.predicate as? StatePredicate {
-                statePredicateDetailLabel.text = statePredicate.triggersWhen.toString()
+                statePredicateDetailLabel.text = statePredicate.triggersWhen.rawValue
             }else {
                 statePredicateDetailLabel.text = " "
             }

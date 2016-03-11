@@ -75,12 +75,12 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         self.clauseTypeToSelect = ClauseType.getTypesArray()
 
         if self.statePredicate == nil {
-            sections.append(SectionStruct(headerTitle: "TriggersWhen", items: [triggersWhensToSelect[0].toString()]))
+            sections.append(SectionStruct(headerTitle: "TriggersWhen", items: [triggersWhensToSelect[0]]))
             sections.append(SectionStruct(headerTitle: "Condition", items: [Any]()))
             triggersWhenSelected = triggersWhensToSelect[0]
 
         }else {
-            sections.append(SectionStruct(headerTitle: "TriggersWhen", items: [statePredicate!.triggersWhen.toString()]))
+            sections.append(SectionStruct(headerTitle: "TriggersWhen", items: [statePredicate!.triggersWhen.rawValue]))
             sections.append(SectionStruct(headerTitle: "Condition", items: [statePredicate!.condition.clause]))
             triggersWhenSelected = statePredicate!.triggersWhen
             clauseSelected = self.statePredicate!.condition.clause
@@ -388,7 +388,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
             return ""
         }else {
             if pickerView.tag == 1{
-                return self.triggersWhensToSelect[row-1].toString()
+                return self.triggersWhensToSelect[row-1].rawValue
             }else {
                 if component == 0 {
                  return self.clauseTypeToSelect[row-1].rawValue
