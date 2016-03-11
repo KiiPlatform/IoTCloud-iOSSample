@@ -185,7 +185,7 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
             }
         });
 
-        enableAction.backgroundColor = UIColor(red: 0.298, green: 0.851, blue: 0.3922, alpha: 1.0);
+        enableAction.backgroundColor = UIColor.orangeColor()
 
         let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler:{action, indexpath in
 
@@ -205,7 +205,21 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
                 })
             }
         });
-        return [deleteRowAction, enableAction]
+        deleteRowAction.backgroundColor = UIColor.redColor()
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        var showResultAction : UITableViewRowAction? = nil
+        if indexPath.section == 1 {
+            showResultAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Results", handler:{action, indexpath in
+                self.performSegueWithIdentifier("showServerCodeResults", sender: cell)
+            });
+            showResultAction!.backgroundColor = UIColor.greenColor()
+        }
+        if showResultAction == nil {
+            return [deleteRowAction, enableAction]
+        } else {
+            return [deleteRowAction, enableAction, showResultAction!]
+        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -254,7 +268,6 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-
         if segue.identifier == "showExistingCommandTriggerDetail" {
             if let triggerDetailVC = segue.destinationViewController as? CommandTriggerDetailViewController {
                 if let selectedCell = sender as? UITableViewCell {
@@ -280,6 +293,14 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
                             selectedTrigger = self.serverCodeTriggers[indexPath.row]
                         }
                         triggerDetailVC.trigger = selectedTrigger
+                    }
+                }
+            }
+        } else if segue.identifier == "showServerCodeResults" {
+            if let serverCodeResultsVC = segue.destinationViewController as? TriggeredServerCodeResultViewController {
+                if let selectedCell = sender as? UITableViewCell {
+                    if let indexPath = self.tableView.indexPathForCell(selectedCell){
+                        serverCodeResultsVC.trigger = self.serverCodeTriggers[indexPath.row]
                     }
                 }
             }

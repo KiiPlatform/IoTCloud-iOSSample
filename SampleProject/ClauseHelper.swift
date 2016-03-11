@@ -103,11 +103,11 @@ class ClauseHelper {
             case .Equals:
                 switch statusType! {
                 case StatusType.BoolType:
-                    initializedClause = EqualsClause(field: statusName, value: false)
+                    initializedClause = EqualsClause(field: statusName, boolValue: false)
                 case StatusType.IntType:
-                    initializedClause = EqualsClause(field: statusName, value: 0)
+                    initializedClause = EqualsClause(field: statusName, intValue: 0)
                 case StatusType.StringType:
-                    initializedClause = EqualsClause(field: statusName, value: "")
+                    initializedClause = EqualsClause(field: statusName, stringValue: "")
                 default:
                     break
                 }
@@ -115,11 +115,11 @@ class ClauseHelper {
             case .NotEquals:
                 switch statusType! {
                 case StatusType.BoolType:
-                    initializedClause = NotEqualsClause(field: statusName, value: false)
+                    initializedClause = NotEqualsClause(field: statusName, boolValue: false)
                 case StatusType.IntType:
-                    initializedClause = NotEqualsClause(field: statusName, value: 0)
+                    initializedClause = NotEqualsClause(field: statusName, intValue: 0)
                 case StatusType.StringType:
-                    initializedClause = NotEqualsClause(field: statusName, value: "")
+                    initializedClause = NotEqualsClause(field: statusName, stringValue: "")
                 default:
                     break
                 }
@@ -135,9 +135,9 @@ class ClauseHelper {
 
                 switch statusType! {
                 case StatusType.IntType:
-                    initializedClause = RangeClause(field: statusName, upperLimit: 0, upperIncluded: upperIncluded)
+                    initializedClause = RangeClause(field: statusName, upperLimitInt: 0, upperIncluded: upperIncluded)
                 case StatusType.DoubleType:
-                    initializedClause = RangeClause(field: statusName, upperLimit: 0.0, upperIncluded: upperIncluded)
+                    initializedClause = RangeClause(field: statusName, upperLimitDouble: 0.0, upperIncluded: upperIncluded)
                 default:
                     break
                 }
@@ -151,9 +151,9 @@ class ClauseHelper {
                 }
                 switch statusType! {
                 case StatusType.IntType:
-                    initializedClause = RangeClause(field: statusName, lowerLimit: 0, lowerIncluded: lowerIncluded)
+                    initializedClause = RangeClause(field: statusName, lowerLimitInt: 0, lowerIncluded: lowerIncluded)
                 case StatusType.DoubleType:
-                    initializedClause = RangeClause(field: statusName, lowerLimit: 0.0, lowerIncluded: lowerIncluded)
+                    initializedClause = RangeClause(field: statusName, lowerLimitDouble: 0.0, lowerIncluded: lowerIncluded)
                 default:
                     break
                 }
@@ -175,9 +175,9 @@ class ClauseHelper {
 
                 switch statusType! {
                 case StatusType.IntType:
-                    initializedClause = RangeClause(field: statusName, lowerLimit: 0, lowerIncluded: lowerIncluded, upperLimit: 0, upperIncluded: upperIncluded)
+                    initializedClause = RangeClause(field: statusName, lowerLimitInt: 0, lowerIncluded: lowerIncluded, upperLimit: 0, upperIncluded: upperIncluded)
                 case StatusType.DoubleType:
-                    initializedClause = RangeClause(field: statusName, lowerLimit: 0.0, lowerIncluded: lowerIncluded, upperLimit: 0.0, upperIncluded: upperIncluded)
+                    initializedClause = RangeClause(field: statusName, lowerLimitDouble: 0.0, lowerIncluded: lowerIncluded, upperLimit: 0.0, upperIncluded: upperIncluded)
                 default:
                     break
                 }
@@ -224,7 +224,7 @@ class ClauseHelper {
 
                 switch statusType {
                 case StatusType.IntType:
-                    newClause = RangeClause(field: status, lowerLimit: lowerLimitValue as! Int, lowerIncluded: lowerIncluded, upperLimit: upperLimitValue as! Int, upperIncluded: upperIncluded)
+                    newClause = RangeClause(field: status, lowerLimitInt: lowerLimitValue as! Int, lowerIncluded: lowerIncluded, upperLimit: upperLimitValue as! Int, upperIncluded: upperIncluded)
                 default:
                     break
                 }
@@ -244,18 +244,18 @@ class ClauseHelper {
             case .Equals:
                 switch statusType {
                 case StatusType.IntType:
-                    newClause = EqualsClause(field: status, value: singleValue as! Int)
+                    newClause = EqualsClause(field: status, intValue: singleValue as! Int)
                 case StatusType.BoolType:
-                    newClause = EqualsClause(field: status, value: singleValue as! Bool)
+                    newClause = EqualsClause(field: status, boolValue: singleValue as! Bool)
                 default:
                     break
                 }
             case .NotEquals:
                 switch statusType {
                 case StatusType.IntType:
-                    newClause = NotEqualsClause(field: status, value: singleValue as! Int)
+                    newClause = NotEqualsClause(field: status, intValue: singleValue as! Int)
                 case StatusType.BoolType:
-                    newClause = NotEqualsClause(field: status, value: singleValue as! Bool)
+                    newClause = NotEqualsClause(field: status, boolValue: singleValue as! Bool)
                 default:
                     break
                 }
@@ -269,7 +269,7 @@ class ClauseHelper {
 
                 switch statusType {
                 case StatusType.IntType:
-                    newClause = RangeClause(field: status, upperLimit: singleValue as! Int, upperIncluded: upperIncluded)
+                    newClause = RangeClause(field: status, upperLimitInt: singleValue as! Int, upperIncluded: upperIncluded)
                 default:
                     break
                 }
@@ -284,7 +284,7 @@ class ClauseHelper {
 
                 switch statusType {
                 case StatusType.IntType:
-                    newClause = RangeClause(field: status, lowerLimit: singleValue as! Int, lowerIncluded: lowerIncluded)
+                    newClause = RangeClause(field: status, lowerLimitInt: singleValue as! Int, lowerIncluded: lowerIncluded)
 
                 default:
                     break
