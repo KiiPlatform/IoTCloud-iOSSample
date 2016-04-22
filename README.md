@@ -6,12 +6,40 @@ iOS SampleProject for the [thing-if SDK](https://github.com/KiiPlatform/thing-if
 - Xcode 7.0+
 - swift 2.0+
 
-# Import ThingIFSDK.framework
+# Dependencies
 
-You can use one of the following ways to get an ThingIFSDK.framework:
+- KiiSDK.framework
+- ThingIFSDK.framework
+
+# Importing Dependencies
+
+## Use CocoaPods
+This is the easiest way to get started.
+SampleProject uses [CocoaPods](https://github.com/CocoaPods/CocoaPods) to manage dependency.
+
+If CocoaPods is not installed, please install it first by following the [installation Guide](http://guides.cocoapods.org/using/getting-started.html#installation).
+
+The `./Podfile` is used to define latest version of KiiSDK and ThingIFSDK to be imported. Just run the following command:
+
+```bash
+$ pod install
+```
 
 ## Use Carthage
+SampleProject is also can be used with Carthage.
+But since KiiSDK is not available on Carthage, You should mix it with CocoaPods.
+The benefit of using Carthage is the flexibility to choose ThingIFSDK branch (CocoaPods only support for master branch).
 
+### Import KiiSDK.framework using CocoaPods
+
+Remove 'ThingIFSDK' from The `./Podfile`.
+The `./Podfile` is used to define latest version of KiiSDK to be imported. Just run the following command:
+
+```bash
+$ pod install
+```
+
+### Import ThingIFSDK.framework using Carthage
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that automates the process of adding frameworks to your Cocoa application.
 
 - Install Carthage with [Homebrew](http://brew.sh/) using the following command:
@@ -32,18 +60,6 @@ You can use one of the following ways to get an ThingIFSDK.framework:
   ```
 - After successfully generated thing-if SDK framework, import it to SampleProject.
 
-
-# Import KiiSDK.framework
-
-KiiSDK is used to get the access token of KiiUser from Kii Cloud. To include KiiSDK, SampleProject uses [CocoaPods](https://github.com/CocoaPods/CocoaPods).
-
-If CocoaPods is not installed, please install it first by following the [installation Guild](http://guides.cocoapods.org/using/getting-started.html#installation).
-
-The `./Podfile` is used to define latest version of KiiSDK to be imported. Just run the following command:
-
-```bash
-$ pod install
-```
 
 # Run SampleProject
 
