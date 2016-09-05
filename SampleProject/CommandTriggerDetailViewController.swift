@@ -15,16 +15,33 @@ struct CommandStruct {
     let actions: [Dictionary<String, AnyObject>]!
 }
 
-class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEditViewControllerDelegate, StatesPredicateViewControllerDelegate {
+class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEditViewControllerDelegate, StatesPredicateViewControllerDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
 
     @IBOutlet weak var commandDetailLabel: UILabel!
 
     @IBOutlet weak var statePredicateDetailLabel: UILabel!
 
+    @IBOutlet weak var crossTriggerCell: UITableViewCell!
+    @IBOutlet weak var thingIDCell: UITableViewCell!
+    @IBOutlet weak var thingIDText: UITextField!
+    @IBOutlet weak var vendorThingIDCell: UITableViewCell!
+    @IBOutlet weak var vendorThingIDText: UITextField!
+
+    enum TargetType: String {
+        case NONE = "None"
+        case STANDALONE = "StandaloneThing"
+        case GATEWAY = "Gateway"
+        case ENDNODE = "EndNode"
+    }
+
     var trigger: Trigger?
 
     private var statePredicateToSave: StatePredicate?
     private var commandStructToSave: CommandStruct?
+    private var commandTarget: Target?
+
+    private let commandTargetList: [TargetType] = [.NONE, .STANDALONE, .GATEWAY, .ENDNODE]
+    private var commandTargetSelected: TargetType = .NONE
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -60,6 +77,14 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         if trigger != nil {
             commandStructToSave = CommandStruct(schemaName: self.trigger!.command!.schemaName, schemaVersion: self.trigger!.command!.schemaVersion, actions: self.trigger!.command!.actions)
         }
+        // for UI.
+        if trigger != nil {
+            self.crossTriggerCell.hidden = true
+        } else {
+            self.crossTriggerCell.hidden = false
+        }
+        self.thingIDCell.hidden = true
+        self.vendorThingIDCell.hidden = true
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -103,7 +128,23 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                 })
             }else {
                 if statePredicateToSave != nil {
-                    iotAPI!.postNewTrigger(commandStructToSave!.schemaName, schemaVersion: commandStructToSave!.schemaVersion, actions: commandStructToSave!.actions, predicate: statePredicateToSave!, completionHandler: { (newTrigger, error) -> Void in
+                    let thingID = thingIDText.text ?? ""
+                    let vendorThingID = vendorThingIDText.text ?? ""
+                    switch commandTargetSelected {
+                    case .STANDALONE:
+                        commandTarget = StandaloneThing(thingID: thingID, vendorThingID: vendorThingID)
+                        break
+                    case .GATEWAY:
+                        commandTarget = Gateway(thingID: thingID, vendorThingID: vendorThingID)
+                        break
+                    case .ENDNODE:
+                        commandTarget = EndNode(thingID: thingID, vendorThingID: vendorThingID)
+                        break
+                    default:
+                        commandTarget = nil
+                        break
+                    }
+                    iotAPI!.postNewTrigger(commandStructToSave!.schemaName, schemaVersion: commandStructToSave!.schemaVersion, actions: commandStructToSave!.actions, predicate: statePredicateToSave!, target: commandTarget, completionHandler: { (newTrigger, error) -> Void in
                         if newTrigger != nil {
                             self.trigger = newTrigger
                         }else {
@@ -125,4 +166,28 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         self.statePredicateToSave = newPredicate
     }
 
+    //MARK: Picker delegation methods
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return self.commandTargetList.count
+    }
+
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return self.commandTargetList[row].rawValue
+    }
+
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let type = self.commandTargetList[row]
+        if type == .NONE {
+            self.thingIDCell.hidden = true
+            self.vendorThingIDCell.hidden = true
+        } else {
+            self.thingIDCell.hidden = false
+            self.vendorThingIDCell.hidden = false
+        }
+        self.commandTargetSelected = type
+    }
 }
