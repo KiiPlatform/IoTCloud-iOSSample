@@ -27,14 +27,21 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
     @IBOutlet weak var vendorThingIDCell: UITableViewCell!
     @IBOutlet weak var vendorThingIDText: UITextField!
 
+    enum TargetType: String {
+        case NONE = "None"
+        case STANDALONE = "StandaloneThing"
+        case GATEWAY = "Gateway"
+        case ENDNODE = "EndNode"
+    }
+
     var trigger: Trigger?
 
     private var statePredicateToSave: StatePredicate?
     private var commandStructToSave: CommandStruct?
     private var commandTarget: Target?
 
-    private let commandTargetList: [String] = ["None", "StandaloneThing", "Gateway", "EndNode"]
-    private var commandTargetSelected: Int = 0
+    private let commandTargetList: [TargetType] = [.NONE, .STANDALONE, .GATEWAY, .ENDNODE]
+    private var commandTargetSelected: TargetType = .NONE
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -124,13 +131,13 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                     let thingID = thingIDText.text ?? ""
                     let vendorThingID = vendorThingIDText.text ?? ""
                     switch commandTargetSelected {
-                    case 1:
+                    case .STANDALONE:
                         commandTarget = StandaloneThing(thingID: thingID, vendorThingID: vendorThingID)
                         break
-                    case 2:
+                    case .GATEWAY:
                         commandTarget = Gateway(thingID: thingID, vendorThingID: vendorThingID)
                         break
-                    case 3:
+                    case .ENDNODE:
                         commandTarget = EndNode(thingID: thingID, vendorThingID: vendorThingID)
                         break
                     default:
@@ -169,17 +176,18 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
     }
 
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.commandTargetList[row]
+        return self.commandTargetList[row].rawValue
     }
 
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if row == 0 {
+        let type = self.commandTargetList[row]
+        if type == .NONE {
             self.thingIDCell.hidden = true
             self.vendorThingIDCell.hidden = true
         } else {
             self.thingIDCell.hidden = false
             self.vendorThingIDCell.hidden = false
         }
-        self.commandTargetSelected = row
+        self.commandTargetSelected = type
     }
 }
