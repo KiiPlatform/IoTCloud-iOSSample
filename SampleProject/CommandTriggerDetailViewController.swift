@@ -78,11 +78,6 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
             commandStructToSave = CommandStruct(schemaName: self.trigger!.command!.schemaName, schemaVersion: self.trigger!.command!.schemaVersion, actions: self.trigger!.command!.actions)
         }
         // for UI.
-        if trigger != nil {
-            self.crossTriggerCell.hidden = true
-        } else {
-            self.crossTriggerCell.hidden = false
-        }
         self.thingIDCell.hidden = true
         self.vendorThingIDCell.hidden = true
     }
@@ -118,8 +113,24 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
     }
     func saveTrigger() {
         if iotAPI != nil && target != nil && commandStructToSave != nil {
+            let thingID = thingIDText.text ?? ""
+            let vendorThingID = vendorThingIDText.text ?? ""
+            switch commandTargetSelected {
+            case .STANDALONE:
+                commandTarget = StandaloneThing(thingID: thingID, vendorThingID: vendorThingID)
+                break
+            case .GATEWAY:
+                commandTarget = Gateway(thingID: thingID, vendorThingID: vendorThingID)
+                break
+            case .ENDNODE:
+                commandTarget = EndNode(thingID: thingID, vendorThingID: vendorThingID)
+                break
+            default:
+                commandTarget = nil
+                break
+            }
             if trigger != nil {
-                iotAPI!.patchTrigger(trigger!.triggerID, schemaName: commandStructToSave!.schemaName, schemaVersion: commandStructToSave!.schemaVersion, actions: commandStructToSave!.actions, predicate: statePredicateToSave, completionHandler: { (updatedTrigger, error) -> Void in
+                iotAPI!.patchTrigger(trigger!.triggerID, schemaName: commandStructToSave!.schemaName, schemaVersion: commandStructToSave!.schemaVersion, commandTarget: commandTarget, actions: commandStructToSave!.actions, predicate: statePredicateToSave, completionHandler: { (updatedTrigger, error) -> Void in
                     if updatedTrigger != nil {
                         self.trigger = updatedTrigger
                     }else {
@@ -128,22 +139,6 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                 })
             }else {
                 if statePredicateToSave != nil {
-                    let thingID = thingIDText.text ?? ""
-                    let vendorThingID = vendorThingIDText.text ?? ""
-                    switch commandTargetSelected {
-                    case .STANDALONE:
-                        commandTarget = StandaloneThing(thingID: thingID, vendorThingID: vendorThingID)
-                        break
-                    case .GATEWAY:
-                        commandTarget = Gateway(thingID: thingID, vendorThingID: vendorThingID)
-                        break
-                    case .ENDNODE:
-                        commandTarget = EndNode(thingID: thingID, vendorThingID: vendorThingID)
-                        break
-                    default:
-                        commandTarget = nil
-                        break
-                    }
                     iotAPI!.postNewTrigger(commandStructToSave!.schemaName, schemaVersion: commandStructToSave!.schemaVersion, actions: commandStructToSave!.actions, predicate: statePredicateToSave!, target: commandTarget, completionHandler: { (newTrigger, error) -> Void in
                         if newTrigger != nil {
                             self.trigger = newTrigger
