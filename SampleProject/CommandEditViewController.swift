@@ -227,7 +227,7 @@ class CommandEditViewController: KiiBaseTableViewController, UIPickerViewDataSou
         toolView.addSubview(buttonCancel) //add it to the toolView
 
         //Add the target - target, function to call, the event witch will trigger the function call
-        buttonCancel.addTarget(self, action: "cancelSelection:", forControlEvents: UIControlEvents.TouchDown)
+        buttonCancel.addTarget(self, action: #selector(CommandEditViewController.cancelSelection(_:)), forControlEvents: UIControlEvents.TouchDown)
 
         //add buttons to the view
         let buttonOkFrame: CGRect = CGRectMake(170, 7, 100, 30) //size & position of the button as placed on the toolView
@@ -238,7 +238,7 @@ class CommandEditViewController: KiiBaseTableViewController, UIPickerViewDataSou
         buttonOk.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
         toolView.addSubview(buttonOk) //add to the subview
 
-        buttonOk.addTarget(self, action: "selectAction:", forControlEvents: UIControlEvents.TouchDown)
+        buttonOk.addTarget(self, action: #selector(CommandEditViewController.selectAction(_:)), forControlEvents: UIControlEvents.TouchDown)
 
         //add the toolbar to the alert controller
         alertController.view.addSubview(toolView)

@@ -231,7 +231,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
         toolView.addSubview(buttonCancel) //add it to the toolView
 
         //Add the target - target, function to call, the event witch will trigger the function call
-        buttonCancel.addTarget(self, action: "cancelPicker:", forControlEvents: UIControlEvents.TouchDown)
+        buttonCancel.addTarget(self, action: #selector(AndOrClauseViewController.cancelPicker(_:)), forControlEvents: UIControlEvents.TouchDown)
 
 
         //add buttons to the view
@@ -243,7 +243,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
         buttonOk.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
         toolView.addSubview(buttonOk) //add to the subview
 
-        buttonOk.addTarget(self, action: "selectClauseAndStatus:", forControlEvents: UIControlEvents.TouchDown)
+        buttonOk.addTarget(self, action: #selector(AndOrClauseViewController.selectClauseAndStatus(_:)), forControlEvents: UIControlEvents.TouchDown)
 
         //add the toolbar to the alert controller
         alertController.view.addSubview(toolView)
