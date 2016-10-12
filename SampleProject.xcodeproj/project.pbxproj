@@ -29,7 +29,6 @@
 		7D8FAB4D1B8EB00100D57F8E /* CommandEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8FAB4C1B8EB00100D57F8E /* CommandEditViewController.swift */; };
 		7D8FAB511B8EC26900D57F8E /* TriggerCommandEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D8FAB501B8EC26900D57F8E /* TriggerCommandEditViewController.swift */; };
 		7D96858C1B8AF3C90017CA7D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D96858B1B8AF3C90017CA7D /* LoginViewController.swift */; };
-		7DA9D2011BD4E5850092B4BC /* ThingIFSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA9D2001BD4E5850092B4BC /* ThingIFSDK.framework */; };
 		7DB3F6E61B8B133D00AE8254 /* OnBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB3F6E51B8B133D00AE8254 /* OnBoardViewController.swift */; };
 		7DB3F6E81B8B243600AE8254 /* Properties.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7DB3F6E71B8B243600AE8254 /* Properties.plist */; };
 		7DB3F6EC1B8B2DED00AE8254 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DB3F6EB1B8B2DED00AE8254 /* TabBarViewController.swift */; };
@@ -45,6 +44,8 @@
 		A5B54B2A1C9151D200440A6B /* TriggeredServerCodeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B54B291C9151D200440A6B /* TriggeredServerCodeResultViewController.swift */; };
 		A5C99DD51C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */; };
 		A5F53FB71C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */; };
+		B6DE17DF1DAE115C006B4558 /* ThingIFSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6DE17DE1DAE115C006B4558 /* ThingIFSDK.framework */; };
+		B6DE17E11DAE1183006B4558 /* ThingIFSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6DE17E01DAE1183006B4558 /* ThingIFSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D5351AA91B8ED6D900E55807 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5351AA71B8ED6D900E55807 /* Notifications.storyboard */; };
 		D5351AAB1B8EDA8900E55807 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5351AAA1B8EDA8900E55807 /* NotificationViewController.swift */; };
 		D5A799A41B8EFC2B00F029F5 /* NotificationSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A799A31B8EFC2B00F029F5 /* NotificationSettingVC.swift */; };
@@ -57,6 +58,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B6DE17E11DAE1183006B4558 /* ThingIFSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,7 +93,6 @@
 		7D8FAB4C1B8EB00100D57F8E /* CommandEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEditViewController.swift; sourceTree = "<group>"; };
 		7D8FAB501B8EC26900D57F8E /* TriggerCommandEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerCommandEditViewController.swift; sourceTree = "<group>"; };
 		7D96858B1B8AF3C90017CA7D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		7DA9D2001BD4E5850092B4BC /* ThingIFSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThingIFSDK.framework; path = "/Users/syahriza/Documents/Kii/Development/thing-if-iOSSample/Carthage/Build/iOS/ThingIFSDK.framework"; sourceTree = "<absolute>"; };
 		7DB3F6E51B8B133D00AE8254 /* OnBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoardViewController.swift; sourceTree = "<group>"; };
 		7DB3F6E71B8B243600AE8254 /* Properties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Properties.plist; sourceTree = "<group>"; };
 		7DB3F6EB1B8B2DED00AE8254 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +108,8 @@
 		A5B54B291C9151D200440A6B /* TriggeredServerCodeResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggeredServerCodeResultViewController.swift; sourceTree = "<group>"; };
 		A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerServerCodeParameterEditViewController.swift; sourceTree = "<group>"; };
 		A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCodeTriggerDetailViewController.swift; sourceTree = "<group>"; };
+		B6DE17DE1DAE115C006B4558 /* ThingIFSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThingIFSDK.framework; path = Carthage/Build/iOS/ThingIFSDK.framework; sourceTree = "<group>"; };
+		B6DE17E01DAE1183006B4558 /* ThingIFSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThingIFSDK.framework; path = Carthage/Build/iOS/ThingIFSDK.framework; sourceTree = "<group>"; };
 		D5351AA81B8ED6D900E55807 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Notifications.storyboard; sourceTree = "<group>"; };
 		D5351AAA1B8EDA8900E55807 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		D5A799A31B8EFC2B00F029F5 /* NotificationSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationSettingVC.swift; sourceTree = "<group>"; };
@@ -117,7 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DA9D2011BD4E5850092B4BC /* ThingIFSDK.framework in Frameworks */,
+				B6DE17DF1DAE115C006B4558 /* ThingIFSDK.framework in Frameworks */,
 				7D783E4D1B87157F00543A09 /* libsqlite3.tbd in Frameworks */,
 				32F0D076E95C4ECA320FABEC /* Pods_SampleProject.framework in Frameworks */,
 			);
@@ -129,6 +132,7 @@
 		42632332CB0F7552608D41C8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B6DE17DE1DAE115C006B4558 /* ThingIFSDK.framework */,
 				3B00E458EE1367B375F774C6 /* Pods_SampleProject.framework */,
 			);
 			name = Frameworks;
@@ -146,6 +150,7 @@
 		7D108ACE1B7210C8006EA12B = {
 			isa = PBXGroup;
 			children = (
+				B6DE17E01DAE1183006B4558 /* ThingIFSDK.framework */,
 				7D783E4E1B87159400543A09 /* frameworks */,
 				7D108AD91B7210C8006EA12B /* SampleProject */,
 				7D783E491B85CD9100543A09 /* SampleProject.app */,
