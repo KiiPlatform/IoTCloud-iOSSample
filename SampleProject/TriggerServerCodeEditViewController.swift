@@ -51,9 +51,11 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
                 fields[cell!.reuseIdentifier!] = textField.text!
             }
         }
-        self.serverCode!.endpoint = fields["EndpointCell"]!
-        self.serverCode!.executorAccessToken = fields["ExecutorAccessTokenCell"]!
-        self.serverCode!.targetAppID = fields["TargetAppIDCell"]!
+        self.serverCode = ServerCode(
+          endpoint: fields["EndpointCell"]!,
+          executorAccessToken: fields["ExecutorAccessTokenCell"],
+          targetAppID: fields["TargetAppIDCell"],
+          parameters: nil)
         self.performSegueWithIdentifier("editServerCodeParameter", sender: self)
     }
     
@@ -66,13 +68,15 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
                 fields[cell!.reuseIdentifier!] = textField.text!
             }
         }
-        self.serverCode!.endpoint = fields["EndpointCell"]!
-        self.serverCode!.executorAccessToken = fields["ExecutorAccessTokenCell"]!
-        self.serverCode!.targetAppID = fields["TargetAppIDCell"]!
-        self.serverCode!.parameters = Dictionary<String, AnyObject>()
-        for parameter in self.parameters {
-           self.serverCode!.parameters![parameter.key] = parameter.value
-        }
+
+        let parameters =
+          TriggerServerCodeEditViewController.parametersToDictionary(
+            self.parameters)
+        self.serverCode = ServerCode(
+          endpoint: fields["EndpointCell"]!,
+          executorAccessToken: fields["ExecutorAccessTokenCell"],
+          targetAppID: fields["TargetAppIDCell"],
+          parameters: parameters)
         if self.delegate != nil {
             self.delegate!.saveServerCode(self.serverCode!)
         }
@@ -143,10 +147,13 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
     
     func saveParameter(parameters: [ParameterStruct]) {
         self.parameters = parameters
-        serverCode?.parameters?.removeAll()
-        for newParameter in parameters {
-            serverCode?.parameters?[newParameter.key] = newParameter.value
-        }
+        self.serverCode = ServerCode(
+          endpoint: self.serverCode!.endpoint,
+          executorAccessToken: self.serverCode!.executorAccessToken,
+          targetAppID: self.serverCode!.targetAppID,
+          parameters:
+            TriggerServerCodeEditViewController.parametersToDictionary(
+              parameters))
         tableView.reloadData()
         self.refreshControl?.endRefreshing()
     }
@@ -158,6 +165,16 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
                 editParameterVC.delegate = self
             }
         }
+    }
+
+    private static func parametersToDictionary(
+      parameters: [ParameterStruct]) -> Dictionary<String, AnyObject>
+    {
+        var retval: Dictionary<String, AnyObject> = [ : ]
+        for parameter in parameters {
+            retval[parameter.key] = parameter.value
+        }
+        return retval
     }
 
 }
