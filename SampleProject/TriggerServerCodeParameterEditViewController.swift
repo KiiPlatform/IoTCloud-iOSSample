@@ -44,7 +44,7 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
         buttonOk.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
         toolView.addSubview(buttonOk) //add to the subview
         
-        buttonOk.addTarget(self, action: "selectAction:", forControlEvents: UIControlEvents.TouchDown)
+        buttonOk.addTarget(self, action: #selector(TriggerServerCodeParameterEditViewController.selectAction(_:)), forControlEvents: UIControlEvents.TouchDown)
         
         //add the toolbar to the alert controller
         alertController.view.addSubview(toolView)
