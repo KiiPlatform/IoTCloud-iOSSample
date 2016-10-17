@@ -108,7 +108,15 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
     func saveTrigger() {
         if iotAPI != nil && target != nil && commandStructToSave != nil {
             if trigger != nil {
-                iotAPI!.patchTrigger(trigger!.triggerID, schemaName: commandStructToSave!.schemaName, schemaVersion: commandStructToSave!.schemaVersion, actions: commandStructToSave!.actions, predicate: statePredicateToSave, completionHandler: { (updatedTrigger, error) -> Void in
+                iotAPI!.patchTrigger(
+                  trigger!.triggerID,
+                  triggeredCommandForm: TriggeredCommandForm(
+                    schemaName: commandStructToSave!.schemaName,
+                    schemaVersion: commandStructToSave!.schemaVersion,
+                    actions: commandStructToSave!.actions),
+                  predicate: statePredicateToSave,
+                  options: self.options,
+                  completionHandler: { (updatedTrigger, error) -> Void in
                     if updatedTrigger != nil {
                         self.trigger = updatedTrigger
                     }else {
@@ -117,7 +125,14 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                 })
             }else {
                 if statePredicateToSave != nil {
-                    iotAPI!.postNewTrigger(commandStructToSave!.schemaName, schemaVersion: commandStructToSave!.schemaVersion, actions: commandStructToSave!.actions, predicate: statePredicateToSave!, completionHandler: { (newTrigger, error) -> Void in
+                    iotAPI!.postNewTrigger(
+                      TriggeredCommandForm(
+                        schemaName: commandStructToSave!.schemaName,
+                        schemaVersion: commandStructToSave!.schemaVersion,
+                        actions: commandStructToSave!.actions),
+                      predicate: statePredicateToSave!,
+                      options: self.options,
+                      completionHandler: { (newTrigger, error) -> Void in
                         if newTrigger != nil {
                             self.trigger = newTrigger
                         }else {
