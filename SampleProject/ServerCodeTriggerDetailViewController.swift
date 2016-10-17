@@ -117,7 +117,11 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
     func saveTrigger() {
         if iotAPI != nil && target != nil && serverCodeToSave != nil && statePredicateToSave != nil {
             if trigger == nil {
-                iotAPI!.postNewTrigger(serverCodeToSave!, predicate: statePredicateToSave!, completionHandler: { (newTrigger, error) -> Void in
+                iotAPI!.postNewTrigger(
+                  serverCodeToSave!,
+                  predicate: statePredicateToSave!,
+                  options: self.options,
+                  completionHandler: { (newTrigger, error) -> Void in
                     if newTrigger != nil {
                         self.trigger = newTrigger
                         self.serverCodeToSave = newTrigger!.serverCode
@@ -127,7 +131,12 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
                     }
                 })
             } else {
-                iotAPI!.patchTrigger(trigger!.triggerID, serverCode: serverCodeToSave!, predicate: statePredicateToSave!, completionHandler: { (newTrigger, error) -> Void in
+                iotAPI!.patchTrigger(
+                  trigger!.triggerID,
+                  serverCode: serverCodeToSave!,
+                  predicate: statePredicateToSave!,
+                  options: self.options,
+                  completionHandler: { (newTrigger, error) -> Void in
                     if newTrigger != nil {
                         self.trigger = newTrigger
                         self.serverCodeToSave = newTrigger!.serverCode
