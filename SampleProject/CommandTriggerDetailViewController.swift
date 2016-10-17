@@ -15,7 +15,7 @@ struct CommandStruct {
     let actions: [Dictionary<String, AnyObject>]!
 }
 
-class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEditViewControllerDelegate, StatesPredicateViewControllerDelegate {
+class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEditViewControllerDelegate, StatesPredicateViewControllerDelegate, TriggerOptionsViewControllerDelegate {
 
     @IBOutlet weak var commandDetailLabel: UILabel!
 
@@ -25,6 +25,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
 
     private var statePredicateToSave: StatePredicate?
     private var commandStructToSave: CommandStruct?
+    private var options: TriggerOptions?
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -84,6 +85,19 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                 }
                 destVC.delegate = self
             }
+        } else if segue.identifier == "editTriggerOptions" {
+            if let destVC = segue.destinationViewController as? TriggerOptionsViewController {
+                if let trigger = self.trigger {
+                    destVC.options = TriggerOptions(
+                      title: trigger.title,
+                      triggerDescription: trigger.triggerDescription,
+                      metadata: trigger.metadata)
+                } else if let options = self.options {
+                    destVC.options = options
+                }
+
+                destVC.delegate = self
+            }
         }
     }
 
@@ -125,4 +139,14 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         self.statePredicateToSave = newPredicate
     }
 
+    func saveTriggerOptions(title: String?,
+                            description: String?,
+                            metadata: Dictionary<String, AnyObject>?)
+    {
+        if title != nil || description != nil || metadata != nil {
+            self.options = TriggerOptions(title: title,
+                                          triggerDescription: description,
+                                          metadata: metadata)
+        }
+    }
 }

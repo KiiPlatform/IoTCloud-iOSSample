@@ -187,7 +187,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="ZCX-fY-BMw" kind="show" id="bly-gW-NR3"/>
+                                            <segue destination="ZCX-fY-BMw" kind="show" identifier="editTriggerOptions" id="bly-gW-NR3"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -493,7 +493,7 @@
                             <tableViewSection headerTitle="Description" id="G8L-r3-zex">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="153" id="j7K-En-X6K">
-                                        <rect key="frame" x="0.0" y="220" width="375" height="153"/>
+                                        <rect key="frame" x="0.0" y="221" width="375" height="153"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j7K-En-X6K" id="NNk-fC-yyb">
                                             <frame key="frameInset" width="375" height="152"/>
@@ -513,12 +513,18 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="metadata" id="Vhc-CM-0Uj">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="e38-L4-nHb">
-                                        <rect key="frame" x="0.0" y="429" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="153" id="e38-L4-nHb">
+                                        <rect key="frame" x="0.0" y="431" width="375" height="153"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e38-L4-nHb" id="vYU-MP-WeT">
-                                            <frame key="frameInset" width="375" height="43"/>
+                                            <frame key="frameInset" width="375" height="152"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="s5i-bG-mM6">
+                                                    <frame key="frameInset" width="375" height="152"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </stackView>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
