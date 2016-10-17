@@ -15,7 +15,7 @@ struct CommandStruct {
     let actions: [Dictionary<String, AnyObject>]!
 }
 
-class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEditViewControllerDelegate, StatesPredicateViewControllerDelegate {
+class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEditViewControllerDelegate, StatesPredicateViewControllerDelegate, TriggerOptionsViewControllerDelegate {
 
     @IBOutlet weak var commandDetailLabel: UILabel!
 
@@ -25,6 +25,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
 
     private var statePredicateToSave: StatePredicate?
     private var commandStructToSave: CommandStruct?
+    private var options: TriggerOptions?
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -84,6 +85,19 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                 }
                 destVC.delegate = self
             }
+        } else if segue.identifier == "editTriggerOptions" {
+            if let destVC = segue.destinationViewController as? TriggerOptionsViewController {
+                if let options = self.options {
+                    destVC.options = options
+                } else if let trigger = self.trigger {
+                    destVC.options = TriggerOptions(
+                      title: trigger.title,
+                      triggerDescription: trigger.triggerDescription,
+                      metadata: trigger.metadata)
+                }
+
+                destVC.delegate = self
+            }
         }
     }
 
@@ -94,7 +108,15 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
     func saveTrigger() {
         if iotAPI != nil && target != nil && commandStructToSave != nil {
             if trigger != nil {
-                iotAPI!.patchTrigger(trigger!.triggerID, schemaName: commandStructToSave!.schemaName, schemaVersion: commandStructToSave!.schemaVersion, actions: commandStructToSave!.actions, predicate: statePredicateToSave, completionHandler: { (updatedTrigger, error) -> Void in
+                iotAPI!.patchTrigger(
+                  trigger!.triggerID,
+                  triggeredCommandForm: TriggeredCommandForm(
+                    schemaName: commandStructToSave!.schemaName,
+                    schemaVersion: commandStructToSave!.schemaVersion,
+                    actions: commandStructToSave!.actions),
+                  predicate: statePredicateToSave,
+                  options: self.options,
+                  completionHandler: { (updatedTrigger, error) -> Void in
                     if updatedTrigger != nil {
                         self.trigger = updatedTrigger
                     }else {
@@ -103,7 +125,14 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                 })
             }else {
                 if statePredicateToSave != nil {
-                    iotAPI!.postNewTrigger(commandStructToSave!.schemaName, schemaVersion: commandStructToSave!.schemaVersion, actions: commandStructToSave!.actions, predicate: statePredicateToSave!, completionHandler: { (newTrigger, error) -> Void in
+                    iotAPI!.postNewTrigger(
+                      TriggeredCommandForm(
+                        schemaName: commandStructToSave!.schemaName,
+                        schemaVersion: commandStructToSave!.schemaVersion,
+                        actions: commandStructToSave!.actions),
+                      predicate: statePredicateToSave!,
+                      options: self.options,
+                      completionHandler: { (newTrigger, error) -> Void in
                         if newTrigger != nil {
                             self.trigger = newTrigger
                         }else {
@@ -125,4 +154,14 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         self.statePredicateToSave = newPredicate
     }
 
+    func saveTriggerOptions(title: String?,
+                            description: String?,
+                            metadata: Dictionary<String, AnyObject>?)
+    {
+        if title != nil || description != nil || metadata != nil {
+            self.options = TriggerOptions(title: title,
+                                          triggerDescription: description,
+                                          metadata: metadata)
+        }
+    }
 }

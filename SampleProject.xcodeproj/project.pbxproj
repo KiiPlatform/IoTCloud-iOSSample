@@ -44,6 +44,7 @@
 		A5B54B2A1C9151D200440A6B /* TriggeredServerCodeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B54B291C9151D200440A6B /* TriggeredServerCodeResultViewController.swift */; };
 		A5C99DD51C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */; };
 		A5F53FB71C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */; };
+		B65736891DB0CED00018C27C /* TriggerOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65736881DB0CECF0018C27C /* TriggerOptionsViewController.swift */; };
 		B6DE17DF1DAE115C006B4558 /* ThingIFSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6DE17DE1DAE115C006B4558 /* ThingIFSDK.framework */; };
 		B6DE17E11DAE1183006B4558 /* ThingIFSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6DE17E01DAE1183006B4558 /* ThingIFSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D5351AA91B8ED6D900E55807 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5351AA71B8ED6D900E55807 /* Notifications.storyboard */; };
@@ -108,6 +109,7 @@
 		A5B54B291C9151D200440A6B /* TriggeredServerCodeResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggeredServerCodeResultViewController.swift; sourceTree = "<group>"; };
 		A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerServerCodeParameterEditViewController.swift; sourceTree = "<group>"; };
 		A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerCodeTriggerDetailViewController.swift; sourceTree = "<group>"; };
+		B65736881DB0CECF0018C27C /* TriggerOptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerOptionsViewController.swift; sourceTree = "<group>"; };
 		B6DE17DE1DAE115C006B4558 /* ThingIFSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThingIFSDK.framework; path = Carthage/Build/iOS/ThingIFSDK.framework; sourceTree = "<group>"; };
 		B6DE17E01DAE1183006B4558 /* ThingIFSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ThingIFSDK.framework; path = Carthage/Build/iOS/ThingIFSDK.framework; sourceTree = "<group>"; };
 		D5351AA81B8ED6D900E55807 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Notifications.storyboard; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				A55734901C84504F005F8111 /* TriggerServerCodeEditViewController.swift */,
 				A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */,
 				A5B54B291C9151D200440A6B /* TriggeredServerCodeResultViewController.swift */,
+				B65736881DB0CECF0018C27C /* TriggerOptionsViewController.swift */,
 			);
 			name = TriggerVC;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 			files = (
 				7D3DFB691B8EFF650055BE18 /* StatesPredicateViewController.swift in Sources */,
 				7DB3F6F71B8C5B0100AE8254 /* CommandViewController.swift in Sources */,
+				B65736891DB0CED00018C27C /* TriggerOptionsViewController.swift in Sources */,
 				D5351AAB1B8EDA8900E55807 /* NotificationViewController.swift in Sources */,
 				7DB3F6F01B8BFB0200AE8254 /* UIViewController+showAlert.swift.swift in Sources */,
 				7DCDBD831B90703C00AB006B /* AndOrClauseViewController.swift in Sources */,
