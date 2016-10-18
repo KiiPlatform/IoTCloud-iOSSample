@@ -13,6 +13,10 @@ struct CommandStruct {
     let schemaName: String!
     let schemaVersion: Int!
     let actions: [Dictionary<String, AnyObject>]!
+    let targetID: TypedID?
+    let title: String?
+    let commandDescription: String?
+    let metadata: Dictionary<String, AnyObject>?
 }
 
 class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEditViewControllerDelegate, StatesPredicateViewControllerDelegate, TriggerOptionsViewControllerDelegate {
@@ -28,10 +32,15 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
 
     func setup(trigger: Trigger) {
         self.triggerID = trigger.triggerID
+        let command = trigger.command!
         self.commandStructToSave = CommandStruct(
-          schemaName: trigger.command!.schemaName,
-          schemaVersion: trigger.command!.schemaVersion,
-          actions: trigger.command!.actions)
+          schemaName: command.schemaName,
+          schemaVersion: command.schemaVersion,
+          actions: command.actions,
+          targetID: command.targetID,
+          title: command.title,
+          commandDescription: command.commandDescription,
+          metadata: command.metadata)
         self.statePredicateToSave = trigger.predicate as? StatePredicate
         if trigger.title != nil ||
              trigger.triggerDescription != nil ||
@@ -91,7 +100,10 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                   triggeredCommandForm: TriggeredCommandForm(
                     schemaName: command.schemaName,
                     schemaVersion: command.schemaVersion,
-                    actions: command.actions),
+                    actions: command.actions,
+                    targetID: command.targetID,
+                    title: command.title,
+                    commandDescription: command.commandDescription),
                   predicate: predicate,
                   options: self.options,
                   completionHandler: { (updatedTrigger, error) -> Void in
@@ -105,7 +117,10 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                   TriggeredCommandForm(
                     schemaName: command.schemaName,
                     schemaVersion: command.schemaVersion,
-                    actions: command.actions),
+                    actions: command.actions,
+                    targetID: command.targetID,
+                    title: command.title,
+                    commandDescription: command.commandDescription),
                   predicate: predicate,
                   options: self.options,
                   completionHandler: { (newTrigger, error) -> Void in
@@ -119,8 +134,22 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
     }
 
     //MARK: delegate function of TriggerCommandEditViewControllerDelegate, called when save command
-    func saveCommands(schemaName: String, schemaVersion: Int, actions: [Dictionary<String, AnyObject>]) {
-        self.commandStructToSave = CommandStruct(schemaName: schemaName, schemaVersion: schemaVersion, actions: actions)
+    func saveCommands(
+      schemaName: String,
+      schemaVersion: Int,
+      actions: [Dictionary<String, AnyObject>],
+      targetID: TypedID?,
+      title: String?,
+      commandDescription: String?,
+      metadata: Dictionary<String, AnyObject>?) {
+        self.commandStructToSave = CommandStruct(
+          schemaName: schemaName,
+          schemaVersion: schemaVersion,
+          actions: actions,
+          targetID: targetID,
+          title: title,
+          commandDescription: commandDescription,
+          metadata: metadata)
     }
 
     func saveStatePredicate(newPredicate: StatePredicate) {
