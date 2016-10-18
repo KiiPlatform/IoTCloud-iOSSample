@@ -605,31 +605,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="uZn-at-lbp" userLabel="TargetIDCell">
-                                <rect key="frame" x="0.0" y="208" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uZn-at-lbp" id="TZD-sz-Q5e">
-                                    <frame key="frameInset" width="375" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="target thing id" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="NXS-rt-7wf">
-                                            <frame key="frameInset" minX="14" minY="5" width="347" height="30"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="300" id="e88-e8-Qeh"/>
-                                            </constraints>
-                                            <nil key="textColor"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="NXS-rt-7wf" firstAttribute="top" secondItem="TZD-sz-Q5e" secondAttribute="topMargin" constant="-1" id="A3D-SC-PzK"/>
-                                        <constraint firstItem="NXS-rt-7wf" firstAttribute="leading" secondItem="TZD-sz-Q5e" secondAttribute="leadingMargin" constant="7" id="HJ7-Rw-Lo6"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewActionItemNumberCell" rowHeight="75" id="eSH-mO-8in" customClass="StatusIntTypeTableViewCell" customModule="SampleProject" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="252" width="375" height="75"/>
+                                <rect key="frame" x="0.0" y="208" width="375" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eSH-mO-8in" id="E8O-nO-b2g">
                                     <frame key="frameInset" width="375" height="74"/>
@@ -673,7 +650,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewActionItemBoolCell" rowHeight="75" id="FFg-Tn-jUa" customClass="StatusBoolTypeTableViewCell" customModule="SampleProject" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="327" width="375" height="75"/>
+                                <rect key="frame" x="0.0" y="283" width="375" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FFg-Tn-jUa" id="XQT-vd-Nqw">
                                     <frame key="frameInset" width="375" height="74"/>
@@ -710,7 +687,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewActionItemButtonCell" rowHeight="75" id="Myg-lw-ksG">
-                                <rect key="frame" x="0.0" y="402" width="375" height="75"/>
+                                <rect key="frame" x="0.0" y="358" width="375" height="75"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Myg-lw-ksG" id="YQp-dI-JTB">
                                     <frame key="frameInset" width="375" height="74"/>
@@ -730,6 +707,29 @@
                                     <constraints>
                                         <constraint firstItem="Nyv-Ru-ye6" firstAttribute="centerY" secondItem="YQp-dI-JTB" secondAttribute="centerY" id="X3K-3K-yGg"/>
                                         <constraint firstItem="Nyv-Ru-ye6" firstAttribute="centerX" secondItem="YQp-dI-JTB" secondAttribute="centerX" id="oC7-fk-oC6"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="uZn-at-lbp" userLabel="TargetIDCell">
+                                <rect key="frame" x="0.0" y="433" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uZn-at-lbp" id="TZD-sz-Q5e">
+                                    <frame key="frameInset" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="target thing id" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="NXS-rt-7wf">
+                                            <frame key="frameInset" minX="14" minY="5" width="347" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="300" id="e88-e8-Qeh"/>
+                                            </constraints>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="NXS-rt-7wf" firstAttribute="top" secondItem="TZD-sz-Q5e" secondAttribute="topMargin" constant="-1" id="A3D-SC-PzK"/>
+                                        <constraint firstItem="NXS-rt-7wf" firstAttribute="leading" secondItem="TZD-sz-Q5e" secondAttribute="leadingMargin" constant="7" id="HJ7-Rw-Lo6"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -756,6 +756,26 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="136" id="65i-Xv-EKc" userLabel="CommandDescriptionCell">
+                                <rect key="frame" x="0.0" y="521" width="375" height="136"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="65i-Xv-EKc" id="OGr-Q8-1uS">
+                                    <frame key="frameInset" width="375" height="135"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GQz-yh-dpr">
+                                            <frame key="frameInset" minX="14" minY="8" width="353" height="119"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="GQz-yh-dpr" firstAttribute="topMargin" secondItem="OGr-Q8-1uS" secondAttribute="centerY" constant="-1" id="Snq-eH-yGb"/>
+                                        <constraint firstItem="GQz-yh-dpr" firstAttribute="leadingMargin" secondItem="OGr-Q8-1uS" secondAttribute="centerX" constant="7" id="pUF-o5-t4w"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -773,7 +793,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ma9-wg-czZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5744.8000000000002" y="417.8410794602699"/>
+            <point key="canvasLocation" x="5762.3999999999996" y="383.65817091454278"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TB0-3w-o13">
