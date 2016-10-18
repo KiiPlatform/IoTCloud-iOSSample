@@ -76,13 +76,13 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
         } else if segue.identifier == "editTriggerOptions" {
             if let destVC = segue.destinationViewController
                     as? TriggerOptionsViewController {
-                if let trigger = self.trigger {
+                if let options = self.options {
+                    destVC.options = options
+                } else if let trigger = self.trigger {
                     destVC.options = TriggerOptions(
                       title: trigger.title,
                       triggerDescription: trigger.triggerDescription,
                       metadata: trigger.metadata)
-                } else if let options = self.options {
-                    destVC.options = options
                 }
                 destVC.delegate = self
             }
