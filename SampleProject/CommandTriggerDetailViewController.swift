@@ -21,7 +21,6 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
 
     @IBOutlet weak var statePredicateDetailLabel: UILabel!
 
-    var trigger: Trigger?
     private var triggerID: String?
     private var statePredicateToSave: StatePredicate?
     private var commandStructToSave: CommandStruct?
@@ -83,10 +82,10 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         self.navigationController?.popViewControllerAnimated(true)
     }
     func saveTrigger() {
-        if let api = iotAPI,
-           let command = self.commandStructToSave,
-           let predicate = self.statePredicateToSave {
+        if let api = iotAPI {
             if let triggerID = self.triggerID {
+                let command = self.commandStructToSave!
+                let predicate = self.statePredicateToSave!
                 api.patchTrigger(
                   triggerID,
                   triggeredCommandForm: TriggeredCommandForm(
@@ -96,13 +95,12 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                   predicate: predicate,
                   options: self.options,
                   completionHandler: { (updatedTrigger, error) -> Void in
-                    if updatedTrigger != nil {
-                        self.trigger = updatedTrigger
-                    }else {
+                    if error != nil {
                         self.showAlert("Update Trigger Failed", error: error, completion: nil)
                     }
                 })
-            }else {
+            } else if let command = self.commandStructToSave,
+                      let predicate = self.statePredicateToSave {
                 api.postNewTrigger(
                   TriggeredCommandForm(
                     schemaName: command.schemaName,
@@ -111,9 +109,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                   predicate: predicate,
                   options: self.options,
                   completionHandler: { (newTrigger, error) -> Void in
-                      if newTrigger != nil {
-                          self.trigger = newTrigger
-                      }else {
+                      if error != nil {
                           self.showAlert("Create Trigger Failed", error: error, completion: nil)
                       }
                   })
