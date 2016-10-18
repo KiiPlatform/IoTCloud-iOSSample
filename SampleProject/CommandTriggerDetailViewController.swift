@@ -22,80 +22,57 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
     @IBOutlet weak var statePredicateDetailLabel: UILabel!
 
     var trigger: Trigger?
-
+    private var triggerID: String?
     private var statePredicateToSave: StatePredicate?
     private var commandStructToSave: CommandStruct?
     private var options: TriggerOptions?
 
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        if trigger != nil {
-            self.navigationItem.title = trigger!.triggerID
-        }else {
-            self.navigationItem.title = "Create New Trigger"
-        }
-
-        if commandStructToSave != nil {
-            commandDetailLabel.text = "\(commandStructToSave!.schemaName):\(commandStructToSave!.schemaVersion), actions(\(commandStructToSave!.actions.count))"
-        }else {
-            if let command = trigger?.command {
-                commandDetailLabel.text = "\(command.schemaName):\(command.schemaVersion), actions(\(command.actions.count))"
-            }else{
-                commandDetailLabel.text = " "
-            }
-        }
-
-        if statePredicateToSave != nil {
-            statePredicateDetailLabel.text = statePredicateToSave!.triggersWhen.rawValue
-        }else {
-            if let statePredicate = trigger?.predicate as? StatePredicate {
-                statePredicateDetailLabel.text = statePredicate.triggersWhen.rawValue
-            }else {
-                statePredicateDetailLabel.text = " "
-            }
+    func setup(trigger: Trigger) {
+        self.triggerID = trigger.triggerID
+        self.commandStructToSave = CommandStruct(
+          schemaName: trigger.command!.schemaName,
+          schemaVersion: trigger.command!.schemaVersion,
+          actions: trigger.command!.actions)
+        self.statePredicateToSave = trigger.predicate as? StatePredicate
+        if trigger.title != nil ||
+             trigger.triggerDescription != nil ||
+             trigger.metadata != nil {
+            self.options = TriggerOptions(
+              title: trigger.title,
+              triggerDescription: trigger.triggerDescription,
+              metadata: trigger.metadata)
         }
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        if trigger != nil {
-            commandStructToSave = CommandStruct(schemaName: self.trigger!.command!.schemaName, schemaVersion: self.trigger!.command!.schemaVersion, actions: self.trigger!.command!.actions)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.title = self.triggerID ?? "Create New Trigger"
+
+        if let command = self.commandStructToSave {
+            commandDetailLabel.text = "\(command.schemaName):\(command.schemaVersion), actions(\(command.actions.count))"
+        } else {
+            commandDetailLabel.text = " "
         }
+
+        self.statePredicateDetailLabel.text =
+          self.statePredicateToSave?.triggersWhen.rawValue ?? " "
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "editTriggerCommand" {
             if let destVC = segue.destinationViewController as? TriggerCommandEditViewController {
-                if self.commandStructToSave == nil {
-                    if self.trigger != nil {
-                    destVC.commandStruct = CommandStruct(schemaName: self.trigger!.command!.schemaName, schemaVersion: self.trigger!.command!.schemaVersion, actions: self.trigger!.command!.actions)
-                    }
-                }else {
-                    destVC.commandStruct = commandStructToSave
-                }
+                destVC.commandStruct = self.commandStructToSave
                 destVC.delegate = self
             }
 
         }else if segue.identifier == "editTriggerPredicate" {
             if let destVC = segue.destinationViewController as? StatesPredicateViewController {
-                if self.statePredicateToSave == nil {
-                    destVC.statePredicate = self.trigger?.predicate as? StatePredicate
-                }else {
-                    destVC.statePredicate = statePredicateToSave
-                }
+                destVC.statePredicate = self.statePredicateToSave
                 destVC.delegate = self
             }
         } else if segue.identifier == "editTriggerOptions" {
             if let destVC = segue.destinationViewController as? TriggerOptionsViewController {
-                if let options = self.options {
-                    destVC.options = options
-                } else if let trigger = self.trigger {
-                    destVC.options = TriggerOptions(
-                      title: trigger.title,
-                      triggerDescription: trigger.triggerDescription,
-                      metadata: trigger.metadata)
-                }
-
+                destVC.options = self.options
                 destVC.delegate = self
             }
         }
@@ -106,15 +83,17 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         self.navigationController?.popViewControllerAnimated(true)
     }
     func saveTrigger() {
-        if iotAPI != nil && target != nil && commandStructToSave != nil {
-            if trigger != nil {
-                iotAPI!.patchTrigger(
-                  trigger!.triggerID,
+        if let api = iotAPI,
+           let command = self.commandStructToSave,
+           let predicate = self.statePredicateToSave {
+            if let triggerID = self.triggerID {
+                api.patchTrigger(
+                  triggerID,
                   triggeredCommandForm: TriggeredCommandForm(
-                    schemaName: commandStructToSave!.schemaName,
-                    schemaVersion: commandStructToSave!.schemaVersion,
-                    actions: commandStructToSave!.actions),
-                  predicate: statePredicateToSave,
+                    schemaName: command.schemaName,
+                    schemaVersion: command.schemaVersion,
+                    actions: command.actions),
+                  predicate: predicate,
                   options: self.options,
                   completionHandler: { (updatedTrigger, error) -> Void in
                     if updatedTrigger != nil {
@@ -124,22 +103,20 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                     }
                 })
             }else {
-                if statePredicateToSave != nil {
-                    iotAPI!.postNewTrigger(
-                      TriggeredCommandForm(
-                        schemaName: commandStructToSave!.schemaName,
-                        schemaVersion: commandStructToSave!.schemaVersion,
-                        actions: commandStructToSave!.actions),
-                      predicate: statePredicateToSave!,
-                      options: self.options,
-                      completionHandler: { (newTrigger, error) -> Void in
-                        if newTrigger != nil {
-                            self.trigger = newTrigger
-                        }else {
-                            self.showAlert("Create Trigger Failed", error: error, completion: nil)
-                        }
-                    })
-                }
+                api.postNewTrigger(
+                  TriggeredCommandForm(
+                    schemaName: command.schemaName,
+                    schemaVersion: command.schemaVersion,
+                    actions: command.actions),
+                  predicate: predicate,
+                  options: self.options,
+                  completionHandler: { (newTrigger, error) -> Void in
+                      if newTrigger != nil {
+                          self.trigger = newTrigger
+                      }else {
+                          self.showAlert("Create Trigger Failed", error: error, completion: nil)
+                      }
+                  })
             }
         }
 

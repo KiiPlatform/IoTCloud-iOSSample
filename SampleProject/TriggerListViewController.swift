@@ -272,13 +272,10 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
             if let triggerDetailVC = segue.destinationViewController as? CommandTriggerDetailViewController {
                 if let selectedCell = sender as? UITableViewCell {
                     if let indexPath = self.tableView.indexPathForCell(selectedCell){
-                        var selectedTrigger: Trigger
                         if indexPath.section == 0 {
-                            selectedTrigger = self.commandTriggers[indexPath.row]
-                        } else {
-                            selectedTrigger = self.serverCodeTriggers[indexPath.row]
+                            triggerDetailVC.setup(
+                              self.commandTriggers[indexPath.row]);
                         }
-                        triggerDetailVC.trigger = selectedTrigger
                     }
                 }
             }
