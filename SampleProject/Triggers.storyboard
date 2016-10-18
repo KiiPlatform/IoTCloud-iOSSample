@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="0Lb-3u-x5U">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -740,8 +739,8 @@
                                     <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" tag="203" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="b4D-l2-eid">
-                                            <frame key="frameInset" minX="14" minY="5" width="353" height="30"/>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="203" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="title" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="b4D-l2-eid">
+                                            <frame key="frameInset" minX="11" minY="5" width="353" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="300" id="vb5-wA-Md9"/>
                                             </constraints>
@@ -752,7 +751,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="b4D-l2-eid" firstAttribute="top" secondItem="GCY-G0-eYg" secondAttribute="topMargin" constant="-1" id="MbD-EY-dDI"/>
-                                        <constraint firstItem="b4D-l2-eid" firstAttribute="leadingMargin" secondItem="GCY-G0-eYg" secondAttribute="centerX" constant="7" id="XCZ-hC-fCA"/>
+                                        <constraint firstItem="b4D-l2-eid" firstAttribute="leading" secondItem="GCY-G0-eYg" secondAttribute="leadingMargin" constant="7" id="XCZ-hC-fCA"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -763,16 +762,20 @@
                                     <frame key="frameInset" width="375" height="135"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="204" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" text="Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GQz-yh-dpr">
-                                            <frame key="frameInset" minX="14" minY="8" width="353" height="119"/>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="204" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GQz-yh-dpr" userLabel="CommandDescription">
+                                            <frame key="frameInset" minX="14" minY="8" width="353" height="92"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="300" id="PPQ-TO-18g"/>
+                                                <constraint firstAttribute="height" constant="100" id="nw3-Xk-Zyz"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         </textView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="GQz-yh-dpr" firstAttribute="topMargin" secondItem="OGr-Q8-1uS" secondAttribute="centerY" constant="-1" id="Snq-eH-yGb"/>
-                                        <constraint firstItem="GQz-yh-dpr" firstAttribute="leadingMargin" secondItem="OGr-Q8-1uS" secondAttribute="centerX" constant="7" id="pUF-o5-t4w"/>
+                                        <constraint firstItem="GQz-yh-dpr" firstAttribute="top" secondItem="OGr-Q8-1uS" secondAttribute="topMargin" constant="-1" id="Snq-eH-yGb"/>
+                                        <constraint firstItem="GQz-yh-dpr" firstAttribute="leading" secondItem="OGr-Q8-1uS" secondAttribute="leadingMargin" constant="7" id="pUF-o5-t4w"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
