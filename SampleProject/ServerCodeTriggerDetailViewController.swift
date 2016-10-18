@@ -9,7 +9,11 @@
 import UIKit
 import ThingIFSDK
 
-class ServerCodeTriggerDetailViewController: KiiBaseTableViewController, TriggerServerCodeEditViewControllerDelegate, StatesPredicateViewControllerDelegate {
+class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
+        TriggerServerCodeEditViewControllerDelegate,
+        StatesPredicateViewControllerDelegate,
+        TriggerOptionsViewControllerDelegate
+{
 
     @IBOutlet weak var serverCodeDetailLabel: UILabel!
     @IBOutlet weak var statePredicateDetailLabel: UILabel!
@@ -17,7 +21,8 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController, Trigger
     var trigger: Trigger?
     private var statePredicateToSave: StatePredicate?
     private var serverCodeToSave: ServerCode?
-    
+    private var options: TriggerOptions?
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if trigger != nil {
@@ -68,6 +73,19 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController, Trigger
                 }
                 destVC.delegate = self
             }
+        } else if segue.identifier == "editTriggerOptions" {
+            if let destVC = segue.destinationViewController
+                    as? TriggerOptionsViewController {
+                if let options = self.options {
+                    destVC.options = options
+                } else if let trigger = self.trigger {
+                    destVC.options = TriggerOptions(
+                      title: trigger.title,
+                      triggerDescription: trigger.triggerDescription,
+                      metadata: trigger.metadata)
+                }
+                destVC.delegate = self
+            }
         }
     }
 
@@ -80,6 +98,17 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController, Trigger
         self.statePredicateToSave = newPredicate
     }
 
+    func saveTriggerOptions(title: String?,
+                            description: String?,
+                            metadata: Dictionary<String, AnyObject>?)
+    {
+        if title != nil || description != nil || metadata != nil {
+            self.options = TriggerOptions(title: title,
+                                          triggerDescription: description,
+                                          metadata: metadata)
+        }
+    }
+
     @IBAction func tapSaveTrigger(sender: AnyObject) {
         self.saveTrigger()
         self.navigationController?.popViewControllerAnimated(true)
@@ -88,7 +117,11 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController, Trigger
     func saveTrigger() {
         if iotAPI != nil && target != nil && serverCodeToSave != nil && statePredicateToSave != nil {
             if trigger == nil {
-                iotAPI!.postNewTrigger(serverCodeToSave!, predicate: statePredicateToSave!, completionHandler: { (newTrigger, error) -> Void in
+                iotAPI!.postNewTrigger(
+                  serverCodeToSave!,
+                  predicate: statePredicateToSave!,
+                  options: self.options,
+                  completionHandler: { (newTrigger, error) -> Void in
                     if newTrigger != nil {
                         self.trigger = newTrigger
                         self.serverCodeToSave = newTrigger!.serverCode
@@ -98,7 +131,12 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController, Trigger
                     }
                 })
             } else {
-                iotAPI!.patchTrigger(trigger!.triggerID, serverCode: serverCodeToSave!, predicate: statePredicateToSave!, completionHandler: { (newTrigger, error) -> Void in
+                iotAPI!.patchTrigger(
+                  trigger!.triggerID,
+                  serverCode: serverCodeToSave!,
+                  predicate: statePredicateToSave!,
+                  options: self.options,
+                  completionHandler: { (newTrigger, error) -> Void in
                     if newTrigger != nil {
                         self.trigger = newTrigger
                         self.serverCodeToSave = newTrigger!.serverCode
