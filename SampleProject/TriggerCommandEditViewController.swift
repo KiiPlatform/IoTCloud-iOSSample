@@ -13,7 +13,7 @@ protocol TriggerCommandEditViewControllerDelegate {
     func saveCommands(schemaName: String,
                       schemaVersion: Int,
                       actions: [Dictionary<String, AnyObject>],
-                      targetID: TypedID?,
+                      targetID: String?,
                       title: String?,
                       commandDescription: String?,
                       metadata: Dictionary<String, AnyObject>?)
@@ -56,9 +56,8 @@ class TriggerCommandEditViewController: CommandEditViewController {
               forIndexPath: indexPath)
             if let items = sections[indexPath.section].items
               where !items.isEmpty {
-                let value = items[indexPath.row] as! TypedID
-                (cell.viewWithTag(202) as! UITextField).text =
-                  "\(value.type):\(value.id)"
+                let value = items[indexPath.row] as! String
+                (cell.viewWithTag(202) as! UITextField).text = value
             }
             return cell
         } else if sections[indexPath.section].headerTitle == "Title" {
@@ -111,30 +110,18 @@ class TriggerCommandEditViewController: CommandEditViewController {
             }
         }
         // the defaultd schema and schemaVersion from predefined schem dict
-        var schema: String?
+        var schema: String? = (self.view.viewWithTag(200) as? UITextField)?.text
         var schemaVersion: Int?
-        var targetID: TypedID?
-        var title: String?
-        var description: String?
-        var metadata: Dictionary<String, AnyObject>?
-
-        if let schemaTextField = self.view.viewWithTag(200) as? UITextField {
-            schema = schemaTextField.text!
-        }
         if let schemaVersionTextFiled = self.view.viewWithTag(201) as? UITextField {
             schemaVersion = Int(schemaVersionTextFiled.text!)!
         }
-        if let text = (self.view.viewWithTag(202) as? UITextField)?.text
-          where text.hasPrefix("thing:") {
-            let array: [String] = text.componentsSeparatedByString(":")
-            targetID = TypedID(type: array[0], id: array[1])
-        }
-        if let text = (self.view.viewWithTag(203) as? UITextField)?.text {
-            title = text
-        }
-        if let text = (self.view.viewWithTag(204) as? UITextView)?.text {
-            description = text
-        }
+        var targetID: String? =
+          (self.view.viewWithTag(202) as? UITextField)?.text
+        var title: String? = (self.view.viewWithTag(203) as? UITextField)?.text
+        var description: String? =
+          (self.view.viewWithTag(204) as? UITextView)?.text
+        var metadata: Dictionary<String, AnyObject>?
+
         if self.delegate != nil {
             delegate?.saveCommands(schema!,
                                    schemaVersion: schemaVersion!,

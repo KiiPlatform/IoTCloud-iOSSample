@@ -13,7 +13,7 @@ struct CommandStruct {
     let schemaName: String!
     let schemaVersion: Int!
     let actions: [Dictionary<String, AnyObject>]!
-    let targetID: TypedID?
+    let targetID: String?
     let title: String?
     let commandDescription: String?
     let metadata: Dictionary<String, AnyObject>?
@@ -37,7 +37,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
           schemaName: command.schemaName,
           schemaVersion: command.schemaVersion,
           actions: command.actions,
-          targetID: command.targetID,
+          targetID: command.targetID.id,
           title: command.title,
           commandDescription: command.commandDescription,
           metadata: command.metadata)
@@ -92,6 +92,12 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
     }
     func saveTrigger() {
         if let api = iotAPI {
+            let commandTargetID: TypedID?
+            if let id = self.commandStructToSave?.targetID {
+                commandTargetID = TypedID(type: "thing", id: id)
+            } else {
+                commandTargetID = nil
+            }
             if let triggerID = self.triggerID {
                 let command = self.commandStructToSave!
                 let predicate = self.statePredicateToSave!
@@ -101,7 +107,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                     schemaName: command.schemaName,
                     schemaVersion: command.schemaVersion,
                     actions: command.actions,
-                    targetID: command.targetID,
+                    targetID: commandTargetID,
                     title: command.title,
                     commandDescription: command.commandDescription),
                   predicate: predicate,
@@ -118,7 +124,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                     schemaName: command.schemaName,
                     schemaVersion: command.schemaVersion,
                     actions: command.actions,
-                    targetID: command.targetID,
+                    targetID: commandTargetID,
                     title: command.title,
                     commandDescription: command.commandDescription),
                   predicate: predicate,
@@ -138,7 +144,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
       schemaName: String,
       schemaVersion: Int,
       actions: [Dictionary<String, AnyObject>],
-      targetID: TypedID?,
+      targetID: String?,
       title: String?,
       commandDescription: String?,
       metadata: Dictionary<String, AnyObject>?) {
