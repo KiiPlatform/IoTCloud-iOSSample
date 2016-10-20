@@ -40,7 +40,7 @@ class TriggerOptionsViewController: KiiBaseTableViewController {
         }
     }
 
-    @IBAction func tapSaveCommand(sender: AnyObject) {
+    @IBAction func tapSaveTriggerOptions(sender: AnyObject) {
         var metadata: Dictionary<String, AnyObject>?
         if let text = self.metadataField.text {
             metadata = try? NSJSONSerialization.JSONObjectWithData(

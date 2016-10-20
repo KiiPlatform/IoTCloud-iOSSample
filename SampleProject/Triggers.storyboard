@@ -541,7 +541,7 @@
                     <navigationItem key="navigationItem" title="Trigger Options" id="Rxh-Yh-WeA">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="sVu-ya-UXS">
                             <connections>
-                                <action selector="tapSaveCommand:" destination="ZCX-fY-BMw" id="RlZ-0A-OdT"/>
+                                <action selector="tapSaveTriggerOptions:" destination="ZCX-fY-BMw" id="fkV-Oa-CzT"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

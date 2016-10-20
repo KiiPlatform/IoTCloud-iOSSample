@@ -48,8 +48,8 @@ class TriggerCommandEditViewController: CommandEditViewController {
                 if let data = try? NSJSONSerialization.dataWithJSONObject(
                      metadata, options: .PrettyPrinted) {
                     metadataSection.items.append(
-                      NSString(data:data,
-                               encoding:NSUTF8StringEncoding)! as String)
+                      String(data:data,
+                             encoding:NSUTF8StringEncoding)!)
                 }
             }
         }
@@ -140,11 +140,27 @@ class TriggerCommandEditViewController: CommandEditViewController {
         } else {
             schemaVersion = nil
         }
-        let targetID: String? =
-          (self.view.viewWithTag(202) as? UITextField)?.text
-        let title: String? = (self.view.viewWithTag(203) as? UITextField)?.text
-        let description: String? =
-          (self.view.viewWithTag(204) as? UITextView)?.text
+        let targetID: String?
+        if let text = (self.view.viewWithTag(202) as? UITextField)?.text
+          where !text.isEmpty {
+            targetID = text
+        } else {
+            targetID = nil
+        }
+        let title: String?
+        if let text = (self.view.viewWithTag(203) as? UITextField)?.text
+          where !text.isEmpty {
+            title = text
+        } else {
+            title = nil
+        }
+        let description: String?
+        if let text = (self.view.viewWithTag(204) as? UITextView)?.text
+          where !text.isEmpty {
+            description = text
+        } else {
+            description = nil
+        }
         let metadata: Dictionary<String, AnyObject>?
         if let text = (self.view.viewWithTag(205) as? UITextView)?.text {
             metadata = try? NSJSONSerialization.JSONObjectWithData(
