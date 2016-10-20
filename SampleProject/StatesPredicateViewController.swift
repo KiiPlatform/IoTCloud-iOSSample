@@ -305,7 +305,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         toolView.addSubview(buttonCancel) //add it to the toolView
 
         //Add the target - target, function to call, the event witch will trigger the function call
-        buttonCancel.addTarget(self, action: "cancelPicker:", forControlEvents: UIControlEvents.TouchDown)
+        buttonCancel.addTarget(self, action: #selector(StatesPredicateViewController.cancelPicker(_:)), forControlEvents: UIControlEvents.TouchDown)
 
 
         //add buttons to the view
@@ -318,9 +318,9 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         toolView.addSubview(buttonOk) //add to the subview
 
         if sentBy == "TriggersWhen" {
-            buttonOk.addTarget(self, action: "selectTriggersWhen:", forControlEvents: UIControlEvents.TouchDown)
+            buttonOk.addTarget(self, action: #selector(StatesPredicateViewController.selectTriggersWhen(_:)), forControlEvents: UIControlEvents.TouchDown)
         }else {
-            buttonOk.addTarget(self, action: "selectClauseAndStatus:", forControlEvents: UIControlEvents.TouchDown)
+            buttonOk.addTarget(self, action: #selector(StatesPredicateViewController.selectClauseAndStatus(_:)), forControlEvents: UIControlEvents.TouchDown)
         }
 
 

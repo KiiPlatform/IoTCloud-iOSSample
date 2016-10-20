@@ -36,7 +36,7 @@ class LoginViewController: UIViewController {
         if let userName = userNameTextField.text, password = passwordTextField.text {
             KiiUser.authenticate(userName, withPassword: password, andBlock: { (user, error) -> Void in
                 if error == nil {
-                    if let userID = user.userID, accessToken = user.accessToken {
+                    if let userID = user!.userID, accessToken = user!.accessToken {
                         self.initThingIFAPI(userID, accessToken: accessToken)
                         self.showActivityView(false)
                         self.userLogined = true
@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
                     }
                 }else {
                     print(error)
-                    self.showAlert("Login Failed", message: error.description, completion: { (action) -> Void in
+                    self.showAlert("Login Failed", message: error!.description, completion: { (action) -> Void in
                         self.showActivityView(false)
                     })
                 }
@@ -62,14 +62,14 @@ class LoginViewController: UIViewController {
             let newUser = KiiUser(username: userName, andPassword: password)
             newUser.performRegistrationWithBlock({ (user, error) -> Void in
                 if error == nil {
-                    if let userID = user.userID, accessToken = user.accessToken {
+                    if let userID = user!.userID, accessToken = user!.accessToken {
                         self.initThingIFAPI(userID, accessToken: accessToken)
                         self.userLogined = true
                         self.performSegueWithIdentifier("userRegister", sender: nil)
                     }
                 }else {
                     print(error)
-                    self.showAlert("Registerd Failed", message: error.description, completion: { (action) -> Void in
+                    self.showAlert("Registerd Failed", message: error!.description, completion: { (action) -> Void in
                         self.showActivityView(false)
                     })
                 }
