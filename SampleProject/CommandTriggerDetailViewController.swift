@@ -109,7 +109,8 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                     actions: command.actions,
                     targetID: commandTargetID,
                     title: command.title,
-                    commandDescription: command.commandDescription),
+                    commandDescription: command.commandDescription,
+                    metadata: command.metadata),
                   predicate: predicate,
                   options: self.options,
                   completionHandler: { (updatedTrigger, error) -> Void in
@@ -126,7 +127,8 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                     actions: command.actions,
                     targetID: commandTargetID,
                     title: command.title,
-                    commandDescription: command.commandDescription),
+                    commandDescription: command.commandDescription,
+                    metadata: command.metadata),
                   predicate: predicate,
                   options: self.options,
                   completionHandler: { (newTrigger, error) -> Void in

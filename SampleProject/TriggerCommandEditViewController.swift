@@ -31,6 +31,9 @@ class TriggerCommandEditViewController: CommandEditViewController {
         var titleSection = SectionStruct(headerTitle: "Title", items: [])
         var descriptionSection = SectionStruct(headerTitle: "Description",
                                                items: [])
+        var metadataSection = SectionStruct(headerTitle: "Meta data",
+                                            items: [])
+
         if let command = self.commandStruct {
             if let targetID = command.targetID {
                 targetIdSection.items.append(targetID)
@@ -41,9 +44,18 @@ class TriggerCommandEditViewController: CommandEditViewController {
             if let description = command.commandDescription {
                 descriptionSection.items.append(description)
             }
+            if let metadata = command.metadata {
+                if let data = try? NSJSONSerialization.dataWithJSONObject(
+                     metadata, options: .PrettyPrinted) {
+                    metadataSection.items.append(
+                      NSString(data:data,
+                               encoding:NSUTF8StringEncoding)! as String)
+                }
+            }
         }
 
-        sections += [targetIdSection, titleSection, descriptionSection]
+        sections += [targetIdSection, titleSection, descriptionSection,
+                     metadataSection]
     }
 
     override func tableView(
@@ -81,6 +93,15 @@ class TriggerCommandEditViewController: CommandEditViewController {
                 (cell.viewWithTag(204) as! UITextView).text = value
             }
             return cell
+        } else if sections[indexPath.section].headerTitle == "Meta data" {
+            let cell = tableView.dequeueReusableCellWithIdentifier(
+              "CommandMetadataCell", forIndexPath: indexPath)
+            if let items = sections[indexPath.section].items
+              where !items.isEmpty {
+                let value = items[indexPath.row] as! String
+                (cell.viewWithTag(205) as! UITextView).text = value
+            }
+            return cell
         } else {
             return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
         }
@@ -92,7 +113,9 @@ class TriggerCommandEditViewController: CommandEditViewController {
     {
         if sections[indexPath.section].headerTitle == "Description" {
             return 130
-        }else {
+        } else if sections[indexPath.section].headerTitle == "Meta data" {
+            return 130
+        } else {
             return super.tableView(tableView,
                                    heightForRowAtIndexPath: indexPath)
         }
@@ -110,17 +133,26 @@ class TriggerCommandEditViewController: CommandEditViewController {
             }
         }
         // the defaultd schema and schemaVersion from predefined schem dict
-        var schema: String? = (self.view.viewWithTag(200) as? UITextField)?.text
-        var schemaVersion: Int?
+        let schema: String? = (self.view.viewWithTag(200) as? UITextField)?.text
+        let schemaVersion: Int?
         if let schemaVersionTextFiled = self.view.viewWithTag(201) as? UITextField {
             schemaVersion = Int(schemaVersionTextFiled.text!)!
+        } else {
+            schemaVersion = nil
         }
-        var targetID: String? =
+        let targetID: String? =
           (self.view.viewWithTag(202) as? UITextField)?.text
-        var title: String? = (self.view.viewWithTag(203) as? UITextField)?.text
-        var description: String? =
+        let title: String? = (self.view.viewWithTag(203) as? UITextField)?.text
+        let description: String? =
           (self.view.viewWithTag(204) as? UITextView)?.text
-        var metadata: Dictionary<String, AnyObject>?
+        let metadata: Dictionary<String, AnyObject>?
+        if let text = (self.view.viewWithTag(205) as? UITextView)?.text {
+            metadata = try? NSJSONSerialization.JSONObjectWithData(
+              text.dataUsingEncoding(NSUTF8StringEncoding)!,
+              options: .MutableContainers) as! Dictionary<String, AnyObject>
+        } else {
+            metadata = nil
+        }
 
         if self.delegate != nil {
             delegate?.saveCommands(schema!,

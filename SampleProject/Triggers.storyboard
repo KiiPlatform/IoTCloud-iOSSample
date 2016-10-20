@@ -767,7 +767,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="204" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="GQz-yh-dpr" userLabel="CommandDescription">
-                                            <frame key="frameInset" minX="14" minY="8" width="353" height="92"/>
+                                            <frame key="frameInset" minX="8" minY="8" width="353" height="92"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="300" id="PPQ-TO-18g"/>
@@ -780,6 +780,30 @@
                                     <constraints>
                                         <constraint firstItem="GQz-yh-dpr" firstAttribute="top" secondItem="OGr-Q8-1uS" secondAttribute="topMargin" constant="-1" id="Snq-eH-yGb"/>
                                         <constraint firstItem="GQz-yh-dpr" firstAttribute="leading" secondItem="OGr-Q8-1uS" secondAttribute="leadingMargin" constant="7" id="pUF-o5-t4w"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommandMetadataCell" id="Aue-5k-rq5" userLabel="CommandMetadataCell">
+                                <rect key="frame" x="0.0" y="657" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Aue-5k-rq5" id="oh1-Sc-i3p">
+                                    <frame key="frameInset" width="375" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="205" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="p9m-3W-cQ0" userLabel="CommandMetadata">
+                                            <frame key="frameInset" minX="8" minY="8" width="353" height="92"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="100" id="Epq-4t-z4X"/>
+                                                <constraint firstAttribute="width" constant="300" id="dQU-dU-hum"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="p9m-3W-cQ0" firstAttribute="leading" secondItem="oh1-Sc-i3p" secondAttribute="leadingMargin" constant="7" id="7yN-VQ-XaK"/>
+                                        <constraint firstItem="p9m-3W-cQ0" firstAttribute="top" secondItem="oh1-Sc-i3p" secondAttribute="topMargin" constant="-1" id="c8G-Ma-r3M"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
