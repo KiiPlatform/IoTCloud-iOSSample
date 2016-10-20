@@ -19,8 +19,7 @@ class TriggerOptionsViewController: KiiBaseTableViewController {
 
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var descriptionField: UITextView!
-    // TODO: changeto IBOutlet.
-    var metadata: Dictionary<String, AnyObject>?
+    @IBOutlet weak var metadataField: UITextView!
 
     var delegate: TriggerOptionsViewControllerDelegate?
 
@@ -30,14 +29,31 @@ class TriggerOptionsViewController: KiiBaseTableViewController {
         if let options = self.options {
             self.titleField.text = options.title
             self.descriptionField.text = options.triggerDescription
+            if let metadata = options.metadata {
+                if let data = try? NSJSONSerialization.dataWithJSONObject(
+                     metadata, options: .PrettyPrinted) {
+                    self.metadataField.text =
+                      NSString(data:data,
+                               encoding:NSUTF8StringEncoding)! as String
+                }
+            }
         }
     }
 
     @IBAction func tapSaveCommand(sender: AnyObject) {
+        var metadata: Dictionary<String, AnyObject>?
+        if let text = self.metadataField.text {
+            metadata = try? NSJSONSerialization.JSONObjectWithData(
+              text.dataUsingEncoding(NSUTF8StringEncoding)!,
+              options: .MutableContainers) as! Dictionary<String, AnyObject>
+        } else {
+            metadata = nil
+        }
+
         self.delegate!.saveTriggerOptions(
           self.titleField.text,
-          description:self.descriptionField.text,
-          metadata:nil)
+          description: self.descriptionField.text,
+          metadata: metadata)
         self.navigationController?.popViewControllerAnimated(true)
     }
 }
