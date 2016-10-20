@@ -113,7 +113,9 @@ class TriggerCommandEditViewController: CommandEditViewController {
     {
         if sections[indexPath.section].headerTitle == "Description" {
             return 130
-        }else {
+        } else if sections[indexPath.section].headerTitle == "Meta data" {
+            return 130
+        } else {
             return super.tableView(tableView,
                                    heightForRowAtIndexPath: indexPath)
         }
