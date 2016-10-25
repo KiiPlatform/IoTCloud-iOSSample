@@ -87,7 +87,6 @@
 		7D45C0791B91E84500378D6D /* IntervalStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntervalStatusTableViewCell.swift; sourceTree = "<group>"; };
 		7D783E491B85CD9100543A09 /* SampleProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D783E4C1B87157F00543A09 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
-		7D783E4F1B8715E500543A09 /* SampleProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SampleProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		7D8FAB4C1B8EB00100D57F8E /* CommandEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandEditViewController.swift; sourceTree = "<group>"; };
 		7D8FAB501B8EC26900D57F8E /* TriggerCommandEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerCommandEditViewController.swift; sourceTree = "<group>"; };
 		7D96858B1B8AF3C90017CA7D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -152,7 +151,6 @@
 				7D783E4E1B87159400543A09 /* frameworks */,
 				7D108AD91B7210C8006EA12B /* SampleProject */,
 				7D783E491B85CD9100543A09 /* SampleProject.app */,
-				7D783E4F1B8715E500543A09 /* SampleProject-Bridging-Header.h */,
 				770FA5D2802D7132F870F3A9 /* Pods */,
 				42632332CB0F7552608D41C8 /* Frameworks */,
 			);
@@ -558,7 +556,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kii.SampleProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SampleProject-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -587,7 +584,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kii.SampleProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SampleProject-Bridging-Header.h";
 				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
