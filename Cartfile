@@ -1,1 +1,1 @@
-github "KiiPlatform/thing-if-iOSSDK" "develop"
+github "KiiPlatform/thing-if-iOSSDK" >= 0.13.1

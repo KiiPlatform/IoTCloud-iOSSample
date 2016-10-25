@@ -6,6 +6,7 @@
 //  Copyright © 2015 Kii Corporation. All rights reserved.
 //
 
+import KiiSDK
 import UIKit
 import ThingIFSDK
 
