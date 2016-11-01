@@ -11,12 +11,12 @@ import ThingIFSDK
 
 class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
-    private let sections: NSArray = ["Command Triggers", "ServerCode Triggers"]
+    fileprivate let sections: NSArray = ["Command Triggers", "ServerCode Triggers"]
     var commandTriggers = [Trigger]()
     var serverCodeTriggers = [Trigger]()
     var nextSegue = "createCommandTrigger"
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         commandTriggers.removeAll()
         serverCodeTriggers.removeAll()
@@ -27,22 +27,22 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
     }
 
     //MARK: Picker delegation methods
-    func selectAction(sender: UIButton){
-        self.dismissViewControllerAnimated(true, completion: nil);
-        self.performSegueWithIdentifier(self.nextSegue, sender: self)
+    func selectAction(_ sender: UIButton){
+        self.dismiss(animated: true, completion: nil);
+        self.performSegue(withIdentifier: self.nextSegue, sender: self)
     }
-    func cancelSelection(sender: UIButton){
-        self.dismissViewControllerAnimated(true, completion: nil);
+    func cancelSelection(_ sender: UIButton){
+        self.dismiss(animated: true, completion: nil);
     }
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return 2
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if row == 0 {
             return "Command Trigger"
         } else {
@@ -50,7 +50,7 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
         }
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if row == 0 {
             self.nextSegue = "createCommandTrigger"
         } else {
@@ -58,10 +58,10 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
         }
     }
 
-    @IBAction func tapAddButton(sender: AnyObject) {
+    @IBAction func tapAddButton(_ sender: AnyObject) {
         
-        let alertController = UIAlertController(title: "", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let pickerFrame = CGRectMake(17, 52, 270, 100)
+        let alertController = UIAlertController(title: "", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let pickerFrame = CGRect(x: 17, y: 52, width: 270, height: 100)
         let picker = UIPickerView(frame: pickerFrame)
         picker.showsSelectionIndicator = true
         picker.dataSource = self
@@ -69,47 +69,47 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
         alertController.view.addSubview(picker)
         
         //Create the toolbar view - the view witch will hold our 2 buttons
-        let toolFrame = CGRectMake(17, 5, 270, 45)
+        let toolFrame = CGRect(x: 17, y: 5, width: 270, height: 45)
         let toolView: UIView = UIView(frame: toolFrame)
         
         //add buttons to the view
-        let buttonCancelFrame: CGRect = CGRectMake(0, 7, 100, 30) //size & position of the button as placed on the toolView
+        let buttonCancelFrame: CGRect = CGRect(x: 0, y: 7, width: 100, height: 30) //size & position of the button as placed on the toolView
         
         //Create the cancel button & set its title
         let buttonCancel: UIButton = UIButton(frame: buttonCancelFrame)
-        buttonCancel.setTitle("Cancel", forState: UIControlState.Normal)
-        buttonCancel.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        buttonCancel.setTitle("Cancel", for: UIControlState())
+        buttonCancel.setTitleColor(UIColor.blue, for: UIControlState())
         toolView.addSubview(buttonCancel) //add it to the toolView
         
         //Add the target - target, function to call, the event witch will trigger the function call
-        buttonCancel.addTarget(self, action: #selector(TriggerListViewController.cancelSelection(_:)), forControlEvents: UIControlEvents.TouchDown)
+        buttonCancel.addTarget(self, action: #selector(TriggerListViewController.cancelSelection(_:)), for: UIControlEvents.touchDown)
         
         //add buttons to the view
-        let buttonOkFrame: CGRect = CGRectMake(170, 7, 100, 30) //size & position of the button as placed on the toolView
+        let buttonOkFrame: CGRect = CGRect(x: 170, y: 7, width: 100, height: 30) //size & position of the button as placed on the toolView
         
         //Create the Select button & set the title
         let buttonOk: UIButton = UIButton(frame: buttonOkFrame)
-        buttonOk.setTitle("Select", forState: UIControlState.Normal)
-        buttonOk.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        buttonOk.setTitle("Select", for: UIControlState())
+        buttonOk.setTitleColor(UIColor.blue, for: UIControlState())
         toolView.addSubview(buttonOk) //add to the subview
         
-        buttonOk.addTarget(self, action: #selector(TriggerListViewController.selectAction(_:)), forControlEvents: UIControlEvents.TouchDown)
+        buttonOk.addTarget(self, action: #selector(TriggerListViewController.selectAction(_:)), for: UIControlEvents.touchDown)
         
         //add the toolbar to the alert controller
         alertController.view.addSubview(toolView)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
     //MARK: Table view delegation methods
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section] as? String
     }
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return commandTriggers.count
         } else if section == 1 {
@@ -119,17 +119,17 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCellWithIdentifier("CommandTriggerCell")
+            cell = tableView.dequeueReusableCell(withIdentifier: "CommandTriggerCell")
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "CommandTriggerCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "CommandTriggerCell")
             }
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("ServerCodeTriggerCell")
+            cell = tableView.dequeueReusableCell(withIdentifier: "ServerCodeTriggerCell")
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "ServerCodeTriggerCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "ServerCodeTriggerCell")
             }
         }
 
@@ -149,11 +149,11 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
         return cell!
     }
 
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         var enableActionTitle: String!
         var trigger: Trigger
         if indexPath.section == 0 {
@@ -167,7 +167,7 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
             enableActionTitle = "Enable"
         }
 
-        let enableAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: enableActionTitle, handler:{action, indexpath in
+        let enableAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: enableActionTitle, handler:{action, indexpath in
             if self.iotAPI != nil && self.target != nil {
                 self.iotAPI!.enableTrigger(trigger.triggerID, enable: !trigger.enabled, completionHandler: { (trigger, error) -> Void in
                     if error == nil {
@@ -185,35 +185,35 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
             }
         });
 
-        enableAction.backgroundColor = UIColor.orangeColor()
+        enableAction.backgroundColor = UIColor.orange
 
-        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler:{action, indexpath in
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete", handler:{action, indexpath in
 
             if self.iotAPI != nil && self.target != nil {
                 // request to delete trigger
                 self.iotAPI!.deleteTrigger( trigger.triggerID, completionHandler: { (trigger, error) -> Void in
                     if error == nil { // if delete trigger successfully in server, then delete it from table view
                         if indexPath.section == 0 {
-                            self.commandTriggers.removeAtIndex(indexPath.row)
+                            self.commandTriggers.remove(at: indexPath.row)
                         } else {
-                            self.serverCodeTriggers.removeAtIndex(indexPath.row)
+                            self.serverCodeTriggers.remove(at: indexPath.row)
                         }
-                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+                        self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.fade)
                     }else{
                         self.showAlert("Delete Trigger Failed", error: error, completion: nil)
                     }
                 })
             }
         });
-        deleteRowAction.backgroundColor = UIColor.redColor()
+        deleteRowAction.backgroundColor = UIColor.red
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRow(at: indexPath)
         var showResultAction : UITableViewRowAction? = nil
         if indexPath.section == 1 {
-            showResultAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Results", handler:{action, indexpath in
-                self.performSegueWithIdentifier("showServerCodeResults", sender: cell)
+            showResultAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Results", handler:{action, indexpath in
+                self.performSegue(withIdentifier: "showServerCodeResults", sender: cell)
             });
-            showResultAction!.backgroundColor = UIColor.greenColor()
+            showResultAction!.backgroundColor = UIColor.green
         }
         if showResultAction == nil {
             return [deleteRowAction, enableAction]
@@ -222,24 +222,24 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
         if indexPath.section == 0 {
-            self.performSegueWithIdentifier("showExistingCommandTriggerDetail", sender: cell)
+            self.performSegue(withIdentifier: "showExistingCommandTriggerDetail", sender: cell)
         } else {
-            self.performSegueWithIdentifier("showExistingServerCodeTriggerDetail", sender: cell)
+            self.performSegue(withIdentifier: "showExistingServerCodeTriggerDetail", sender: cell)
         }
     }
     
     //MARK: IBAction methods
-    @IBAction func tapLogout(sender: AnyObject) {
+    @IBAction func tapLogout(_ sender: AnyObject) {
         logout { () -> Void in
             self.tabBarController?.viewDidAppear(true)
         }
     }
 
     //MARK: Custom methods
-    func getTriggers(nextPaginationKey: String?){
+    func getTriggers(_ nextPaginationKey: String?){
         if iotAPI != nil && target != nil {
             showActivityView(true)
             // use default bestEffortLimit
@@ -267,11 +267,11 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
         }
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showExistingCommandTriggerDetail" {
-            if let triggerDetailVC = segue.destinationViewController as? CommandTriggerDetailViewController {
+            if let triggerDetailVC = segue.destination as? CommandTriggerDetailViewController {
                 if let selectedCell = sender as? UITableViewCell {
-                    if let indexPath = self.tableView.indexPathForCell(selectedCell){
+                    if let indexPath = self.tableView.indexPath(for: selectedCell){
                         if indexPath.section == 0 {
                             triggerDetailVC.setup(
                               self.commandTriggers[indexPath.row]);
@@ -280,9 +280,9 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
                 }
             }
         } else if segue.identifier == "showExistingServerCodeTriggerDetail" {
-            if let triggerDetailVC = segue.destinationViewController as? ServerCodeTriggerDetailViewController {
+            if let triggerDetailVC = segue.destination as? ServerCodeTriggerDetailViewController {
                 if let selectedCell = sender as? UITableViewCell {
-                    if let indexPath = self.tableView.indexPathForCell(selectedCell){
+                    if let indexPath = self.tableView.indexPath(for: selectedCell){
                         var selectedTrigger: Trigger
                         if indexPath.section == 0 {
                             selectedTrigger = self.commandTriggers[indexPath.row]
@@ -294,9 +294,9 @@ class TriggerListViewController: KiiBaseTableViewController, UIPickerViewDataSou
                 }
             }
         } else if segue.identifier == "showServerCodeResults" {
-            if let serverCodeResultsVC = segue.destinationViewController as? TriggeredServerCodeResultViewController {
+            if let serverCodeResultsVC = segue.destination as? TriggeredServerCodeResultViewController {
                 if let selectedCell = sender as? UITableViewCell {
-                    if let indexPath = self.tableView.indexPathForCell(selectedCell){
+                    if let indexPath = self.tableView.indexPath(for: selectedCell){
                         serverCodeResultsVC.trigger = self.serverCodeTriggers[indexPath.row]
                     }
                 }

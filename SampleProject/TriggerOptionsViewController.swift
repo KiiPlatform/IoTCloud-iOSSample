@@ -10,7 +10,7 @@ import UIKit
 import ThingIFSDK
 
 protocol TriggerOptionsViewControllerDelegate {
-    func saveTriggerOptions(title: String?,
+    func saveTriggerOptions(_ title: String?,
                             description: String?,
                             metadata: Dictionary<String, AnyObject>?)
 }
@@ -30,22 +30,22 @@ class TriggerOptionsViewController: KiiBaseTableViewController {
             self.titleField.text = options.title
             self.descriptionField.text = options.triggerDescription
             if let metadata = options.metadata {
-                if let data = try? NSJSONSerialization.dataWithJSONObject(
-                     metadata, options: .PrettyPrinted) {
+                if let data = try? JSONSerialization.data(
+                     withJSONObject: metadata, options: .prettyPrinted) {
                     self.metadataField.text =
                       NSString(data:data,
-                               encoding:NSUTF8StringEncoding)! as String
+                               encoding:String.Encoding.utf8.rawValue)! as String
                 }
             }
         }
     }
 
-    @IBAction func tapSaveTriggerOptions(sender: AnyObject) {
+    @IBAction func tapSaveTriggerOptions(_ sender: AnyObject) {
         var metadata: Dictionary<String, AnyObject>?
         if let text = self.metadataField.text {
-            metadata = try? NSJSONSerialization.JSONObjectWithData(
-              text.dataUsingEncoding(NSUTF8StringEncoding)!,
-              options: .MutableContainers) as! Dictionary<String, AnyObject>
+            metadata = try? JSONSerialization.jsonObject(
+              with: text.data(using: String.Encoding.utf8)!,
+              options: .mutableContainers) as! Dictionary<String, AnyObject>
         } else {
             metadata = nil
         }
@@ -54,6 +54,6 @@ class TriggerOptionsViewController: KiiBaseTableViewController {
           self.titleField.text,
           description: self.descriptionField.text,
           metadata: metadata)
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
 }

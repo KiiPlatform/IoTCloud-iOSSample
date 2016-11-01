@@ -15,8 +15,8 @@ class StatusBoolTypeTableViewCell: UITableViewCell {
     var value: Bool? {
         didSet {
             if value != nil {
-                if value != boolSwitch.on {
-                    boolSwitch.on = value!
+                if value != boolSwitch.isOn {
+                    boolSwitch.isOn = value!
                 }
             }
         }
@@ -26,9 +26,9 @@ class StatusBoolTypeTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusNameLabel: UILabel!
 
-    @IBAction func changeSwitch(sender: AnyObject) {
+    @IBAction func changeSwitch(_ sender: AnyObject) {
         let boolSwitch = sender as! UISwitch
-        value = boolSwitch.on
-        delegate?.setStatus(self, value: boolSwitch.on)
+        value = boolSwitch.isOn
+        delegate?.setStatus(self, value: boolSwitch.isOn)
     }
 }

@@ -14,17 +14,17 @@ class StateViewController: KiiBaseTableViewController {
         super.viewDidLoad()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getState()
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return stateStringsArray.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("StateCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StateCell", for: indexPath)
 
         cell.textLabel?.text = stateStringsArray[indexPath.row]
 
@@ -47,10 +47,10 @@ class StateViewController: KiiBaseTableViewController {
         }
     }
 
-    @IBAction func tapRefresh(sender: AnyObject) {
+    @IBAction func tapRefresh(_ sender: AnyObject) {
         getState()
     }
-    @IBAction func tapLogout(sender: AnyObject) {
+    @IBAction func tapLogout(_ sender: AnyObject) {
         logout { () -> Void in
             self.tabBarController?.viewDidAppear(true)
         }

@@ -25,22 +25,22 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
 
     @IBOutlet weak var statePredicateDetailLabel: UILabel!
 
-    private var triggerID: String?
-    private var statePredicateToSave: StatePredicate?
-    private var commandStructToSave: CommandStruct?
-    private var options: TriggerOptions?
+    fileprivate var triggerID: String?
+    fileprivate var statePredicateToSave: StatePredicate?
+    fileprivate var commandStructToSave: CommandStruct?
+    fileprivate var options: TriggerOptions?
 
-    func setup(trigger: Trigger) {
+    func setup(_ trigger: Trigger) {
         self.triggerID = trigger.triggerID
         let command = trigger.command!
         self.commandStructToSave = CommandStruct(
           schemaName: command.schemaName,
           schemaVersion: command.schemaVersion,
-          actions: command.actions,
+          actions: command.actions as [Dictionary<String, AnyObject>]!,
           targetID: command.targetID.id,
           title: command.title,
           commandDescription: command.commandDescription,
-          metadata: command.metadata)
+          metadata: command.metadata as Dictionary<String, AnyObject>?)
         self.statePredicateToSave = trigger.predicate as? StatePredicate
         if trigger.title != nil ||
              trigger.triggerDescription != nil ||
@@ -52,7 +52,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         }
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = self.triggerID ?? "Create New Trigger"
 
@@ -66,29 +66,29 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
           self.statePredicateToSave?.triggersWhen.rawValue ?? " "
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editTriggerCommand" {
-            if let destVC = segue.destinationViewController as? TriggerCommandEditViewController {
+            if let destVC = segue.destination as? TriggerCommandEditViewController {
                 destVC.commandStruct = self.commandStructToSave
                 destVC.delegate = self
             }
 
         }else if segue.identifier == "editTriggerPredicate" {
-            if let destVC = segue.destinationViewController as? StatesPredicateViewController {
+            if let destVC = segue.destination as? StatesPredicateViewController {
                 destVC.statePredicate = self.statePredicateToSave
                 destVC.delegate = self
             }
         } else if segue.identifier == "editTriggerOptions" {
-            if let destVC = segue.destinationViewController as? TriggerOptionsViewController {
+            if let destVC = segue.destination as? TriggerOptionsViewController {
                 destVC.options = self.options
                 destVC.delegate = self
             }
         }
     }
 
-    @IBAction func tapSaveTrigger(sender: AnyObject) {
+    @IBAction func tapSaveTrigger(_ sender: AnyObject) {
         self.saveTrigger()
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     func saveTrigger() {
         if let api = iotAPI {
@@ -143,7 +143,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
 
     //MARK: delegate function of TriggerCommandEditViewControllerDelegate, called when save command
     func saveCommands(
-      schemaName: String,
+      _ schemaName: String,
       schemaVersion: Int,
       actions: [Dictionary<String, AnyObject>],
       targetID: String?,
@@ -160,11 +160,11 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
           metadata: metadata)
     }
 
-    func saveStatePredicate(newPredicate: StatePredicate) {
+    func saveStatePredicate(_ newPredicate: StatePredicate) {
         self.statePredicateToSave = newPredicate
     }
 
-    func saveTriggerOptions(title: String?,
+    func saveTriggerOptions(_ title: String?,
                             description: String?,
                             metadata: Dictionary<String, AnyObject>?)
     {

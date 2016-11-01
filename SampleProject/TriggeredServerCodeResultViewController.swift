@@ -6,7 +6,7 @@ class TriggeredServerCodeResultViewController: KiiBaseTableViewController {
     var serverCodeResults = [TriggeredServerCodeResult]()
     var trigger: Trigger? = nil
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         serverCodeResults.removeAll()
         
@@ -15,11 +15,11 @@ class TriggeredServerCodeResultViewController: KiiBaseTableViewController {
         getServerCodeResults(nil)
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return serverCodeResults.count
     }
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("ServerCodeResultCell")
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ServerCodeResultCell")
         let result = serverCodeResults[indexPath.row]
         
         if result.succeeded {
@@ -27,17 +27,17 @@ class TriggeredServerCodeResultViewController: KiiBaseTableViewController {
         }else {
             cell!.textLabel?.text = "Failed:" + (result.error!.errorMessage ?? "")
         }
-        let dateFormatter: NSDateFormatter = NSDateFormatter()
+        let dateFormatter: DateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
-        cell!.detailTextLabel?.text = dateFormatter.stringFromDate(result.executedAt)
+        cell!.detailTextLabel?.text = dateFormatter.string(from: result.executedAt)
         return cell!
     }
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func getServerCodeResults(nextPaginationKey: String?){
+    func getServerCodeResults(_ nextPaginationKey: String?){
         if iotAPI != nil && target != nil {
             showActivityView(true)
             // use default bestEffortLimit

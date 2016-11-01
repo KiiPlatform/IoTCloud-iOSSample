@@ -2,7 +2,7 @@ import UIKit
 import ThingIFSDK
 
 protocol TriggerServerCodeEditViewControllerDelegate {
-    func saveServerCode(serverCode: ServerCode)
+    func saveServerCode(_ serverCode: ServerCode)
 }
 
 struct ParameterStruct {
@@ -31,22 +31,22 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
     var delegate: TriggerServerCodeEditViewControllerDelegate?
     var parameters: [ParameterStruct] = []
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if parameters.isEmpty {
             if let params = serverCode?.parameters {
                 for (key, value) in params {
-                    parameters.append(ParameterStruct(key: key, value: value))
+                    parameters.append(ParameterStruct(key: key, value: value as AnyObject))
                 }
             }
         }
     }
     
-    @IBAction func tapNewParameter(sender: AnyObject) {
+    @IBAction func tapNewParameter(_ sender: AnyObject) {
         var fields = Dictionary<String, String>()
-        for rowIndex in 0...self.tableView.numberOfRowsInSection(0) {
-            let indexPath : NSIndexPath = NSIndexPath(forItem: rowIndex, inSection: 0);
-            let cell : UITableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath);
+        for rowIndex in 0...self.tableView.numberOfRows(inSection: 0) {
+            let indexPath : IndexPath = IndexPath(item: rowIndex, section: 0);
+            let cell : UITableViewCell? = self.tableView.cellForRow(at: indexPath);
             if let textField = cell?.viewWithTag(200) as? UITextField {
                 fields[cell!.reuseIdentifier!] = textField.text!
             }
@@ -56,14 +56,14 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
           executorAccessToken: fields["ExecutorAccessTokenCell"],
           targetAppID: fields["TargetAppIDCell"],
           parameters: nil)
-        self.performSegueWithIdentifier("editServerCodeParameter", sender: self)
+        self.performSegue(withIdentifier: "editServerCodeParameter", sender: self)
     }
     
-    @IBAction func tapSaveServerCode(sender: AnyObject) {
+    @IBAction func tapSaveServerCode(_ sender: AnyObject) {
         var fields = Dictionary<String, String>()
-        for rowIndex in 0...self.tableView.numberOfRowsInSection(0) {
-            let indexPath : NSIndexPath = NSIndexPath(forItem: rowIndex, inSection: 0);
-            let cell : UITableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath);
+        for rowIndex in 0...self.tableView.numberOfRows(inSection: 0) {
+            let indexPath : IndexPath = IndexPath(item: rowIndex, section: 0);
+            let cell : UITableViewCell? = self.tableView.cellForRow(at: indexPath);
             if let textField = cell?.viewWithTag(200) as? UITextField {
                 fields[cell!.reuseIdentifier!] = textField.text!
             }
@@ -80,59 +80,59 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
         if self.delegate != nil {
             self.delegate!.saveServerCode(self.serverCode!)
         }
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: Table view delegation methods
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4 + (parameters.count ?? 0)
     }
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
         if indexPath.row == 0 {
             // endpoint
-            cell = tableView.dequeueReusableCellWithIdentifier("EndpointCell")
+            cell = tableView.dequeueReusableCell(withIdentifier: "EndpointCell")
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "EndpointCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "EndpointCell")
             }
             if let textField = cell!.viewWithTag(200) as? UITextField {
                 textField.text = serverCode!.endpoint
             }
         } else if indexPath.row == 1 {
             // executor access token
-            cell = tableView.dequeueReusableCellWithIdentifier("ExecutorAccessTokenCell")
+            cell = tableView.dequeueReusableCell(withIdentifier: "ExecutorAccessTokenCell")
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "ExecutorAccessTokenCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "ExecutorAccessTokenCell")
             }
             if let textField = cell!.viewWithTag(200) as? UITextField {
                 textField.text = serverCode!.executorAccessToken
             }
         } else if indexPath.row == 2 {
             // target app id
-            cell = tableView.dequeueReusableCellWithIdentifier("TargetAppIDCell")
+            cell = tableView.dequeueReusableCell(withIdentifier: "TargetAppIDCell")
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "TargetAppIDCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "TargetAppIDCell")
             }
             if let textField = cell!.viewWithTag(200) as? UITextField {
                 textField.text = serverCode!.targetAppID
             }
         } else if indexPath.row == 3 {
             // add new parameter button
-            cell = tableView.dequeueReusableCellWithIdentifier("NewParameterButtonCell")
+            cell = tableView.dequeueReusableCell(withIdentifier: "NewParameterButtonCell")
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NewParameterButtonCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "NewParameterButtonCell")
             }
         } else {
-            cell = tableView.dequeueReusableCellWithIdentifier("NewParameterCell")
+            cell = tableView.dequeueReusableCell(withIdentifier: "NewParameterCell")
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NewParameterCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "NewParameterCell")
             }
             let parameter = parameters[indexPath.row - 4]
             var parameterString = parameter.key + " = "
             if parameter.isString {
                 parameterString += parameter.value as! String
             } else if parameter.isInt {
-                parameterString += String(parameter.value as! NSNumber)
+                parameterString += String(describing: parameter.value as! NSNumber)
             } else if parameter.isBool {
                 parameterString += String(parameter.value as! Bool)
             }
@@ -141,11 +141,11 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
         return cell!
     }
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
     
-    func saveParameter(parameters: [ParameterStruct]) {
+    func saveParameter(_ parameters: [ParameterStruct]) {
         self.parameters = parameters
         self.serverCode = ServerCode(
           endpoint: self.serverCode!.endpoint,
@@ -158,17 +158,17 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
         self.refreshControl?.endRefreshing()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editServerCodeParameter" {
-            if let editParameterVC = segue.destinationViewController as? TriggerServerCodeParameterEditViewController {
+            if let editParameterVC = segue.destination as? TriggerServerCodeParameterEditViewController {
                 editParameterVC.parameters = self.parameters
                 editParameterVC.delegate = self
             }
         }
     }
 
-    private static func parametersToDictionary(
-      parameters: [ParameterStruct]) -> Dictionary<String, AnyObject>
+    fileprivate static func parametersToDictionary(
+      _ parameters: [ParameterStruct]) -> Dictionary<String, AnyObject>
     {
         var retval: Dictionary<String, AnyObject> = [ : ]
         for parameter in parameters {

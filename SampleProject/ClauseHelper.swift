@@ -39,7 +39,7 @@ enum ClauseType: String {
         ]
     }
 
-    static func getClauseType(clause: Clause) -> ClauseType? {
+    static func getClauseType(_ clause: Clause) -> ClauseType? {
         if clause is AndClause {
             return ClauseType.And
         }else if clause is OrClause {
@@ -50,7 +50,7 @@ enum ClauseType: String {
             return ClauseType.NotEquals
         } else if clause is RangeClause {
             let nsdict = clause.toNSDictionary()
-            if let _ = nsdict["lowerLimit"], _ = nsdict["upperLimit"], lowerIncluded = nsdict["lowerIncluded"] as? Bool, upperIncluded = nsdict["upperIncluded"] as? Bool{
+            if let _ = nsdict["lowerLimit"], let _ = nsdict["upperLimit"], let lowerIncluded = nsdict["lowerIncluded"] as? Bool, let upperIncluded = nsdict["upperIncluded"] as? Bool{
                 if lowerIncluded && upperIncluded {
                     return ClauseType.BothClose
                 }else if !lowerIncluded && upperIncluded {
@@ -62,7 +62,7 @@ enum ClauseType: String {
                 }
             }
 
-            if let _ = nsdict["lowerLimit"], lowerIncluded = nsdict["lowerIncluded"] as? Bool {
+            if let _ = nsdict["lowerLimit"], let lowerIncluded = nsdict["lowerIncluded"] as? Bool {
                 if lowerIncluded {
                     return ClauseType.GreaterThanOrEquals
                 }else {
@@ -70,7 +70,7 @@ enum ClauseType: String {
                 }
             }
 
-            if let _ = nsdict["upperLimit"], upperIncluded = nsdict["upperIncluded"] as? Bool{
+            if let _ = nsdict["upperLimit"], let upperIncluded = nsdict["upperIncluded"] as? Bool{
                 if upperIncluded {
                     return ClauseType.LessThanOrEquals
                 }else {
@@ -87,7 +87,7 @@ enum ClauseType: String {
 
 class ClauseHelper {
 
-    static func getInitializedClause(clauseType: ClauseType, statusSchema: StatusSchema?) -> Clause? {
+    static func getInitializedClause(_ clauseType: ClauseType, statusSchema: StatusSchema?) -> Clause? {
         var initializedClause: Clause?
 
         if clauseType == ClauseType.And {
@@ -103,11 +103,11 @@ class ClauseHelper {
             case .Equals:
                 switch statusType! {
                 case StatusType.BoolType:
-                    initializedClause = EqualsClause(field: statusName, boolValue: false)
+                    initializedClause = EqualsClause(field: statusName!, boolValue: false)
                 case StatusType.IntType:
-                    initializedClause = EqualsClause(field: statusName, intValue: 0)
+                    initializedClause = EqualsClause(field: statusName!, intValue: 0)
                 case StatusType.StringType:
-                    initializedClause = EqualsClause(field: statusName, stringValue: "")
+                    initializedClause = EqualsClause(field: statusName!, stringValue: "")
                 default:
                     break
                 }
@@ -115,11 +115,11 @@ class ClauseHelper {
             case .NotEquals:
                 switch statusType! {
                 case StatusType.BoolType:
-                    initializedClause = NotEqualsClause(field: statusName, boolValue: false)
+                    initializedClause = NotEqualsClause(field: statusName!, boolValue: false)
                 case StatusType.IntType:
-                    initializedClause = NotEqualsClause(field: statusName, intValue: 0)
+                    initializedClause = NotEqualsClause(field: statusName!, intValue: 0)
                 case StatusType.StringType:
-                    initializedClause = NotEqualsClause(field: statusName, stringValue: "")
+                    initializedClause = NotEqualsClause(field: statusName!, stringValue: "")
                 default:
                     break
                 }
@@ -135,9 +135,9 @@ class ClauseHelper {
 
                 switch statusType! {
                 case StatusType.IntType:
-                    initializedClause = RangeClause(field: statusName, upperLimitInt: 0, upperIncluded: upperIncluded)
+                    initializedClause = RangeClause(field: statusName!, upperLimitInt: 0, upperIncluded: upperIncluded)
                 case StatusType.DoubleType:
-                    initializedClause = RangeClause(field: statusName, upperLimitDouble: 0.0, upperIncluded: upperIncluded)
+                    initializedClause = RangeClause(field: statusName!, upperLimitDouble: 0.0, upperIncluded: upperIncluded)
                 default:
                     break
                 }
@@ -151,9 +151,9 @@ class ClauseHelper {
                 }
                 switch statusType! {
                 case StatusType.IntType:
-                    initializedClause = RangeClause(field: statusName, lowerLimitInt: 0, lowerIncluded: lowerIncluded)
+                    initializedClause = RangeClause(field: statusName!, lowerLimitInt: 0, lowerIncluded: lowerIncluded)
                 case StatusType.DoubleType:
-                    initializedClause = RangeClause(field: statusName, lowerLimitDouble: 0.0, lowerIncluded: lowerIncluded)
+                    initializedClause = RangeClause(field: statusName!, lowerLimitDouble: 0.0, lowerIncluded: lowerIncluded)
                 default:
                     break
                 }
@@ -175,9 +175,9 @@ class ClauseHelper {
 
                 switch statusType! {
                 case StatusType.IntType:
-                    initializedClause = RangeClause(field: statusName, lowerLimitInt: 0, lowerIncluded: lowerIncluded, upperLimit: 0, upperIncluded: upperIncluded)
+                    initializedClause = RangeClause(field: statusName!, lowerLimitInt: 0, lowerIncluded: lowerIncluded, upperLimit: 0, upperIncluded: upperIncluded)
                 case StatusType.DoubleType:
-                    initializedClause = RangeClause(field: statusName, lowerLimitDouble: 0.0, lowerIncluded: lowerIncluded, upperLimit: 0.0, upperIncluded: upperIncluded)
+                    initializedClause = RangeClause(field: statusName!, lowerLimitDouble: 0.0, lowerIncluded: lowerIncluded, upperLimit: 0.0, upperIncluded: upperIncluded)
                 default:
                     break
                 }
@@ -190,7 +190,7 @@ class ClauseHelper {
         return initializedClause
     }
 
-    static func getStatusFromClause(clause: Clause) -> String {
+    static func getStatusFromClause(_ clause: Clause) -> String {
         let clauseDict = clause.toNSDictionary()
         let clauseType = ClauseType.getClauseType(clause)!
 
@@ -201,10 +201,10 @@ class ClauseHelper {
         }
     }
 
-    static func getNewClause(clause: RangeClause, lowerLimitValue: AnyObject, upperLimitValue: AnyObject, statusSchema: StatusSchema) -> RangeClause? {
+    static func getNewClause(_ clause: RangeClause, lowerLimitValue: AnyObject, upperLimitValue: AnyObject, statusSchema: StatusSchema) -> RangeClause? {
         var newClause: RangeClause?
         let status = statusSchema.name
-        if let clauseType = ClauseType.getClauseType(clause), statusType = statusSchema.type {
+        if let clauseType = ClauseType.getClauseType(clause), let statusType = statusSchema.type {
             switch clauseType {
             case .LeftOpen, .RightOpen, .BothClose, .BothOpen:
 
@@ -224,7 +224,7 @@ class ClauseHelper {
 
                 switch statusType {
                 case StatusType.IntType:
-                    newClause = RangeClause(field: status, lowerLimitInt: lowerLimitValue as! Int, lowerIncluded: lowerIncluded, upperLimit: upperLimitValue as! Int, upperIncluded: upperIncluded)
+                    newClause = RangeClause(field: status!, lowerLimitInt: lowerLimitValue as! Int, lowerIncluded: lowerIncluded, upperLimit: upperLimitValue as! Int, upperIncluded: upperIncluded)
                 default:
                     break
                 }
@@ -236,26 +236,26 @@ class ClauseHelper {
         return newClause
     }
 
-    static func getNewClause(clause: Clause, singleValue: AnyObject, statusSchema: StatusSchema) -> Clause?{
+    static func getNewClause(_ clause: Clause, singleValue: AnyObject, statusSchema: StatusSchema) -> Clause?{
         var newClause: Clause?
         let status = statusSchema.name
-        if let clauseType = ClauseType.getClauseType(clause), statusType = statusSchema.type {
+        if let clauseType = ClauseType.getClauseType(clause), let statusType = statusSchema.type {
             switch clauseType {
             case .Equals:
                 switch statusType {
                 case StatusType.IntType:
-                    newClause = EqualsClause(field: status, intValue: singleValue as! Int)
+                    newClause = EqualsClause(field: status!, intValue: singleValue as! Int)
                 case StatusType.BoolType:
-                    newClause = EqualsClause(field: status, boolValue: singleValue as! Bool)
+                    newClause = EqualsClause(field: status!, boolValue: singleValue as! Bool)
                 default:
                     break
                 }
             case .NotEquals:
                 switch statusType {
                 case StatusType.IntType:
-                    newClause = NotEqualsClause(field: status, intValue: singleValue as! Int)
+                    newClause = NotEqualsClause(field: status!, intValue: singleValue as! Int)
                 case StatusType.BoolType:
-                    newClause = NotEqualsClause(field: status, boolValue: singleValue as! Bool)
+                    newClause = NotEqualsClause(field: status!, boolValue: singleValue as! Bool)
                 default:
                     break
                 }
@@ -269,7 +269,7 @@ class ClauseHelper {
 
                 switch statusType {
                 case StatusType.IntType:
-                    newClause = RangeClause(field: status, upperLimitInt: singleValue as! Int, upperIncluded: upperIncluded)
+                    newClause = RangeClause(field: status!, upperLimitInt: singleValue as! Int, upperIncluded: upperIncluded)
                 default:
                     break
                 }
@@ -284,7 +284,7 @@ class ClauseHelper {
 
                 switch statusType {
                 case StatusType.IntType:
-                    newClause = RangeClause(field: status, lowerLimitInt: singleValue as! Int, lowerIncluded: lowerIncluded)
+                    newClause = RangeClause(field: status!, lowerLimitInt: singleValue as! Int, lowerIncluded: lowerIncluded)
 
                 default:
                     break
