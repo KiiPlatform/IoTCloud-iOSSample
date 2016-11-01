@@ -7,5 +7,5 @@ use_frameworks!
 
 target 'SampleProject' do
 pod 'KiiCloud'
-pod 'ThingIFSDK'
+# pod 'ThingIFSDK'
 end
