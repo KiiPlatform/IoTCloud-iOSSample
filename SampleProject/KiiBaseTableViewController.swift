@@ -17,7 +17,7 @@ class KiiBaseTableViewController: UITableViewController {
     var target: Target?
     var schema: IoTSchema?
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         do{
             try iotAPI = ThingIFAPI.loadWithStoredInstance()
@@ -29,8 +29,8 @@ class KiiBaseTableViewController: UITableViewController {
         self.navigationController?.navigationItem.title = target?.typedID.id
 
         if schema == nil {
-            if let schemaData = NSUserDefaults.standardUserDefaults().objectForKey("schema") as? NSData {
-                if let schema = NSKeyedUnarchiver.unarchiveObjectWithData(schemaData) as? IoTSchema {
+            if let schemaData = UserDefaults.standard.object(forKey: "schema") as? Data {
+                if let schema = NSKeyedUnarchiver.unarchiveObject(with: schemaData) as? IoTSchema {
                     self.schema = schema
                 }
             }
@@ -43,19 +43,19 @@ class KiiBaseTableViewController: UITableViewController {
         super.viewDidLoad()
     }
 
-    func showActivityView(show: Bool) {
+    func showActivityView(_ show: Bool) {
         if activityIndicatorView != nil {
-            if show && self.activityIndicatorView.hidden{
-                self.activityIndicatorView.hidden = false
+            if show && self.activityIndicatorView.isHidden{
+                self.activityIndicatorView.isHidden = false
                 self.activityIndicatorView.startAnimating()
-            }else if !(show || self.activityIndicatorView.hidden) {
+            }else if !(show || self.activityIndicatorView.isHidden) {
                 self.activityIndicatorView.stopAnimating()
-                self.activityIndicatorView.hidden = true
+                self.activityIndicatorView.isHidden = true
             }
         }
     }
 
-    func showAlert(title: String, error: ThingIFError?, completion: (() -> Void)?) {
+    func showAlert(_ title: String, error: ThingIFError?, completion: (() -> Void)?) {
         var errorString: String?
         if error != nil {
             switch error! {
@@ -76,7 +76,7 @@ class KiiBaseTableViewController: UITableViewController {
         showAlert(title, message: errorString, completion: completion)
     }
 
-    func logout(completion: ()-> Void) {
+    func logout(_ completion: ()-> Void) {
         ThingIFAPI.removeStoredInstances()
         completion()
     }

@@ -10,7 +10,7 @@ import UIKit
 import ThingIFSDK
 
 protocol TriggerCommandEditViewControllerDelegate {
-    func saveCommands(schemaName: String,
+    func saveCommands(_ schemaName: String,
                       schemaVersion: Int,
                       actions: [Dictionary<String, AnyObject>],
                       targetID: String?,
@@ -23,7 +23,7 @@ class TriggerCommandEditViewController: CommandEditViewController {
 
     var delegate: TriggerCommandEditViewControllerDelegate?
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         var targetIdSection = SectionStruct(headerTitle: "Target thing ID",
@@ -45,11 +45,11 @@ class TriggerCommandEditViewController: CommandEditViewController {
                 descriptionSection.items.append(description)
             }
             if let metadata = command.metadata {
-                if let data = try? NSJSONSerialization.dataWithJSONObject(
-                     metadata, options: .PrettyPrinted) {
+                if let data = try? JSONSerialization.data(
+                     withJSONObject: metadata, options: .prettyPrinted) {
                     metadataSection.items.append(
                       String(data:data,
-                             encoding:NSUTF8StringEncoding)!)
+                             encoding:String.Encoding.utf8)!)
                 }
             }
         }
@@ -59,57 +59,53 @@ class TriggerCommandEditViewController: CommandEditViewController {
     }
 
     override func tableView(
-      tableView: UITableView,
-      cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+      _ tableView: UITableView,
+      cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         if sections[indexPath.section].headerTitle == "Target thing ID" {
-            let cell = tableView.dequeueReusableCellWithIdentifier(
-              "TargetIDCell",
-              forIndexPath: indexPath)
-            if let items = sections[indexPath.section].items
-              where !items.isEmpty {
+            let cell = tableView.dequeueReusableCell(
+              withIdentifier: "TargetIDCell",
+              for: indexPath)
+            if let items = sections[indexPath.section].items, !items.isEmpty {
                 let value = items[indexPath.row] as! String
                 (cell.viewWithTag(202) as! UITextField).text = value
             }
             return cell
         } else if sections[indexPath.section].headerTitle == "Title" {
-            let cell = tableView.dequeueReusableCellWithIdentifier(
-              "CommandTitleCell",
-              forIndexPath: indexPath)
-            if let items = sections[indexPath.section].items
-              where !items.isEmpty {
+            let cell = tableView.dequeueReusableCell(
+              withIdentifier: "CommandTitleCell",
+              for: indexPath)
+            if let items = sections[indexPath.section].items, !items.isEmpty {
                 let value = items[indexPath.row] as! String
                 (cell.viewWithTag(203) as! UITextField).text = value
             }
             return cell
         } else if sections[indexPath.section].headerTitle == "Description" {
-            let cell = tableView.dequeueReusableCellWithIdentifier(
-              "CommandDescriptionCell",
-              forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(
+              withIdentifier: "CommandDescriptionCell",
+              for: indexPath)
 
-            if let items = sections[indexPath.section].items
-              where !items.isEmpty {
+            if let items = sections[indexPath.section].items, !items.isEmpty {
                 let value = items[indexPath.row] as! String
                 (cell.viewWithTag(204) as! UITextView).text = value
             }
             return cell
         } else if sections[indexPath.section].headerTitle == "Meta data" {
-            let cell = tableView.dequeueReusableCellWithIdentifier(
-              "CommandMetadataCell", forIndexPath: indexPath)
-            if let items = sections[indexPath.section].items
-              where !items.isEmpty {
+            let cell = tableView.dequeueReusableCell(
+              withIdentifier: "CommandMetadataCell", for: indexPath)
+            if let items = sections[indexPath.section].items, !items.isEmpty {
                 let value = items[indexPath.row] as! String
                 (cell.viewWithTag(205) as! UITextView).text = value
             }
             return cell
         } else {
-            return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+            return super.tableView(tableView, cellForRowAt: indexPath)
         }
     }
 
     override func tableView(
-      tableView: UITableView,
-      heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+      _ tableView: UITableView,
+      heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         if sections[indexPath.section].headerTitle == "Description" {
             return 130
@@ -117,11 +113,11 @@ class TriggerCommandEditViewController: CommandEditViewController {
             return 130
         } else {
             return super.tableView(tableView,
-                                   heightForRowAtIndexPath: indexPath)
+                                   heightForRowAt: indexPath)
         }
     }
 
-    @IBAction func tapSaveCommand(sender: AnyObject) {
+    @IBAction func tapSaveCommand(_ sender: AnyObject) {
         // generate actions array
         var actions = [Dictionary<String, AnyObject>]()
         if let actionsItems = sections[2].items {
@@ -141,31 +137,28 @@ class TriggerCommandEditViewController: CommandEditViewController {
             schemaVersion = nil
         }
         let targetID: String?
-        if let text = (self.view.viewWithTag(202) as? UITextField)?.text
-          where !text.isEmpty {
+        if let text = (self.view.viewWithTag(202) as? UITextField)?.text, !text.isEmpty {
             targetID = text
         } else {
             targetID = nil
         }
         let title: String?
-        if let text = (self.view.viewWithTag(203) as? UITextField)?.text
-          where !text.isEmpty {
+        if let text = (self.view.viewWithTag(203) as? UITextField)?.text, !text.isEmpty {
             title = text
         } else {
             title = nil
         }
         let description: String?
-        if let text = (self.view.viewWithTag(204) as? UITextView)?.text
-          where !text.isEmpty {
+        if let text = (self.view.viewWithTag(204) as? UITextView)?.text, !text.isEmpty {
             description = text
         } else {
             description = nil
         }
         let metadata: Dictionary<String, AnyObject>?
         if let text = (self.view.viewWithTag(205) as? UITextView)?.text {
-            metadata = try? NSJSONSerialization.JSONObjectWithData(
-              text.dataUsingEncoding(NSUTF8StringEncoding)!,
-              options: .MutableContainers) as! Dictionary<String, AnyObject>
+            metadata = try? JSONSerialization.jsonObject(
+              with: text.data(using: String.Encoding.utf8)!,
+              options: .mutableContainers) as! Dictionary<String, AnyObject>
         } else {
             metadata = nil
         }
@@ -180,7 +173,7 @@ class TriggerCommandEditViewController: CommandEditViewController {
                                    metadata: metadata)
         }
 
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
 
 }

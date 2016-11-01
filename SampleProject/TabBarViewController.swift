@@ -11,7 +11,7 @@ import ThingIFSDK
 
 class TabBarViewController: UITabBarController {
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         var savedIoTAPI: ThingIFAPI?
@@ -26,8 +26,8 @@ class TabBarViewController: UITabBarController {
         // if there is not saved iotAPI, present login UIs
         if savedIoTAPI == nil {
             let storyBoard = UIStoryboard(name: "Onboarding", bundle: nil)
-            let loginRootNaviVC = storyBoard.instantiateViewControllerWithIdentifier("LoginRootViewController") as! UINavigationController
-            self.presentViewController(loginRootNaviVC, animated: true, completion: nil)
+            let loginRootNaviVC = storyBoard.instantiateViewController(withIdentifier: "LoginRootViewController") as! UINavigationController
+            self.present(loginRootNaviVC, animated: true, completion: nil)
         }
     }
 }
