@@ -9,7 +9,7 @@
 import UIKit
 
 protocol StatusTableViewCellDelegate {
-    func setStatus(_ sender: UITableViewCell, value: AnyObject)
+    func setStatus(_ sender: UITableViewCell, value: Any)
 }
 
 class StatusIntTypeTableViewCell: UITableViewCell {

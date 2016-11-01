@@ -428,7 +428,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     }
 
 
-    func setStatus(_ sender: UITableViewCell, value: AnyObject) {
+    func setStatus(_ sender: UITableViewCell, value: Any) {
         let indexPath = self.tableView.indexPath(for: sender)!
         var section = sections[indexPath.section]
         let clause = section.items[indexPath.row] as! Clause

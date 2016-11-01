@@ -302,7 +302,7 @@ class CommandEditViewController: KiiBaseTableViewController, UIPickerViewDataSou
         self.selectedActionName = actionSchemasToSelect[row-1]
     }
 
-    func setStatus(_ sender: UITableViewCell, value: AnyObject) {
+    func setStatus(_ sender: UITableViewCell, value: Any) {
         if let selectedIndexPath = self.tableView.indexPath(for: sender) {
             var selectedAction = sections[selectedIndexPath.section].items[selectedIndexPath.row] as? ActionStruct
             if  selectedAction != nil {

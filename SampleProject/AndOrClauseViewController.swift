@@ -347,7 +347,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
         }
     }
 
-    func setStatus(_ sender: UITableViewCell, value: AnyObject) {
+    func setStatus(_ sender: UITableViewCell, value: Any) {
         let indexPath = self.tableView.indexPath(for: sender)!
         let clause = subClauses[indexPath.row]
         let status = ClauseHelper.getStatusFromClause(clause)

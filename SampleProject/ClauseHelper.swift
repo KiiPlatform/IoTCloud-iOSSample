@@ -236,7 +236,7 @@ class ClauseHelper {
         return newClause
     }
 
-    static func getNewClause(_ clause: Clause, singleValue: AnyObject, statusSchema: StatusSchema) -> Clause?{
+    static func getNewClause(_ clause: Clause, singleValue: Any, statusSchema: StatusSchema) -> Clause?{
         var newClause: Clause?
         let status = statusSchema.name
         if let clauseType = ClauseType.getClauseType(clause), let statusType = statusSchema.type {
