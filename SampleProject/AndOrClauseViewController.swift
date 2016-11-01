@@ -83,7 +83,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
             return tableView.dequeueReusableCell(withIdentifier: "NewClauseButtonCell", for: indexPath)
         }else {
             let clause = subClauses[indexPath.row]
-            let clauseDict = clause.toNSDictionary()
+            let clauseDict = clause.toNSDictionary() as! [ String : Any ]
             let clauseType = ClauseType.getClauseType(clause)!
 
             var cell: UITableViewCell!
@@ -95,7 +95,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
                 let status = ClauseHelper.getStatusFromClause(clause)
                 let statusType = schema!.getStatusType(status)!
                 // only for int and bool value
-                var singleValue: AnyObject?
+                var singleValue: Any?
                 var lowerLimitValue: Int?
                 var upperLimitValue: Int?
 
