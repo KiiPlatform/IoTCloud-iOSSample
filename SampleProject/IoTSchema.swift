@@ -104,8 +104,8 @@ class StatusSchema: NSObject, NSCoding {
 }
 
 class ActionSchema: NSObject, NSCoding {
-    let name: String!
-    let status: StatusSchema!
+    let name: String
+    let status: StatusSchema
 
     func encode(with aCoder: NSCoder) {
         aCoder.encode(self.name, forKey: "name")
