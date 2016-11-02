@@ -44,6 +44,8 @@
 		A5B54B2A1C9151D200440A6B /* TriggeredServerCodeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B54B291C9151D200440A6B /* TriggeredServerCodeResultViewController.swift */; };
 		A5C99DD51C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C99DD41C85A5CD00FC83FE /* TriggerServerCodeParameterEditViewController.swift */; };
 		A5F53FB71C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F53FB61C8042F400B713EE /* ServerCodeTriggerDetailViewController.swift */; };
+		B6338F121DC9E5E10063B36C /* ThingIFSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6DE17DE1DAE115C006B4558 /* ThingIFSDK.framework */; };
+		B6338F131DC9E5F60063B36C /* ThingIFSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6DE17E01DAE1183006B4558 /* ThingIFSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B65736891DB0CED00018C27C /* TriggerOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65736881DB0CECF0018C27C /* TriggerOptionsViewController.swift */; };
 		D5351AA91B8ED6D900E55807 /* Notifications.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5351AA71B8ED6D900E55807 /* Notifications.storyboard */; };
 		D5351AAB1B8EDA8900E55807 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5351AAA1B8EDA8900E55807 /* NotificationViewController.swift */; };
@@ -57,6 +59,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B6338F131DC9E5F60063B36C /* ThingIFSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6338F121DC9E5E10063B36C /* ThingIFSDK.framework in Frameworks */,
 				7D783E4D1B87157F00543A09 /* libsqlite3.tbd in Frameworks */,
 				32F0D076E95C4ECA320FABEC /* Pods_SampleProject.framework in Frameworks */,
 			);
