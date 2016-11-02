@@ -53,11 +53,11 @@ struct ActionStruct {
             return nil
         }
 
-        let actionNameKey = Array(actionDict.keys)[0]
+        let actionNameKey = (Array(actionDict.keys) as! [String])[0]
 
         if actionSchema.name == actionNameKey {
             if let statusDict = actionDict[actionNameKey] as? Dictionary<String, AnyObject> {
-                let statusNameKey = Array(statusDict.keys)[0]
+                let statusNameKey = (Array(statusDict.keys) as! [String])[0]
                 if actionSchema.status.name == statusNameKey {
                     self.value = statusDict[statusNameKey]
                 }else{

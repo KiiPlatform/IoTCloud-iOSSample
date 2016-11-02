@@ -43,7 +43,7 @@ class CommandEditViewController: KiiBaseTableViewController, UIPickerViewDataSou
             // construct actionsItems
             for actionDict in commandStruct!.actions {
                 if actionDict.keys.count > 0 {
-                    let actionNameKey = Array(actionDict.keys)[0]
+                    let actionNameKey = (Array(actionDict.keys) as! [String])[0]
                     if let actionSchema = schema?.getActionSchema(actionNameKey) {
                         if let actionCellData = ActionStruct(actionSchema: actionSchema, actionDict: actionDict) {
                             actionItems.append(actionCellData)

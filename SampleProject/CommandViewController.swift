@@ -79,7 +79,7 @@ class CommandViewController: KiiBaseTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ActionItemCell", for: indexPath)
             let action = sections[indexPath.section].items[indexPath.row] as! Dictionary<String, AnyObject>
             if action.keys.count > 0 {
-                let actionKey: String = Array(action.keys)[0]
+                let actionKey: String = (Array(action.keys) as! [String])[0]
                 cell.textLabel?.text = actionKey
                 var actionString = ""
                 if let actionDict = action[actionKey] as? Dictionary<String, AnyObject> {
