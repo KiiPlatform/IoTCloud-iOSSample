@@ -253,7 +253,7 @@ class CommandEditViewController: KiiBaseTableViewController, UIPickerViewDataSou
             if let actionSchema = schema?.getActionSchema(selectedActionName) {
                 if let statusType = schema!.getStatusType(actionSchema.status.name) {
 
-                    var defaultedValue: AnyObject?
+                    var defaultedValue: Any?
                     switch statusType {
                     case .BoolType:
                         defaultedValue = false

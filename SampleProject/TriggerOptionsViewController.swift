@@ -12,7 +12,7 @@ import ThingIFSDK
 protocol TriggerOptionsViewControllerDelegate {
     func saveTriggerOptions(_ title: String?,
                             description: String?,
-                            metadata: Dictionary<String, AnyObject>?)
+                            metadata: Dictionary<String, Any>?)
 }
 
 class TriggerOptionsViewController: KiiBaseTableViewController {
@@ -41,11 +41,11 @@ class TriggerOptionsViewController: KiiBaseTableViewController {
     }
 
     @IBAction func tapSaveTriggerOptions(_ sender: AnyObject) {
-        var metadata: Dictionary<String, AnyObject>?
+        var metadata: Dictionary<String, Any>?
         if let text = self.metadataField.text {
             metadata = try? JSONSerialization.jsonObject(
               with: text.data(using: String.Encoding.utf8)!,
-              options: .mutableContainers) as! Dictionary<String, AnyObject>
+              options: .mutableContainers) as! Dictionary<String, Any>
         } else {
             metadata = nil
         }

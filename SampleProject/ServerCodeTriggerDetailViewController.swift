@@ -100,7 +100,7 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
 
     func saveTriggerOptions(_ title: String?,
                             description: String?,
-                            metadata: Dictionary<String, AnyObject>?)
+                            metadata: Dictionary<String, Any>?)
     {
         if title != nil || description != nil || metadata != nil {
             self.options = TriggerOptions(title: title,

@@ -26,7 +26,7 @@ extension CommandState {
 class CommandViewController: KiiBaseTableViewController {
     struct SectionStruct {
         let headerTitle: String!
-        var items: [AnyObject]!
+        var items: [Any]!
     }
 
     var command: Command?
@@ -77,12 +77,12 @@ class CommandViewController: KiiBaseTableViewController {
 
         if sections[indexPath.section].headerTitle == "Actions"  || sections[indexPath.section].headerTitle == "ActionResults" {
             let cell = tableView.dequeueReusableCell(withIdentifier: "ActionItemCell", for: indexPath)
-            let action = sections[indexPath.section].items[indexPath.row] as! Dictionary<String, AnyObject>
+            let action = sections[indexPath.section].items[indexPath.row] as! Dictionary<String, Any>
             if action.keys.count > 0 {
                 let actionKey: String = (Array(action.keys) as! [String])[0]
                 cell.textLabel?.text = actionKey
                 var actionString = ""
-                if let actionDict = action[actionKey] as? Dictionary<String, AnyObject> {
+                if let actionDict = action[actionKey] as? Dictionary<String, Any> {
                     for (key, value) in actionDict {
                         actionString = "\(key): \(value) "
                     }
@@ -109,9 +109,9 @@ class CommandViewController: KiiBaseTableViewController {
         }else {
             sections.append(SectionStruct(headerTitle: "Schema", items: [schema!.name]))
             sections.append(SectionStruct(headerTitle: "Version", items: [schema!.version]))
-            sections.append(SectionStruct(headerTitle: "Actions", items: [AnyObject]()))
-            sections.append(SectionStruct(headerTitle: "ActionResults", items: [AnyObject]()))
-            sections.append(SectionStruct(headerTitle: "State", items: [AnyObject]()))
+            sections.append(SectionStruct(headerTitle: "Actions", items: [Any]()))
+            sections.append(SectionStruct(headerTitle: "ActionResults", items: [Any]()))
+            sections.append(SectionStruct(headerTitle: "State", items: [Any]()))
         }
 
     }

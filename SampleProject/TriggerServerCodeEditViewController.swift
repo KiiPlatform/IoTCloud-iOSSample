@@ -7,7 +7,7 @@ protocol TriggerServerCodeEditViewControllerDelegate {
 
 struct ParameterStruct {
     var key: String
-    var value: AnyObject
+    var value: Any
     var isString: Bool {
         return value is NSString
     }
@@ -168,9 +168,9 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
     }
 
     fileprivate static func parametersToDictionary(
-      _ parameters: [ParameterStruct]) -> Dictionary<String, AnyObject>
+      _ parameters: [ParameterStruct]) -> Dictionary<String, Any>
     {
-        var retval: Dictionary<String, AnyObject> = [ : ]
+        var retval: Dictionary<String, Any> = [ : ]
         for parameter in parameters {
             retval[parameter.key] = parameter.value
         }

@@ -12,11 +12,11 @@ import ThingIFSDK
 protocol TriggerCommandEditViewControllerDelegate {
     func saveCommands(_ schemaName: String,
                       schemaVersion: Int,
-                      actions: [Dictionary<String, AnyObject>],
+                      actions: [Dictionary<String, Any>],
                       targetID: String?,
                       title: String?,
                       commandDescription: String?,
-                      metadata: Dictionary<String, AnyObject>?)
+                      metadata: Dictionary<String, Any>?)
 }
 
 class TriggerCommandEditViewController: CommandEditViewController {
@@ -119,7 +119,7 @@ class TriggerCommandEditViewController: CommandEditViewController {
 
     @IBAction func tapSaveCommand(_ sender: AnyObject) {
         // generate actions array
-        var actions = [Dictionary<String, AnyObject>]()
+        var actions = [Dictionary<String, Any>]()
         if let actionsItems = sections[2].items {
             for actionItem in actionsItems {
                 if let actionCellData = actionItem as? ActionStruct {
@@ -154,11 +154,11 @@ class TriggerCommandEditViewController: CommandEditViewController {
         } else {
             description = nil
         }
-        let metadata: Dictionary<String, AnyObject>?
+        let metadata: Dictionary<String, Any>?
         if let text = (self.view.viewWithTag(205) as? UITextView)?.text {
             metadata = try? JSONSerialization.jsonObject(
               with: text.data(using: String.Encoding.utf8)!,
-              options: .mutableContainers) as! Dictionary<String, AnyObject>
+              options: .mutableContainers) as! Dictionary<String, Any>
         } else {
             metadata = nil
         }
