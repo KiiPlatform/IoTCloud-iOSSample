@@ -12,13 +12,13 @@ import ThingIFSDK
 extension CommandState {
     public func toString() -> String {
         switch self {
-        case .DELIVERED:
+        case .delivered:
             return "DELIVERED"
-        case .DONE:
+        case .done:
             return "DONE"
-        case .INCOMPLETE:
+        case .incomplete:
             return "INCOMPLETE"
-        case .SENDING:
+        case .sending:
             return "SENDING"
         }
     }
