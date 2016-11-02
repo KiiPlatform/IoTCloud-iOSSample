@@ -15,13 +15,13 @@ struct CommandsSection {
     init(state: CommandState, commands: [Command]) {
         self.commands = commands
         switch state {
-        case .DELIVERED:
+        case .delivered:
             self.state = "DELIVERED"
-        case .DONE:
+        case .done:
             self.state = "DONE"
-        case .INCOMPLETE:
+        case .incomplete:
             self.state = "INCOMPLETE"
-        case .SENDING:
+        case .sending:
             self.state = "SENDING"
         }
     }

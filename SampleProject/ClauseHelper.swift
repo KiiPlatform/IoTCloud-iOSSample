@@ -49,7 +49,7 @@ enum ClauseType: String {
         }else if clause is NotEqualsClause {
             return ClauseType.NotEquals
         } else if clause is RangeClause {
-            let nsdict = clause.toNSDictionary()
+            let nsdict = clause.toNSDictionary() as! [ String : Any ]
             if let _ = nsdict["lowerLimit"], let _ = nsdict["upperLimit"], let lowerIncluded = nsdict["lowerIncluded"] as? Bool, let upperIncluded = nsdict["upperIncluded"] as? Bool{
                 if lowerIncluded && upperIncluded {
                     return ClauseType.BothClose
@@ -191,7 +191,7 @@ class ClauseHelper {
     }
 
     static func getStatusFromClause(_ clause: Clause) -> String {
-        let clauseDict = clause.toNSDictionary()
+        let clauseDict = clause.toNSDictionary() as! [ String : Any ]
         let clauseType = ClauseType.getClauseType(clause)!
 
         if clauseType != ClauseType.NotEquals {
@@ -236,7 +236,7 @@ class ClauseHelper {
         return newClause
     }
 
-    static func getNewClause(_ clause: Clause, singleValue: AnyObject, statusSchema: StatusSchema) -> Clause?{
+    static func getNewClause(_ clause: Clause, singleValue: Any, statusSchema: StatusSchema) -> Clause?{
         var newClause: Clause?
         let status = statusSchema.name
         if let clauseType = ClauseType.getClauseType(clause), let statusType = statusSchema.type {

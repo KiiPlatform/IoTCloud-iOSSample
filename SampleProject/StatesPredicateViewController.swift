@@ -139,7 +139,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
                  return tableView.dequeueReusableCell(withIdentifier: "NewClauseButtonCell", for: indexPath)
             }else {
                 let clause = section.items[0] as! Clause
-                let clauseDict = clause.toNSDictionary()
+                let clauseDict = clause.toNSDictionary() as! [ String : Any ]
                 let clauseType = ClauseType.getClauseType(clause)!
 
                 var cell: UITableViewCell!
@@ -149,7 +149,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
                     cell.textLabel?.text = "\(clauseType.rawValue) Clause"
                 }else {
                     // only for int and bool value
-                    var singleValue: AnyObject?
+                    var singleValue: Any?
                     var lowerLimitValue: Int?
                     var upperLimitValue: Int?
                     let status = ClauseHelper.getStatusFromClause(clause)
@@ -428,7 +428,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     }
 
 
-    func setStatus(_ sender: UITableViewCell, value: AnyObject) {
+    func setStatus(_ sender: UITableViewCell, value: Any) {
         let indexPath = self.tableView.indexPath(for: sender)!
         var section = sections[indexPath.section]
         let clause = section.items[indexPath.row] as! Clause
