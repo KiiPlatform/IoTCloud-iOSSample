@@ -33,31 +33,31 @@ enum StatusType: String{
 
 struct ActionStruct {
     let actionSchema: ActionSchema!
-    var value: AnyObject!
+    var value: Any!
 
     // the return Ditionary will be like: ["actionName": ["requiredStatus": value] ], where value can be Bool, Int or Double. ie. ["TurnPower": ["power": true]]
-    func getActionDict() -> Dictionary<String, AnyObject> {
-        let actionDict: Dictionary<String, AnyObject> = [actionSchema.name: [actionSchema.status.name: value]]
+    func getActionDict() -> Dictionary<String, Any> {
+        let actionDict: Dictionary<String, Any> = [actionSchema.name: [actionSchema.status.name: value]]
         return actionDict
     }
 
-    init(actionSchema: ActionSchema, value: AnyObject) {
+    init(actionSchema: ActionSchema, value: Any) {
         self.actionSchema = actionSchema
         self.value = value
     }
 
-    init?(actionSchema: ActionSchema, actionDict: Dictionary<String, AnyObject>) {
+    init?(actionSchema: ActionSchema, actionDict: Dictionary<String, Any>) {
         self.actionSchema = actionSchema
 
         if actionDict.keys.count == 0 {
             return nil
         }
 
-        let actionNameKey = Array(actionDict.keys)[0]
+        let actionNameKey = (Array(actionDict.keys) as! [String])[0]
 
         if actionSchema.name == actionNameKey {
-            if let statusDict = actionDict[actionNameKey] as? Dictionary<String, AnyObject> {
-                let statusNameKey = Array(statusDict.keys)[0]
+            if let statusDict = actionDict[actionNameKey] as? Dictionary<String, Any> {
+                let statusNameKey = (Array(statusDict.keys) as! [String])[0]
                 if actionSchema.status.name == statusNameKey {
                     self.value = statusDict[statusNameKey]
                 }else{
@@ -76,8 +76,8 @@ struct ActionStruct {
 class StatusSchema: NSObject, NSCoding {
     let name: String!
     let type: StatusType!
-    var minValue: AnyObject?
-    var maxValue: AnyObject?
+    var minValue: Any?
+    var maxValue: Any?
 
     func encode(with aCoder: NSCoder) {
         aCoder.encode(self.name, forKey: "name")
@@ -94,7 +94,7 @@ class StatusSchema: NSObject, NSCoding {
         self.maxValue = aDecoder.decodeObject(forKey: "maxValue")
     }
 
-    init(name: String, type: StatusType, minValue: AnyObject?, maxValue: AnyObject?) {
+    init(name: String, type: StatusType, minValue: Any?, maxValue: Any?) {
         self.name = name
         self.type = type
         self.minValue = minValue
@@ -158,7 +158,7 @@ class IoTSchema: NSObject,NSCoding {
         statusSchemaDict[statusName] = StatusSchema(name: statusName, type: statusType, minValue: nil, maxValue: nil)
     }
 
-    func addStatus(_ statusName: String, statusType: StatusType, minValue: AnyObject?, maxvalue: AnyObject?) {
+    func addStatus(_ statusName: String, statusType: StatusType, minValue: Any?, maxvalue: Any?) {
         statusSchemaDict[statusName] = StatusSchema(name: statusName, type: statusType, minValue: minValue, maxValue: maxvalue)
     }
 

@@ -63,11 +63,11 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
                     if parameters[rowIndex - 1].isInt {
                         parameters[rowIndex - 1].value = Int(textFieldValue.text!)!
                     } else {
-                        parameters[rowIndex - 1].value = textFieldValue.text! as AnyObject
+                        parameters[rowIndex - 1].value = textFieldValue.text!
                     }
                 }
                 if let switchValue = cell?.viewWithTag(201) as? UISwitch {
-                    parameters[rowIndex - 1].value = switchValue.isOn as AnyObject
+                    parameters[rowIndex - 1].value = switchValue.isOn
                 }
             }
         }
@@ -81,11 +81,11 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
     var selectedType = 0
     func selectAction(_ sender: UIButton){
         if selectedType == 0 {
-            parameters.append(ParameterStruct(key: "", value: "" as AnyObject))
+            parameters.append(ParameterStruct(key: "", value: ""))
         } else if selectedType == 1 {
-            parameters.append(ParameterStruct(key: "", value: 0 as AnyObject))
+            parameters.append(ParameterStruct(key: "", value: 0))
         } else {
-            parameters.append(ParameterStruct(key: "", value: true as AnyObject))
+            parameters.append(ParameterStruct(key: "", value: true))
         }
         tableView.beginUpdates()
         tableView.insertRows(at: [

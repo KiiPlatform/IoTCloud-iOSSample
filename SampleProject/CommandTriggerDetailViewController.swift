@@ -12,11 +12,11 @@ import ThingIFSDK
 struct CommandStruct {
     let schemaName: String!
     let schemaVersion: Int!
-    let actions: [Dictionary<String, AnyObject>]!
+    let actions: [Dictionary<String, Any>]!
     let targetID: String?
     let title: String?
     let commandDescription: String?
-    let metadata: Dictionary<String, AnyObject>?
+    let metadata: Dictionary<String, Any>?
 }
 
 class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCommandEditViewControllerDelegate, StatesPredicateViewControllerDelegate, TriggerOptionsViewControllerDelegate {
@@ -36,11 +36,11 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         self.commandStructToSave = CommandStruct(
           schemaName: command.schemaName,
           schemaVersion: command.schemaVersion,
-          actions: command.actions as [Dictionary<String, AnyObject>]!,
+          actions: command.actions,
           targetID: command.targetID.id,
           title: command.title,
           commandDescription: command.commandDescription,
-          metadata: command.metadata as Dictionary<String, AnyObject>?)
+          metadata: command.metadata)
         self.statePredicateToSave = trigger.predicate as? StatePredicate
         if trigger.title != nil ||
              trigger.triggerDescription != nil ||
@@ -145,11 +145,11 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
     func saveCommands(
       _ schemaName: String,
       schemaVersion: Int,
-      actions: [Dictionary<String, AnyObject>],
+      actions: [Dictionary<String, Any>],
       targetID: String?,
       title: String?,
       commandDescription: String?,
-      metadata: Dictionary<String, AnyObject>?) {
+      metadata: Dictionary<String, Any>?) {
         self.commandStructToSave = CommandStruct(
           schemaName: schemaName,
           schemaVersion: schemaVersion,
@@ -166,7 +166,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
 
     func saveTriggerOptions(_ title: String?,
                             description: String?,
-                            metadata: Dictionary<String, AnyObject>?)
+                            metadata: Dictionary<String, Any>?)
     {
         if title != nil || description != nil || metadata != nil {
             self.options = TriggerOptions(title: title,

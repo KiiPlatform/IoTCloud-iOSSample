@@ -21,7 +21,7 @@ class CommandNewViewController: CommandEditViewController {
             self.uploadButton.isEnabled = false
 
             // generate actions array
-            var actions = [Dictionary<String, AnyObject>]()
+            var actions = [Dictionary<String, Any>]()
             if let actionsItems = sections[2].items {
                 for actionItem in actionsItems {
                     if let actionCellData = actionItem as? ActionStruct {
