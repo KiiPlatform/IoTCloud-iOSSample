@@ -44,8 +44,8 @@ class LoginViewController: UIViewController {
                         self.performSegue(withIdentifier: "userLogin", sender: nil)
                     }
                 }else {
-                    print(error)
-                    self.showAlert("Login Failed", message: error!.description, completion: { (action) -> Void in
+                    print(error!)
+                    self.showAlert("Login Failed", message: (error as! NSError).description, completion: { (action) -> Void in
                         self.showActivityView(false)
                     })
                 }
@@ -69,8 +69,8 @@ class LoginViewController: UIViewController {
                         self.performSegue(withIdentifier: "userRegister", sender: nil)
                     }
                 }else {
-                    print(error)
-                    self.showAlert("Registerd Failed", message: error!.description, completion: { (action) -> Void in
+                    print(error!)
+                    self.showAlert("Registerd Failed", message: (error as! NSError).description, completion: { (action) -> Void in
                         self.showActivityView(false)
                     })
                 }
