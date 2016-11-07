@@ -111,7 +111,7 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
 
     @IBAction func tapSaveTrigger(_ sender: AnyObject) {
         self.saveTrigger()
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func saveTrigger() {

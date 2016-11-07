@@ -80,12 +80,12 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
         if self.delegate != nil {
             self.delegate!.saveServerCode(self.serverCode!)
         }
-        self.navigationController?.popViewController(animated: true)
+        self.navigationController!.popViewController(animated: true)
     }
     
     //MARK: Table view delegation methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4 + (parameters.count ?? 0)
+        return 4 + (parameters.count)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?

@@ -29,14 +29,9 @@ class NotificationSettingVC: UITableViewController {
 
         alertSwitch.isOn = userNotificationSettings!.types.contains(.alert)
 
-        guard let installationID : String? = self.savedIoTAPI?.installationID else{
-            installationSwitch.isOn = false
-            return
-        }
-        kiiVerboseLog("Push Installation ID :",installationID)
-        installationSwitch.isOn = installationID != nil
-
-
+        installationSwitch.isOn = self.savedIoTAPI?.installationID != nil
+        kiiVerboseLog("Push Installation ID :",
+                      self.savedIoTAPI?.installationID ?? "no installationID")
     }
     @IBAction func alertDidChange(_ sender: UISwitch) {
 
