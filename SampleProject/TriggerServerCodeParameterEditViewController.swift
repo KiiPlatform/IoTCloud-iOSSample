@@ -74,7 +74,7 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
         if delegate != nil {
             delegate!.saveParameter(parameters)
         }
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: Picker delegation methods

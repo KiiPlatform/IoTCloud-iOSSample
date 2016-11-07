@@ -420,7 +420,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
                 delegate!.saveStatePredicate(StatePredicate(condition: Condition(clause: clauseSelected!), triggersWhen: triggersWhenSelected!))
             }
         }
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 
     @IBAction func tapAddClause(_ sender: AnyObject) {

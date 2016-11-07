@@ -80,7 +80,7 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
         if self.delegate != nil {
             self.delegate!.saveServerCode(self.serverCode!)
         }
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     //MARK: Table view delegation methods

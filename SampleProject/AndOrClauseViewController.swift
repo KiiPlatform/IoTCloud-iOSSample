@@ -333,7 +333,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
                 delegate!.saveClause(newClause)
             }
         }
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
 
     @IBAction func tapAddClause(_ sender: AnyObject) {
