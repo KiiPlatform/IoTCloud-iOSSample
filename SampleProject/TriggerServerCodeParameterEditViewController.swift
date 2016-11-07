@@ -118,7 +118,7 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
     //MARK: Table view delegation methods
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // TODO: +Parameters
-        return 1 + (self.parameters.count ?? 0)
+        return 1 + (self.parameters.count)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
