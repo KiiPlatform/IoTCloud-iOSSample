@@ -54,6 +54,6 @@ class TriggerOptionsViewController: KiiBaseTableViewController {
           self.titleField.text,
           description: self.descriptionField.text,
           metadata: metadata)
-        _ = self.navigationController?.popViewController(animated: true)
+        self.navigationController!.popViewController(animated: true)
     }
 }

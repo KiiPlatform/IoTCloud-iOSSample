@@ -173,7 +173,7 @@ class TriggerCommandEditViewController: CommandEditViewController {
                                    metadata: metadata)
         }
 
-        _ = self.navigationController?.popViewController(animated: true)
+        self.navigationController!.popViewController(animated: true)
     }
 
 }

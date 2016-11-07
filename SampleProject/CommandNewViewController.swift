@@ -43,8 +43,7 @@ class CommandNewViewController: CommandEditViewController {
             // call postNewCommand method
             iotAPI!.postNewCommand(schemaName!, schemaVersion: schemaVersion!, actions: actions, completionHandler: { (command, error) -> Void in
                 if command != nil {
-                    _ = self.navigationController?.popViewController(
-                      animated: true)
+                    self.navigationController!.popViewController(animated: true)
                 }else {
                     self.showAlert("Upload Command Failed", error: error, completion: { () -> Void in
                         self.uploadButton.isEnabled = true

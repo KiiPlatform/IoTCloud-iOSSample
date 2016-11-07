@@ -88,7 +88,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
 
     @IBAction func tapSaveTrigger(_ sender: AnyObject) {
         self.saveTrigger()
-        _ = self.navigationController?.popViewController(animated: true)
+        self.navigationController!.popViewController(animated: true)
     }
     func saveTrigger() {
         if let api = iotAPI {
