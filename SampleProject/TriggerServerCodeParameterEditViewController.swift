@@ -10,6 +10,10 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
     var parameters: [ParameterStruct] = []
     var delegate: TriggerServerCodeParameterEditViewControllerDelegate?
     
+    func cancelSelection(_ sender: UIButton){
+        self.dismiss(animated: true, completion: nil);
+    }
+
     @IBAction func tapNewParameter(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.actionSheet)
         let pickerFrame = CGRect(x: 17, y: 52, width: 270, height: 100)
@@ -33,7 +37,11 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
         toolView.addSubview(buttonCancel) //add it to the toolView
         
         //Add the target - target, function to call, the event witch will trigger the function call
-        buttonCancel.addTarget(self, action: "cancelSelection:", for: UIControlEvents.touchDown)
+        buttonCancel.addTarget(
+          self,
+          action: #selector(
+            TriggerServerCodeParameterEditViewController.cancelSelection(_:)),
+          for: UIControlEvents.touchDown)
         
         //add buttons to the view
         let buttonOkFrame: CGRect = CGRect(x: 170, y: 7, width: 100, height: 30) //size & position of the button as placed on the toolView
