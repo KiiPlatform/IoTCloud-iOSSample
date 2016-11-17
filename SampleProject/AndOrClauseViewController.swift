@@ -83,7 +83,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
             return tableView.dequeueReusableCell(withIdentifier: "NewClauseButtonCell", for: indexPath)
         }else {
             let clause = subClauses[indexPath.row]
-            let clauseDict = clause.toNSDictionary() as! [ String : Any ]
+            let clauseDict = clause.makeDictionary()
             let clauseType = ClauseType.getClauseType(clause)!
 
             var cell: UITableViewCell!

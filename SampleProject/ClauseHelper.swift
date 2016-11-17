@@ -49,8 +49,8 @@ enum ClauseType: String {
         }else if clause is NotEqualsClause {
             return ClauseType.NotEquals
         } else if clause is RangeClause {
-            let nsdict = clause.toNSDictionary() as! [ String : Any ]
-            if let _ = nsdict["lowerLimit"], let _ = nsdict["upperLimit"], let lowerIncluded = nsdict["lowerIncluded"] as? Bool, let upperIncluded = nsdict["upperIncluded"] as? Bool{
+            let dict = clause.makeDictionary()
+            if let _ = dict["lowerLimit"], let _ = dict["upperLimit"], let lowerIncluded = dict["lowerIncluded"] as? Bool, let upperIncluded = dict["upperIncluded"] as? Bool{
                 if lowerIncluded && upperIncluded {
                     return ClauseType.BothClose
                 }else if !lowerIncluded && upperIncluded {
@@ -62,7 +62,7 @@ enum ClauseType: String {
                 }
             }
 
-            if let _ = nsdict["lowerLimit"], let lowerIncluded = nsdict["lowerIncluded"] as? Bool {
+            if let _ = dict["lowerLimit"], let lowerIncluded = dict["lowerIncluded"] as? Bool {
                 if lowerIncluded {
                     return ClauseType.GreaterThanOrEquals
                 }else {
@@ -70,7 +70,7 @@ enum ClauseType: String {
                 }
             }
 
-            if let _ = nsdict["upperLimit"], let upperIncluded = nsdict["upperIncluded"] as? Bool{
+            if let _ = dict["upperLimit"], let upperIncluded = dict["upperIncluded"] as? Bool{
                 if upperIncluded {
                     return ClauseType.LessThanOrEquals
                 }else {
@@ -191,7 +191,7 @@ class ClauseHelper {
     }
 
     static func getStatusFromClause(_ clause: Clause) -> String {
-        let clauseDict = clause.toNSDictionary() as! [ String : Any ]
+        let clauseDict = clause.makeDictionary()
         let clauseType = ClauseType.getClauseType(clause)!
 
         if clauseType != ClauseType.NotEquals {
