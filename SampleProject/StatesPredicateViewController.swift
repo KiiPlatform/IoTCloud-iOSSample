@@ -28,7 +28,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
 
     fileprivate var statusToSelect = [String]()
     fileprivate var clauseTypeToSelect = [ClauseType]()
-    fileprivate var triggersWhensToSelect = [TriggersWhen.CONDITION_CHANGED, TriggersWhen.CONDITION_FALSE_TO_TRUE, TriggersWhen.CONDITION_TRUE]
+    fileprivate var triggersWhensToSelect = [TriggersWhen.conditionChanged, TriggersWhen.conditionFalseToTrue, TriggersWhen.conditionTrue]
 
     fileprivate var triggersWhenSelected: TriggersWhen! {
         get {
@@ -139,7 +139,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
                  return tableView.dequeueReusableCell(withIdentifier: "NewClauseButtonCell", for: indexPath)
             }else {
                 let clause = section.items[0] as! Clause
-                let clauseDict = clause.toNSDictionary() as! [ String : Any ]
+                let clauseDict = clause.makeDictionary()
                 let clauseType = ClauseType.getClauseType(clause)!
 
                 var cell: UITableViewCell!

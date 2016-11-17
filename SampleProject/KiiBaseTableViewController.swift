@@ -61,13 +61,13 @@ class KiiBaseTableViewController: UITableViewController {
             switch error! {
             case .connection:
                 errorString = "CONNECTION"
-            case .error_RESPONSE(let errorResponse):
+            case .errorResponse(let errorResponse):
                 errorString = "{statusCode: \(errorResponse.httpStatusCode), errorCode: \(errorResponse.errorCode), message: \(errorResponse.errorMessage)}"
-            case .json_PARSE_ERROR:
+            case .jsonParseError:
                 errorString = "JSON_PARSE_ERROR"
-            case .push_NOT_AVAILABLE:
+            case .pushNotAvailable:
                 errorString = "PUSH_NOT_AVAILABLE"
-            case .unsupported_ERROR:
+            case .unsupportedError:
                 errorString = "UNSUPPORTED_ERROR"
             default:
                 break

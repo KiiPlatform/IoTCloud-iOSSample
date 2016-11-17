@@ -104,8 +104,8 @@ class LoginViewController: UIViewController {
             let appID = dict["appID"] as! String
             let appKey = dict["appKey"] as! String
             let appHost = dict["appHost"] as! String
-            let app = AppBuilder(appID: appID, appKey: appKey, hostName: appHost).build()
-            let api = ThingIFAPIBuilder(app: app, owner: owner).build()
+            let app = AppBuilder(appID: appID, appKey: appKey, hostName: appHost).make()
+            let api = ThingIFAPIBuilder(app: app, owner: owner).make()
             api.saveInstance()
         }else {
             print("please make sure the Properties.plist file exists")
