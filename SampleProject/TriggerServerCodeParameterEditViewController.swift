@@ -2,7 +2,7 @@ import UIKit
 import ThingIFSDK
 
 protocol TriggerServerCodeParameterEditViewControllerDelegate {
-    func saveParameter(parameters: [ParameterStruct])
+    func saveParameter(_ parameters: [ParameterStruct])
 }
 
 class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -10,9 +10,13 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
     var parameters: [ParameterStruct] = []
     var delegate: TriggerServerCodeParameterEditViewControllerDelegate?
     
-    @IBAction func tapNewParameter(sender: AnyObject) {
-        let alertController = UIAlertController(title: "", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let pickerFrame = CGRectMake(17, 52, 270, 100)
+    func cancelSelection(_ sender: UIButton){
+        self.dismiss(animated: true, completion: nil);
+    }
+
+    @IBAction func tapNewParameter(_ sender: AnyObject) {
+        let alertController = UIAlertController(title: "", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let pickerFrame = CGRect(x: 17, y: 52, width: 270, height: 100)
         let picker = UIPickerView(frame: pickerFrame)
         picker.showsSelectionIndicator = true
         picker.dataSource = self
@@ -20,43 +24,47 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
         alertController.view.addSubview(picker)
         
         //Create the toolbar view - the view witch will hold our 2 buttons
-        let toolFrame = CGRectMake(17, 5, 270, 45)
+        let toolFrame = CGRect(x: 17, y: 5, width: 270, height: 45)
         let toolView: UIView = UIView(frame: toolFrame)
         
         //add buttons to the view
-        let buttonCancelFrame: CGRect = CGRectMake(0, 7, 100, 30) //size & position of the button as placed on the toolView
+        let buttonCancelFrame: CGRect = CGRect(x: 0, y: 7, width: 100, height: 30) //size & position of the button as placed on the toolView
         
         //Create the cancel button & set its title
         let buttonCancel: UIButton = UIButton(frame: buttonCancelFrame)
-        buttonCancel.setTitle("Cancel", forState: UIControlState.Normal)
-        buttonCancel.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        buttonCancel.setTitle("Cancel", for: UIControlState())
+        buttonCancel.setTitleColor(UIColor.blue, for: UIControlState())
         toolView.addSubview(buttonCancel) //add it to the toolView
         
         //Add the target - target, function to call, the event witch will trigger the function call
-        buttonCancel.addTarget(self, action: "cancelSelection:", forControlEvents: UIControlEvents.TouchDown)
+        buttonCancel.addTarget(
+          self,
+          action: #selector(
+            TriggerServerCodeParameterEditViewController.cancelSelection(_:)),
+          for: UIControlEvents.touchDown)
         
         //add buttons to the view
-        let buttonOkFrame: CGRect = CGRectMake(170, 7, 100, 30) //size & position of the button as placed on the toolView
+        let buttonOkFrame: CGRect = CGRect(x: 170, y: 7, width: 100, height: 30) //size & position of the button as placed on the toolView
         
         //Create the Select button & set the title
         let buttonOk: UIButton = UIButton(frame: buttonOkFrame)
-        buttonOk.setTitle("Select", forState: UIControlState.Normal)
-        buttonOk.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        buttonOk.setTitle("Select", for: UIControlState())
+        buttonOk.setTitleColor(UIColor.blue, for: UIControlState())
         toolView.addSubview(buttonOk) //add to the subview
         
-        buttonOk.addTarget(self, action: #selector(TriggerServerCodeParameterEditViewController.selectAction(_:)), forControlEvents: UIControlEvents.TouchDown)
+        buttonOk.addTarget(self, action: #selector(TriggerServerCodeParameterEditViewController.selectAction(_:)), for: UIControlEvents.touchDown)
         
         //add the toolbar to the alert controller
         alertController.view.addSubview(toolView)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func tapSaveParameter(sender: AnyObject) {
+    @IBAction func tapSaveParameter(_ sender: AnyObject) {
         
-        for rowIndex in 0...self.tableView.numberOfRowsInSection(0) {
-            let indexPath : NSIndexPath = NSIndexPath(forItem: rowIndex, inSection: 0);
-            let cell : UITableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath);
+        for rowIndex in 0...self.tableView.numberOfRows(inSection: 0) {
+            let indexPath : IndexPath = IndexPath(item: rowIndex, section: 0);
+            let cell : UITableViewCell? = self.tableView.cellForRow(at: indexPath);
             if let textFieldKey = cell?.viewWithTag(200) as? UITextField {
                 parameters[rowIndex - 1].key = textFieldKey.text!
                 if let textFieldValue = cell?.viewWithTag(201) as? UITextField {
@@ -67,19 +75,19 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
                     }
                 }
                 if let switchValue = cell?.viewWithTag(201) as? UISwitch {
-                    parameters[rowIndex - 1].value = switchValue.on
+                    parameters[rowIndex - 1].value = switchValue.isOn
                 }
             }
         }
         if delegate != nil {
             delegate!.saveParameter(parameters)
         }
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController!.popViewController(animated: true)
     }
     
     //MARK: Picker delegation methods
     var selectedType = 0
-    func selectAction(sender: UIButton){
+    func selectAction(_ sender: UIButton){
         if selectedType == 0 {
             parameters.append(ParameterStruct(key: "", value: ""))
         } else if selectedType == 1 {
@@ -88,20 +96,20 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
             parameters.append(ParameterStruct(key: "", value: true))
         }
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths([
-            NSIndexPath(forRow: 1 + parameters.count - 1, inSection: 0)
-            ], withRowAnimation: .Automatic)
+        tableView.insertRows(at: [
+            IndexPath(row: 1 + parameters.count - 1, section: 0)
+            ], with: .automatic)
         tableView.endUpdates()
-        self.dismissViewControllerAnimated(true, completion: nil);
+        self.dismiss(animated: true, completion: nil);
     }
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return 3
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if row == 0 {
             return "String"
         } else if row == 1 {
@@ -111,29 +119,29 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
         }
     }
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedType = row
     }
 
     //MARK: Table view delegation methods
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // TODO: +Parameters
-        return 1 + (self.parameters.count ?? 0)
+        return 1 + (self.parameters.count)
     }
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell?
         if indexPath.row == 0 {
             // endpoint
-            cell = tableView.dequeueReusableCellWithIdentifier("NewParameterButtonCell")
+            cell = tableView.dequeueReusableCell(withIdentifier: "NewParameterButtonCell")
             if cell == nil {
-                cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NewParameterButtonCell")
+                cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "NewParameterButtonCell")
             }
         } else {
             let parameter = parameters[indexPath.row - 1]
             if parameter.isString {
-                cell = tableView.dequeueReusableCellWithIdentifier("StringParameterCell")
+                cell = tableView.dequeueReusableCell(withIdentifier: "StringParameterCell")
                 if cell == nil {
-                    cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "StringParameterCell")
+                    cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "StringParameterCell")
                 }
                 if let textFieldValue = cell!.viewWithTag(201) as? UITextField {
                     if let value = parameter.value as? String {
@@ -141,23 +149,23 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
                     }
                 }
             } else if parameter.isBool {
-                cell = tableView.dequeueReusableCellWithIdentifier("BoolParameterCell")
+                cell = tableView.dequeueReusableCell(withIdentifier: "BoolParameterCell")
                 if cell == nil {
-                    cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "BoolParameterCell")
+                    cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "BoolParameterCell")
                 }
                 if let switchValue = cell!.viewWithTag(201) as? UISwitch {
                     if let value = parameter.value as? Bool {
-                        switchValue.on = value
+                        switchValue.isOn = value
                     }
                 }
             } else if parameter.isInt {
-                cell = tableView.dequeueReusableCellWithIdentifier("NumberParameterCell")
+                cell = tableView.dequeueReusableCell(withIdentifier: "NumberParameterCell")
                 if cell == nil {
-                    cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NumberParameterCell")
+                    cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "NumberParameterCell")
                 }
                 if let textFieldValue = cell!.viewWithTag(201) as? UITextField {
                     if let number = parameter.value as? NSNumber {
-                        textFieldValue.text = String(number)
+                        textFieldValue.text = String(describing: number)
                     }
                 }
             }
@@ -167,10 +175,10 @@ class TriggerServerCodeParameterEditViewController: KiiBaseTableViewController, 
         }
         return cell!
     }
-    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler:{action, indexpath in
-            self.parameters.removeAtIndex(indexPath.row - 1)
-            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteRowAction = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete", handler:{action, indexpath in
+            self.parameters.remove(at: indexPath.row - 1)
+            self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.fade)
         });
         return [deleteRowAction]
     }

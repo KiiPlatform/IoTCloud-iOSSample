@@ -14,14 +14,14 @@ class CommandNewViewController: CommandEditViewController {
     @IBOutlet weak var uploadButton: UIBarButtonItem!
 
     //MARK: IBActions methods
-    @IBAction func tapUpload(sender: AnyObject) {
+    @IBAction func tapUpload(_ sender: AnyObject) {
 
         if iotAPI != nil && target != nil && schema != nil{
             // disable upload button while uploading
-            self.uploadButton.enabled = false
+            self.uploadButton.isEnabled = false
 
             // generate actions array
-            var actions = [Dictionary<String, AnyObject>]()
+            var actions = [Dictionary<String, Any>]()
             if let actionsItems = sections[2].items {
                 for actionItem in actionsItems {
                     if let actionCellData = actionItem as? ActionStruct {
@@ -40,13 +40,14 @@ class CommandNewViewController: CommandEditViewController {
                 schemaVersion = Int(schemaVersionTextFiled.text!)!
             }
 
+            let form = CommandForm(schemaName: schemaName!, schemaVersion: schemaVersion!, actions: actions)
             // call postNewCommand method
-            iotAPI!.postNewCommand(schemaName, schemaVersion: schemaVersion, actions: actions, completionHandler: { (command, error) -> Void in
+            iotAPI!.postNewCommand(form, completionHandler: { (command, error) -> Void in
                 if command != nil {
-                    self.navigationController?.popViewControllerAnimated(true)
+                    self.navigationController!.popViewController(animated: true)
                 }else {
                     self.showAlert("Upload Command Failed", error: error, completion: { () -> Void in
-                        self.uploadButton.enabled = true
+                        self.uploadButton.isEnabled = true
                     })
                 }
             })

@@ -15,13 +15,13 @@ struct CommandsSection {
     init(state: CommandState, commands: [Command]) {
         self.commands = commands
         switch state {
-        case .DELIVERED:
+        case .delivered:
             self.state = "DELIVERED"
-        case .DONE:
+        case .done:
             self.state = "DONE"
-        case .INCOMPLETE:
+        case .incomplete:
             self.state = "INCOMPLETE"
-        case .SENDING:
+        case .sending:
             self.state = "SENDING"
         }
     }
@@ -29,17 +29,17 @@ struct CommandsSection {
 class CommandsListViewController: KiiBaseTableViewController {
     var sections = [CommandsSection]()
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getCommands()
 
     }
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section < sections.count {
             return sections[section].commands.count
         }else {
@@ -47,7 +47,7 @@ class CommandsListViewController: KiiBaseTableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section < sections.count {
             return sections[section].state
         }else {
@@ -55,8 +55,8 @@ class CommandsListViewController: KiiBaseTableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CommandCell", forIndexPath: indexPath)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CommandCell", for: indexPath)
 
         let command = sections[indexPath.section].commands[indexPath.row]
         cell.textLabel?.text = command.commandID
@@ -66,11 +66,11 @@ class CommandsListViewController: KiiBaseTableViewController {
 
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showCommandViewController" {
-            if let targetVC = segue.destinationViewController as? CommandViewController {
+            if let targetVC = segue.destination as? CommandViewController {
                 if let selectedTableViewCell = sender as? UITableViewCell {
-                    if let selectedIndexPath = self.tableView.indexPathForCell(selectedTableViewCell) {
+                    if let selectedIndexPath = self.tableView.indexPath(for: selectedTableViewCell) {
                         let selectedCommand = sections[selectedIndexPath.section].commands[selectedIndexPath.row]
                             targetVC.command = selectedCommand
                     }
@@ -104,7 +104,7 @@ class CommandsListViewController: KiiBaseTableViewController {
             })
         }
     }
-    @IBAction func tapLogout(sender: AnyObject) {
+    @IBAction func tapLogout(_ sender: AnyObject) {
         self.logout { () -> Void in
             self.tabBarController?.viewDidAppear(true)
         }

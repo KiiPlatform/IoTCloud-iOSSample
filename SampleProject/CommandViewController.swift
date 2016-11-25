@@ -12,13 +12,13 @@ import ThingIFSDK
 extension CommandState {
     public func toString() -> String {
         switch self {
-        case .DELIVERED:
+        case .delivered:
             return "DELIVERED"
-        case .DONE:
+        case .done:
             return "DONE"
-        case .INCOMPLETE:
+        case .incomplete:
             return "INCOMPLETE"
-        case .SENDING:
+        case .sending:
             return "SENDING"
         }
     }
@@ -26,13 +26,13 @@ extension CommandState {
 class CommandViewController: KiiBaseTableViewController {
     struct SectionStruct {
         let headerTitle: String!
-        var items: [AnyObject]!
+        var items: [Any]!
     }
 
     var command: Command?
-    private var sections = [SectionStruct]()
+    fileprivate var sections = [SectionStruct]()
 
-    @IBAction func refreshCommand(sender: AnyObject) {
+    @IBAction func refreshCommand(_ sender: AnyObject) {
         if command != nil && iotAPI != nil && target != nil {
             iotAPI!.getCommand(command!.commandID, completionHandler: { (newCommand, error) -> Void in
                 if newCommand != nil {
@@ -45,7 +45,7 @@ class CommandViewController: KiiBaseTableViewController {
             })
         }
     }
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if command != nil {
             self.navigationItem.title = command!.commandID
@@ -53,11 +53,11 @@ class CommandViewController: KiiBaseTableViewController {
         loadSections()
     }
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section < sections.count {
             return sections[section].items.count
         }else {
@@ -65,7 +65,7 @@ class CommandViewController: KiiBaseTableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section < sections.count {
             return sections[section].headerTitle
         }else {
@@ -73,16 +73,16 @@ class CommandViewController: KiiBaseTableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         if sections[indexPath.section].headerTitle == "Actions"  || sections[indexPath.section].headerTitle == "ActionResults" {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ActionItemCell", forIndexPath: indexPath)
-            let action = sections[indexPath.section].items[indexPath.row] as! Dictionary<String, AnyObject>
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ActionItemCell", for: indexPath)
+            let action = sections[indexPath.section].items[indexPath.row] as! Dictionary<String, Any>
             if action.keys.count > 0 {
-                let actionKey: String = Array(action.keys)[0]
+                let actionKey: String = (Array(action.keys) as! [String])[0]
                 cell.textLabel?.text = actionKey
                 var actionString = ""
-                if let actionDict = action[actionKey] as? Dictionary<String, AnyObject> {
+                if let actionDict = action[actionKey] as? Dictionary<String, Any> {
                     for (key, value) in actionDict {
                         actionString = "\(key): \(value) "
                     }
@@ -91,7 +91,7 @@ class CommandViewController: KiiBaseTableViewController {
             }
             return cell
         }else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("CommandItemCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommandItemCell", for: indexPath)
             let item = sections[indexPath.section].items[indexPath.row]
             cell.textLabel?.text = "\(item)"
             return cell
@@ -109,9 +109,9 @@ class CommandViewController: KiiBaseTableViewController {
         }else {
             sections.append(SectionStruct(headerTitle: "Schema", items: [schema!.name]))
             sections.append(SectionStruct(headerTitle: "Version", items: [schema!.version]))
-            sections.append(SectionStruct(headerTitle: "Actions", items: [AnyObject]()))
-            sections.append(SectionStruct(headerTitle: "ActionResults", items: [AnyObject]()))
-            sections.append(SectionStruct(headerTitle: "State", items: [AnyObject]()))
+            sections.append(SectionStruct(headerTitle: "Actions", items: [Any]()))
+            sections.append(SectionStruct(headerTitle: "ActionResults", items: [Any]()))
+            sections.append(SectionStruct(headerTitle: "State", items: [Any]()))
         }
 
     }

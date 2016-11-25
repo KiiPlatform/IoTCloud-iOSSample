@@ -9,7 +9,7 @@
 import UIKit
 
 protocol IntervalStatusCellDelegate {
-    func setIntervalStatus(sender: UITableViewCell, lowerLimitValue: AnyObject, upperLimitValue: AnyObject)
+    func setIntervalStatus(_ sender: UITableViewCell, lowerLimitValue: AnyObject, upperLimitValue: AnyObject)
 }
 
 class IntervalStatusIntTypeCell: UITableViewCell {
@@ -35,7 +35,7 @@ class IntervalStatusIntTypeCell: UITableViewCell {
         didSet{
             if lowerLimitValue != nil {
                 if oldValue == nil || oldValue != lowerLimitValue {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: { () -> Void in
                         self.lowerLimitValueLabel.text = "\(self.lowerLimitValue)"
                         self.lowerLimitValueSlider.value = Float(self.lowerLimitValue)
                     })
@@ -48,7 +48,7 @@ class IntervalStatusIntTypeCell: UITableViewCell {
         didSet{
             if upperLimitValue != nil {
                 if oldValue == nil || oldValue != upperLimitValue {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: { () -> Void in
                         self.upperLimitValueSlider.value = Float(self.upperLimitValue)
                         self.upperLimitValueLabel.text = "\(self.upperLimitValue)"
                     })
@@ -66,7 +66,7 @@ class IntervalStatusIntTypeCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var statusNameLabel: UILabel!
 
-    @IBAction func changeValue(sender: AnyObject) {
+    @IBAction func changeValue(_ sender: AnyObject) {
         let changedSlider = sender as! UISlider
 
         if changedSlider == lowerLimitValueSlider {
@@ -74,7 +74,7 @@ class IntervalStatusIntTypeCell: UITableViewCell {
         }else {
             upperLimitValue = Int(changedSlider.value)
         }
-        delegate?.setIntervalStatus(self, lowerLimitValue: self.lowerLimitValue!, upperLimitValue: self.upperLimitValue!)
+        delegate?.setIntervalStatus(self, lowerLimitValue: self.lowerLimitValue! as AnyObject, upperLimitValue: self.upperLimitValue! as AnyObject)
     }
 
 }

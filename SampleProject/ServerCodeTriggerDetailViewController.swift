@@ -19,11 +19,11 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
     @IBOutlet weak var statePredicateDetailLabel: UILabel!
     
     var trigger: Trigger?
-    private var statePredicateToSave: StatePredicate?
-    private var serverCodeToSave: ServerCode?
-    private var options: TriggerOptions?
+    fileprivate var statePredicateToSave: StatePredicate?
+    fileprivate var serverCodeToSave: ServerCode?
+    fileprivate var options: TriggerOptions?
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if trigger != nil {
             self.navigationItem.title = trigger!.triggerID
@@ -54,9 +54,9 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
         }
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editTriggerServerCode" {
-            if let destVC = segue.destinationViewController as? TriggerServerCodeEditViewController {
+            if let destVC = segue.destination as? TriggerServerCodeEditViewController {
                 if self.serverCodeToSave == nil {
                     destVC.serverCode = ServerCode(endpoint: "", executorAccessToken: "", targetAppID: "", parameters: nil)
                 }else {
@@ -65,7 +65,7 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
                 destVC.delegate = self
             }
         }else if segue.identifier == "editTriggerPredicate" {
-            if let destVC = segue.destinationViewController as? StatesPredicateViewController {
+            if let destVC = segue.destination as? StatesPredicateViewController {
                 if self.statePredicateToSave == nil {
                     destVC.statePredicate = self.trigger?.predicate as? StatePredicate
                 }else {
@@ -74,7 +74,7 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
                 destVC.delegate = self
             }
         } else if segue.identifier == "editTriggerOptions" {
-            if let destVC = segue.destinationViewController
+            if let destVC = segue.destination
                     as? TriggerOptionsViewController {
                 if let options = self.options {
                     destVC.options = options
@@ -90,17 +90,17 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
     }
 
     //MARK: delegate function of TriggerCommandEditViewControllerDelegate, called when save command
-    func saveServerCode(newServerCode: ServerCode) {
+    func saveServerCode(_ newServerCode: ServerCode) {
         self.serverCodeToSave = newServerCode
     }
     
-    func saveStatePredicate(newPredicate: StatePredicate) {
+    func saveStatePredicate(_ newPredicate: StatePredicate) {
         self.statePredicateToSave = newPredicate
     }
 
-    func saveTriggerOptions(title: String?,
+    func saveTriggerOptions(_ title: String?,
                             description: String?,
-                            metadata: Dictionary<String, AnyObject>?)
+                            metadata: Dictionary<String, Any>?)
     {
         if title != nil || description != nil || metadata != nil {
             self.options = TriggerOptions(title: title,
@@ -109,9 +109,9 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
         }
     }
 
-    @IBAction func tapSaveTrigger(sender: AnyObject) {
+    @IBAction func tapSaveTrigger(_ sender: AnyObject) {
         self.saveTrigger()
-        self.navigationController?.popViewControllerAnimated(true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     func saveTrigger() {

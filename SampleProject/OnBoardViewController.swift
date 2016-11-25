@@ -17,16 +17,17 @@ class OnBoardViewController: KiiBaseTableViewController {
     @IBOutlet weak var thingIDTextField: UITextField!
 
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
 
-    @IBAction func tapOnboardWithVendorThingID(sender: AnyObject) {
-        if let vendorThingID = vendorThingID.text, thingPassword = thingPassTextField.text {
+    @IBAction func tapOnboardWithVendorThingID(_ sender: AnyObject) {
+        if let vendorThingID = vendorThingID.text, let thingPassword = thingPassTextField.text {
             showActivityView(true)
-            self.iotAPI?.onboard(vendorThingID, thingPassword: thingPassword, thingType: thingTypeTextField.text, thingProperties: nil, completionHandler: { (target, error) -> Void in
+            let options = OnboardWithVendorThingIDOptions(thingType: thingTypeTextField.text)
+            self.iotAPI?.onboardWith(vendorThingID: vendorThingID, thingPassword: thingPassword, options: options, completionHandler: { (target, error) -> Void in
                 if target != nil {
-                    self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                    self.navigationController?.dismiss(animated: true, completion: nil)
                     self.showActivityView(false)
                 }else {
                     self.showAlert("Onboard Failed", error: error, completion: { () -> Void in
@@ -36,12 +37,12 @@ class OnBoardViewController: KiiBaseTableViewController {
             })
         }
     }
-    @IBAction func tapOnBoardWithThingID(sender: AnyObject) {
-        if let thingID = thingIDTextField.text, thingPassword = thingPassTextField.text {
+    @IBAction func tapOnBoardWithThingID(_ sender: AnyObject) {
+        if let thingID = thingIDTextField.text, let thingPassword = thingPassTextField.text {
             showActivityView(true)
-            self.iotAPI?.onboard(thingID, thingPassword: thingPassword, completionHandler: { (target, error) -> Void in
+            self.iotAPI?.onboardWith(thingID: thingID, thingPassword: thingPassword, completionHandler: { (target, error) -> Void in
                 if target != nil {
-                    self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                    self.navigationController?.dismiss(animated: true, completion: nil)
                     self.showActivityView(false)
                 }else {
                     self.showAlert("Onboard Failed", error: error, completion: { () -> Void in

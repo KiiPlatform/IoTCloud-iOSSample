@@ -1,1 +1,1 @@
-github "KiiPlatform/thing-if-iOSSDK" >= 0.13.1
+github "KiiPlatform/thing-if-iOSSDK" "migrate-swift3.0"

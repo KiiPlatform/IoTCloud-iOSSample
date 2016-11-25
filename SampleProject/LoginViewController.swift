@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         userLogined = false
         self.showActivityView(false)
@@ -30,22 +30,22 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-    @IBAction func tapLogin(sender: AnyObject) {
+    @IBAction func tapLogin(_ sender: AnyObject) {
 
         self.showActivityView(true)
 
-        if let userName = userNameTextField.text, password = passwordTextField.text {
+        if let userName = userNameTextField.text, let password = passwordTextField.text {
             KiiUser.authenticate(userName, withPassword: password, andBlock: { (user, error) -> Void in
                 if error == nil {
-                    if let userID = user!.userID, accessToken = user!.accessToken {
+                    if let userID = user!.userID, let accessToken = user!.accessToken {
                         self.initThingIFAPI(userID, accessToken: accessToken)
                         self.showActivityView(false)
                         self.userLogined = true
-                        self.performSegueWithIdentifier("userLogin", sender: nil)
+                        self.performSegue(withIdentifier: "userLogin", sender: nil)
                     }
                 }else {
-                    print(error)
-                    self.showAlert("Login Failed", message: error!.description, completion: { (action) -> Void in
+                    print(error!)
+                    self.showAlert("Login Failed", message: (error as! NSError).description, completion: { (action) -> Void in
                         self.showActivityView(false)
                     })
                 }
@@ -55,22 +55,22 @@ class LoginViewController: UIViewController {
             print("please input username and password")
         }
     }
-    @IBAction func tapRegister(sender: AnyObject) {
+    @IBAction func tapRegister(_ sender: AnyObject) {
 
         self.showActivityView(true)
 
-        if let userName = userNameTextField.text, password = passwordTextField.text {
+        if let userName = userNameTextField.text, let password = passwordTextField.text {
             let newUser = KiiUser(username: userName, andPassword: password)
-            newUser.performRegistrationWithBlock({ (user, error) -> Void in
+            newUser.performRegistration({ (user, error) -> Void in
                 if error == nil {
-                    if let userID = user!.userID, accessToken = user!.accessToken {
+                    if let userID = user!.userID, let accessToken = user!.accessToken {
                         self.initThingIFAPI(userID, accessToken: accessToken)
                         self.userLogined = true
-                        self.performSegueWithIdentifier("userRegister", sender: nil)
+                        self.performSegue(withIdentifier: "userRegister", sender: nil)
                     }
                 }else {
-                    print(error)
-                    self.showAlert("Registerd Failed", message: error!.description, completion: { (action) -> Void in
+                    print(error!)
+                    self.showAlert("Registerd Failed", message: (error as! NSError).description, completion: { (action) -> Void in
                         self.showActivityView(false)
                     })
                 }
@@ -79,7 +79,7 @@ class LoginViewController: UIViewController {
         }
     }
 
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "userLogin" || identifier == "userRegister" {
             if self.userLogined {
                 return true
@@ -92,20 +92,20 @@ class LoginViewController: UIViewController {
     }
 
     // init ThingIFAPI after success to login/register as KiiUser
-    func initThingIFAPI(ownerID: String, accessToken: String) {
+    func initThingIFAPI(_ ownerID: String, accessToken: String) {
         let owner = Owner(typedID: TypedID(type: "user", id: ownerID), accessToken: accessToken)
 
         // init iotAPI with values from Properties.plist, please make sure to put correct values
         var propertiesDict: NSDictionary?
-        if let path = NSBundle.mainBundle().pathForResource("Properties", ofType: "plist") {
+        if let path = Bundle.main.path(forResource: "Properties", ofType: "plist") {
             propertiesDict = NSDictionary(contentsOfFile: path)
         }
         if let dict = propertiesDict {
             let appID = dict["appID"] as! String
             let appKey = dict["appKey"] as! String
             let appHost = dict["appHost"] as! String
-            let app = AppBuilder(appID: appID, appKey: appKey, hostName: appHost).build()
-            let api = ThingIFAPIBuilder(app: app, owner: owner).build()
+            let app = AppBuilder(appID: appID, appKey: appKey, hostName: appHost).make()
+            let api = ThingIFAPIBuilder(app: app, owner: owner).make()
             api.saveInstance()
         }else {
             print("please make sure the Properties.plist file exists")
@@ -113,13 +113,13 @@ class LoginViewController: UIViewController {
 
     }
 
-    func showActivityView(show: Bool) {
-        if show && self.activityIndicatorView.hidden{
-            self.activityIndicatorView.hidden = false
+    func showActivityView(_ show: Bool) {
+        if show && self.activityIndicatorView.isHidden{
+            self.activityIndicatorView.isHidden = false
             self.activityIndicatorView.startAnimating()
-        }else if !(show || self.activityIndicatorView.hidden) {
+        }else if !(show || self.activityIndicatorView.isHidden) {
             self.activityIndicatorView.stopAnimating()
-            self.activityIndicatorView.hidden = true
+            self.activityIndicatorView.isHidden = true
         }
     }
 }

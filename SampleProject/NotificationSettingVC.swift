@@ -23,46 +23,41 @@ class NotificationSettingVC: UITableViewController {
             // do nothing
         }
     }
-    override func viewWillAppear(animated: Bool) {
-        let userNotificationSettings = UIApplication.sharedApplication().currentUserNotificationSettings()
+    override func viewWillAppear(_ animated: Bool) {
+        let userNotificationSettings = UIApplication.shared.currentUserNotificationSettings
 
 
-        alertSwitch.on = userNotificationSettings!.types.contains(.Alert)
+        alertSwitch.isOn = userNotificationSettings!.types.contains(.alert)
 
-        guard let installationID : String! = self.savedIoTAPI?.installationID else{
-            installationSwitch.on = false
-            return
-        }
-        kiiVerboseLog("Push Installation ID :",installationID)
-        installationSwitch.on = installationID != nil
-
-
+        installationSwitch.isOn = self.savedIoTAPI?.installationID != nil
+        kiiVerboseLog("Push Installation ID :",
+                      self.savedIoTAPI?.installationID ?? "no installationID")
     }
-    @IBAction func alertDidChange(sender: UISwitch) {
+    @IBAction func alertDidChange(_ sender: UISwitch) {
 
-        if sender.on {
-            UIApplication.sharedApplication().registerUserNotificationSettings(UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert, categories: nil))
+        if sender.isOn {
+            UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: UIUserNotificationType.alert, categories: nil))
         }else{
 
-            let settings = UIUserNotificationSettings(forTypes:.None, categories: nil)
-            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+            let settings = UIUserNotificationSettings(types:UIUserNotificationType(), categories: nil)
+            UIApplication.shared.registerUserNotificationSettings(settings)
         }
 
     }
-        @IBAction func didChangeInstallation(sender: UISwitch) {
+        @IBAction func didChangeInstallation(_ sender: UISwitch) {
 
-        if sender.on {
-            if let data = NSUserDefaults.standardUserDefaults().objectForKey("deviceToken") as? NSData {
+        if sender.isOn {
+            if let data = UserDefaults.standard.object(forKey: "deviceToken") as? Data {
                 savedIoTAPI?.installPush(data, development: true, completionHandler: { (_, error) -> Void in
                     if error != nil {
-                        self.installationSwitch.on = false
+                        self.installationSwitch.isOn = false
                     }
                 })
             }
         }else{
             savedIoTAPI?.uninstallPush(nil, completionHandler: { (error) -> Void in
                 if error != nil {
-                    self.installationSwitch.on = true
+                    self.installationSwitch.isOn = true
                 }
             })
         }

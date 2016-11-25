@@ -11,7 +11,7 @@ import ThingIFSDK
 
 protocol StatesPredicateViewControllerDelegate {
 
-    func saveStatePredicate(newPredicate: StatePredicate)
+    func saveStatePredicate(_ newPredicate: StatePredicate)
 }
 
 class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDataSource, UIPickerViewDelegate, StatusTableViewCellDelegate, IntervalStatusCellDelegate, AndOrClauseViewControllerDelegate {
@@ -24,13 +24,13 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     var statePredicate: StatePredicate?
     var delegate: StatesPredicateViewControllerDelegate?
 
-    private var sections = [SectionStruct]()
+    fileprivate var sections = [SectionStruct]()
 
-    private var statusToSelect = [String]()
-    private var clauseTypeToSelect = [ClauseType]()
-    private var triggersWhensToSelect = [TriggersWhen.CONDITION_CHANGED, TriggersWhen.CONDITION_FALSE_TO_TRUE, TriggersWhen.CONDITION_TRUE]
+    fileprivate var statusToSelect = [String]()
+    fileprivate var clauseTypeToSelect = [ClauseType]()
+    fileprivate var triggersWhensToSelect = [TriggersWhen.conditionChanged, TriggersWhen.conditionFalseToTrue, TriggersWhen.conditionTrue]
 
-    private var triggersWhenSelected: TriggersWhen! {
+    fileprivate var triggersWhenSelected: TriggersWhen! {
         get {
             var triggersWhen: TriggersWhen?
             if sections[0].items.count > 0 {
@@ -43,9 +43,9 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
                 sections[0].items = [newValue]
             }
     }
-    private var triggersWhenTempSelected: TriggersWhen? // it is setted each time when user select item from pickerView, as soon as tapping "set" button of pickerview, it will be assigned to triggersWhenSelected
+    fileprivate var triggersWhenTempSelected: TriggersWhen? // it is setted each time when user select item from pickerView, as soon as tapping "set" button of pickerview, it will be assigned to triggersWhenSelected
 
-    private var clauseSelected: Clause! {
+    fileprivate var clauseSelected: Clause! {
         get {
             var clause: Clause?
             if sections[1].items.count > 0 {
@@ -57,10 +57,10 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
             sections[1].items = [newValue]
         }
     }
-    private var clauseTypeTempSelected: ClauseType?
-    private var statusTempSelected: String?
+    fileprivate var clauseTypeTempSelected: ClauseType?
+    fileprivate var statusTempSelected: String?
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // init actionSchemasToSelect from predefined schemaDict
         if schema != nil && statusToSelect.count == 0 {
@@ -88,11 +88,11 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     }
 
     //MARK: - TableView methods
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section < sections.count {
             if sections[section].headerTitle == "Condition" {// always is 1, if there is no clause, will show "Add Clause" button
                 return 1
@@ -104,7 +104,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         }
     }
 
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section < sections.count {
             return sections[section].headerTitle
         }else {
@@ -112,7 +112,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         }
     }
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if sections[indexPath.section].headerTitle == "Condition" {
             if sections[indexPath.section].items.count > 0 {
                 if let clause = sections[indexPath.section].items[indexPath.row] as? RangeClause {
@@ -129,27 +129,27 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let section = sections[indexPath.section]
 
         if section.headerTitle == "Condition"{
 
             if section.items.count == 0 {
-                 return tableView.dequeueReusableCellWithIdentifier("NewClauseButtonCell", forIndexPath: indexPath)
+                 return tableView.dequeueReusableCell(withIdentifier: "NewClauseButtonCell", for: indexPath)
             }else {
                 let clause = section.items[0] as! Clause
-                let clauseDict = clause.toNSDictionary()
+                let clauseDict = clause.makeDictionary()
                 let clauseType = ClauseType.getClauseType(clause)!
 
                 var cell: UITableViewCell!
 
                 if clause is AndClause || clause is OrClause {
-                    cell = tableView.dequeueReusableCellWithIdentifier("AndOrClauseCell", forIndexPath: indexPath)
+                    cell = tableView.dequeueReusableCell(withIdentifier: "AndOrClauseCell", for: indexPath)
                     cell.textLabel?.text = "\(clauseType.rawValue) Clause"
                 }else {
                     // only for int and bool value
-                    var singleValue: AnyObject?
+                    var singleValue: Any?
                     var lowerLimitValue: Int?
                     var upperLimitValue: Int?
                     let status = ClauseHelper.getStatusFromClause(clause)
@@ -179,7 +179,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
 
                     switch statusType {
                     case StatusType.BoolType:
-                        let boolCell = tableView.dequeueReusableCellWithIdentifier("BoolCell", forIndexPath: indexPath) as! StatusBoolTypeTableViewCell
+                        let boolCell = tableView.dequeueReusableCell(withIdentifier: "BoolCell", for: indexPath) as! StatusBoolTypeTableViewCell
                         boolCell.value = singleValue as? Bool
                         boolCell.titleLabel.text = clauseType.rawValue
                         boolCell.statusNameLabel.text = status
@@ -189,7 +189,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
                     case StatusType.IntType:
 
                         if singleValue != nil {
-                            let intCell = tableView.dequeueReusableCellWithIdentifier("IntCell", forIndexPath: indexPath) as! StatusIntTypeTableViewCell
+                            let intCell = tableView.dequeueReusableCell(withIdentifier: "IntCell", for: indexPath) as! StatusIntTypeTableViewCell
                             intCell.statusNameLabel.text = status
                             intCell.titleLabel.text = clauseType.rawValue
                             intCell.value = singleValue as? Int
@@ -200,7 +200,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
 
                         }
                         if lowerLimitValue != nil && upperLimitValue != nil {
-                            let intervalCell = tableView.dequeueReusableCellWithIdentifier("IntervalCell", forIndexPath: indexPath) as! IntervalStatusIntTypeCell
+                            let intervalCell = tableView.dequeueReusableCell(withIdentifier: "IntervalCell", for: indexPath) as! IntervalStatusIntTypeCell
                             intervalCell.titleLabel.text = clauseType.rawValue
                             intervalCell.upperLimitValue = upperLimitValue!
                             intervalCell.lowerLimitValue = lowerLimitValue!
@@ -220,18 +220,18 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
             }
         }else {
             if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("TriggersWhenCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TriggersWhenCell", for: indexPath)
             let itemValue = sections[indexPath.section].items[indexPath.row]
             cell.textLabel?.text = "\(itemValue)"
             return cell
             }else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("TriggersWhenPickerCell", forIndexPath: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: "TriggersWhenPickerCell", for: indexPath)
                 return cell
             }
         }
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sectionStruct = sections[indexPath.section]
 
         if sectionStruct.headerTitle == "TriggersWhen" {
@@ -239,7 +239,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         }
     }
 
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if sections[indexPath.section].headerTitle == "Condition" {
             if sections[indexPath.section].items.count == 0 {
                 return false
@@ -251,19 +251,19 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         }
     }
 
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 
-        if editingStyle == UITableViewCellEditingStyle.Delete {
-            sections[indexPath.section].items.removeAtIndex(indexPath.row)
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            sections[indexPath.section].items.remove(at: indexPath.row)
             self.tableView.reloadData()
         }
     }
 
 
-    func showPickerView(sentBy: String) {
+    func showPickerView(_ sentBy: String) {
 
-        let alertController = UIAlertController(title: "", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.ActionSheet)
-        let pickerFrame = CGRectMake(17, 52, 270, 100)
+        let alertController = UIAlertController(title: "", message: "\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.actionSheet)
+        let pickerFrame = CGRect(x: 17, y: 52, width: 270, height: 100)
         let picker = UIPickerView(frame: pickerFrame)
         picker.showsSelectionIndicator = true
         picker.dataSource = self
@@ -272,75 +272,75 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
 
         if sentBy == "TriggersWhen"{
             picker.tag = 1
-            if let selectedIndex = self.triggersWhensToSelect.indexOf(triggersWhenSelected) {
+            if let selectedIndex = self.triggersWhensToSelect.index(of: triggersWhenSelected) {
                 picker.selectRow(selectedIndex+1, inComponent: 0, animated: false)
             }
         }else{
             picker.tag = 2
 
             if let statusSelected = self.statusTempSelected {
-                if let selectedIndex = self.statusToSelect.indexOf(statusSelected) {
+                if let selectedIndex = self.statusToSelect.index(of: statusSelected) {
                     picker.selectRow(selectedIndex+1, inComponent: 1, animated: false)
                 }
             }
 
             if let clauseTypeSelected = self.clauseTypeTempSelected {
-                if let selectedIndex = self.clauseTypeToSelect.indexOf(clauseTypeSelected) {
+                if let selectedIndex = self.clauseTypeToSelect.index(of: clauseTypeSelected) {
                     picker.selectRow(selectedIndex+1, inComponent: 0, animated: false)
                 }
             }
         }
 
         //Create the toolbar view - the view witch will hold our 2 buttons
-        let toolFrame = CGRectMake(17, 5, 270, 45)
+        let toolFrame = CGRect(x: 17, y: 5, width: 270, height: 45)
         let toolView: UIView = UIView(frame: toolFrame)
 
         //add buttons to the view
-        let buttonCancelFrame: CGRect = CGRectMake(0, 7, 100, 30) //size & position of the button as placed on the toolView
+        let buttonCancelFrame: CGRect = CGRect(x: 0, y: 7, width: 100, height: 30) //size & position of the button as placed on the toolView
 
         //Create the cancel button & set its title
         let buttonCancel: UIButton = UIButton(frame: buttonCancelFrame)
-        buttonCancel.setTitle("Cancel", forState: UIControlState.Normal)
-        buttonCancel.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        buttonCancel.setTitle("Cancel", for: UIControlState())
+        buttonCancel.setTitleColor(UIColor.blue, for: UIControlState())
         toolView.addSubview(buttonCancel) //add it to the toolView
 
         //Add the target - target, function to call, the event witch will trigger the function call
-        buttonCancel.addTarget(self, action: #selector(StatesPredicateViewController.cancelPicker(_:)), forControlEvents: UIControlEvents.TouchDown)
+        buttonCancel.addTarget(self, action: #selector(StatesPredicateViewController.cancelPicker(_:)), for: UIControlEvents.touchDown)
 
 
         //add buttons to the view
-        let buttonOkFrame: CGRect = CGRectMake(170, 7, 100, 30) //size & position of the button as placed on the toolView
+        let buttonOkFrame: CGRect = CGRect(x: 170, y: 7, width: 100, height: 30) //size & position of the button as placed on the toolView
 
         //Create the Select button & set the title
         let buttonOk: UIButton = UIButton(frame: buttonOkFrame)
-        buttonOk.setTitle("Select", forState: UIControlState.Normal)
-        buttonOk.setTitleColor(UIColor.blueColor(), forState: UIControlState.Normal)
+        buttonOk.setTitle("Select", for: UIControlState())
+        buttonOk.setTitleColor(UIColor.blue, for: UIControlState())
         toolView.addSubview(buttonOk) //add to the subview
 
         if sentBy == "TriggersWhen" {
-            buttonOk.addTarget(self, action: #selector(StatesPredicateViewController.selectTriggersWhen(_:)), forControlEvents: UIControlEvents.TouchDown)
+            buttonOk.addTarget(self, action: #selector(StatesPredicateViewController.selectTriggersWhen(_:)), for: UIControlEvents.touchDown)
         }else {
-            buttonOk.addTarget(self, action: #selector(StatesPredicateViewController.selectClauseAndStatus(_:)), forControlEvents: UIControlEvents.TouchDown)
+            buttonOk.addTarget(self, action: #selector(StatesPredicateViewController.selectClauseAndStatus(_:)), for: UIControlEvents.touchDown)
         }
 
 
         //add the toolbar to the alert controller
         alertController.view.addSubview(toolView)
 
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
 
     }
 
     //MARK: Custom methods
-    func selectTriggersWhen(sender: UIButton){
+    func selectTriggersWhen(_ sender: UIButton){
         if triggersWhenTempSelected != nil {
             triggersWhenSelected = triggersWhenTempSelected
             self.tableView.reloadData()
         }
-        self.dismissViewControllerAnimated(true, completion: nil);
+        self.dismiss(animated: true, completion: nil);
     }
 
-    func selectClauseAndStatus(sender: UIButton) {
+    func selectClauseAndStatus(_ sender: UIButton) {
         if let clauseTypeSelected = clauseTypeTempSelected {
             if clauseTypeSelected == ClauseType.And {
                 clauseSelected = AndClause()
@@ -355,15 +355,15 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
             }
             self.tableView.reloadData()
         }
-        self.dismissViewControllerAnimated(true, completion: nil);
+        self.dismiss(animated: true, completion: nil);
     }
 
-    func cancelPicker(sender: UIButton){
-        self.dismissViewControllerAnimated(true, completion: nil);
+    func cancelPicker(_ sender: UIButton){
+        self.dismiss(animated: true, completion: nil);
     }
 
     //MARK: Picker delegation methods
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         if pickerView.tag == 1 {
             return 1
         }else {
@@ -371,7 +371,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         }
     }
 
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == 1 {
             return self.triggersWhensToSelect.count+1
         }else {
@@ -383,7 +383,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         }
     }
 
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if row == 0 {
             return ""
         }else {
@@ -399,7 +399,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         }
     }
 
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if row != 0 {
             if pickerView.tag == 1 {
                 self.triggersWhenTempSelected = triggersWhensToSelect[row-1]
@@ -414,22 +414,22 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     }
 
     //MARK: IBActions methods
-    @IBAction func tapSave(sender: AnyObject) {
+    @IBAction func tapSave(_ sender: AnyObject) {
         if self.delegate != nil {
             if triggersWhenSelected != nil && clauseSelected != nil {
                 delegate!.saveStatePredicate(StatePredicate(condition: Condition(clause: clauseSelected!), triggersWhen: triggersWhenSelected!))
             }
         }
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController!.popViewController(animated: true)
     }
 
-    @IBAction func tapAddClause(sender: AnyObject) {
+    @IBAction func tapAddClause(_ sender: AnyObject) {
         self.showPickerView("AddClause")
     }
 
 
-    func setStatus(sender: UITableViewCell, value: AnyObject) {
-        let indexPath = self.tableView.indexPathForCell(sender)!
+    func setStatus(_ sender: UITableViewCell, value: Any) {
+        let indexPath = self.tableView.indexPath(for: sender)!
         var section = sections[indexPath.section]
         let clause = section.items[indexPath.row] as! Clause
         let status = ClauseHelper.getStatusFromClause(clause)
@@ -441,8 +441,8 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         }
     }
 
-    func setIntervalStatus(sender: UITableViewCell, lowerLimitValue: AnyObject, upperLimitValue: AnyObject) {
-        let indexPath = self.tableView.indexPathForCell(sender)!
+    func setIntervalStatus(_ sender: UITableViewCell, lowerLimitValue: AnyObject, upperLimitValue: AnyObject) {
+        let indexPath = self.tableView.indexPath(for: sender)!
         var section = sections[indexPath.section]
         let clause = section.items[indexPath.row] as! RangeClause
         let status = ClauseHelper.getStatusFromClause(clause)
@@ -455,11 +455,11 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
 
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "editAndOrClause" {
-            if let destVC = segue.destinationViewController as? AndOrClauseViewController {
+            if let destVC = segue.destination as? AndOrClauseViewController {
                 let cell = sender as! UITableViewCell
-                let selectedIndexPath = self.tableView.indexPathForCell(cell)!
+                let selectedIndexPath = self.tableView.indexPath(for: cell)!
                 let andOrClause = sections[1].items[selectedIndexPath.row] as? Clause
                 destVC.andOrClause = andOrClause
                 destVC.delegate = self
@@ -467,7 +467,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         }
     }
 
-    func saveClause(newClause: Clause) {
+    func saveClause(_ newClause: Clause) {
         var section = sections[1]
         section.items = [newClause]
         sections[1] = section
