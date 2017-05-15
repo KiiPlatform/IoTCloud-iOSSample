@@ -10,9 +10,7 @@ import UIKit
 import ThingIFSDK
 
 struct CommandStruct {
-    let schemaName: String!
-    let schemaVersion: Int!
-    let actions: [Dictionary<String, Any>]!
+    let actions: [AliasAction]!
     let targetID: String?
     let title: String?
     let commandDescription: String?
@@ -34,9 +32,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         self.triggerID = trigger.triggerID
         let command = trigger.command!
         self.commandStructToSave = CommandStruct(
-          schemaName: command.schemaName,
-          schemaVersion: command.schemaVersion,
-          actions: command.actions,
+          actions: command.aliasActions,
           targetID: command.targetID.id,
           title: command.title,
           commandDescription: command.commandDescription,
@@ -46,7 +42,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
              trigger.triggerDescription != nil ||
              trigger.metadata != nil {
             self.options = TriggerOptions(
-              title: trigger.title,
+              trigger.title,
               triggerDescription: trigger.triggerDescription,
               metadata: trigger.metadata)
         }
@@ -57,7 +53,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         self.navigationItem.title = self.triggerID ?? "Create New Trigger"
 
         if let command = self.commandStructToSave {
-            commandDetailLabel.text = "\(command.schemaName):\(command.schemaVersion), actions(\(command.actions.count))"
+            commandDetailLabel.text = "actions(\(command.actions.count))"
         } else {
             commandDetailLabel.text = " "
         }
@@ -94,7 +90,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
         if let api = iotAPI {
             let commandTargetID: TypedID?
             if let id = self.commandStructToSave?.targetID {
-                commandTargetID = TypedID(type: "thing", id: id)
+                commandTargetID = TypedID(TypedID.Types.thing, id: id)
             } else {
                 commandTargetID = nil
             }
@@ -104,9 +100,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                 api.patchTrigger(
                   triggerID,
                   triggeredCommandForm: TriggeredCommandForm(
-                    schemaName: command.schemaName,
-                    schemaVersion: command.schemaVersion,
-                    actions: command.actions,
+                    command.actions,
                     targetID: commandTargetID,
                     title: command.title,
                     commandDescription: command.commandDescription,
@@ -122,9 +116,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                       let predicate = self.statePredicateToSave {
                 api.postNewTrigger(
                   TriggeredCommandForm(
-                    schemaName: command.schemaName,
-                    schemaVersion: command.schemaVersion,
-                    actions: command.actions,
+                    command.actions,
                     targetID: commandTargetID,
                     title: command.title,
                     commandDescription: command.commandDescription,
@@ -143,16 +135,12 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
 
     //MARK: delegate function of TriggerCommandEditViewControllerDelegate, called when save command
     func saveCommands(
-      _ schemaName: String,
-      schemaVersion: Int,
-      actions: [Dictionary<String, Any>],
+      _ actions: [AliasAction],
       targetID: String?,
       title: String?,
       commandDescription: String?,
       metadata: Dictionary<String, Any>?) {
         self.commandStructToSave = CommandStruct(
-          schemaName: schemaName,
-          schemaVersion: schemaVersion,
           actions: actions,
           targetID: targetID,
           title: title,
@@ -169,7 +157,7 @@ class CommandTriggerDetailViewController: KiiBaseTableViewController, TriggerCom
                             metadata: Dictionary<String, Any>?)
     {
         if title != nil || description != nil || metadata != nil {
-            self.options = TriggerOptions(title: title,
+            self.options = TriggerOptions(title,
                                           triggerDescription: description,
                                           metadata: metadata)
         }

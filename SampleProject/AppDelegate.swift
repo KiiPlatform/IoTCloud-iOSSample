@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         smartLightDemoSchema.addStatus("power", statusType: StatusType.BoolType)
         smartLightDemoSchema.addStatus("brightness", statusType: StatusType.IntType, minValue: 0, maxvalue: 100)
         smartLightDemoSchema.addStatus("color", statusType: StatusType.IntType, minValue: 0, maxvalue: 16777215)
+        smartLightDemoSchema.addStatus("colorTemperature", statusType: StatusType.IntType, minValue: 0, maxvalue: 16777215)
         if !smartLightDemoSchema.addAction("turnPower", statusName: "power") {
             return false
         }
@@ -42,6 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
         if !smartLightDemoSchema.addAction("setColor", statusName: "color") {
+            return false
+        }
+        if !smartLightDemoSchema.addAction("setColorTemperature", statusName: "colorTemperature") {
             return false
         }
         // save schema

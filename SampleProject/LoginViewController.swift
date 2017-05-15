@@ -93,7 +93,7 @@ class LoginViewController: UIViewController {
 
     // init ThingIFAPI after success to login/register as KiiUser
     func initThingIFAPI(_ ownerID: String, accessToken: String) {
-        let owner = Owner(typedID: TypedID(type: "user", id: ownerID), accessToken: accessToken)
+        let owner = Owner(TypedID(TypedID.Types.user, id: ownerID), accessToken: accessToken)
 
         // init iotAPI with values from Properties.plist, please make sure to put correct values
         var propertiesDict: NSDictionary?
@@ -104,8 +104,8 @@ class LoginViewController: UIViewController {
             let appID = dict["appID"] as! String
             let appKey = dict["appKey"] as! String
             let appHost = dict["appHost"] as! String
-            let app = AppBuilder(appID: appID, appKey: appKey, hostName: appHost).make()
-            let api = ThingIFAPIBuilder(app: app, owner: owner).make()
+            let app = KiiApp(appID, appKey: appKey, hostName: appHost)
+            let api = ThingIFAPI(app, owner: owner)
             api.saveInstance()
         }else {
             print("please make sure the Properties.plist file exists")

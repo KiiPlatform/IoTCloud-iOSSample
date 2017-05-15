@@ -15,8 +15,8 @@ struct CommandsSection {
     init(state: CommandState, commands: [Command]) {
         self.commands = commands
         switch state {
-        case .delivered:
-            self.state = "DELIVERED"
+        case .sendFailed:
+            self.state = "FAILED"
         case .done:
             self.state = "DONE"
         case .incomplete:
@@ -60,7 +60,7 @@ class CommandsListViewController: KiiBaseTableViewController {
 
         let command = sections[indexPath.section].commands[indexPath.row]
         cell.textLabel?.text = command.commandID
-        cell.detailTextLabel?.text = "\(command.schemaName):\(command.schemaVersion), actions(\(command.actions.count))"
+        cell.detailTextLabel?.text = "actions(\(command.aliasActions.count))"
 
         return cell
 
@@ -87,10 +87,10 @@ class CommandsListViewController: KiiBaseTableViewController {
                 if commands != nil {
                     var commandStateDict = Dictionary<CommandState, [Command]>()
                     for command in commands! {
-                        if let commandsArray = commandStateDict[command.commandState]{
-                            commandStateDict[command.commandState] = commandsArray+[command]
+                        if let commandsArray = commandStateDict[command.commandState!]{
+                            commandStateDict[command.commandState!] = commandsArray+[command]
                         }else {
-                            commandStateDict[command.commandState] = [command]
+                            commandStateDict[command.commandState!] = [command]
                         }
                     }
                     self.sections.removeAll()

@@ -21,26 +21,17 @@ class CommandNewViewController: CommandEditViewController {
             self.uploadButton.isEnabled = false
 
             // generate actions array
-            var actions = [Dictionary<String, Any>]()
-            if let actionsItems = sections[2].items {
+            var actions = [AliasAction]()
+            if let actionsItems = sections[0].items {
                 for actionItem in actionsItems {
                     if let actionCellData = actionItem as? ActionStruct {
-                        actions.append(actionCellData.getActionDict())
+                        actions.append(AliasAction(
+                            AppConstants.DEFAULT_ALIAS,
+                            actions: [Action(actionCellData.actionName, value: actionCellData.value)]))
                     }
                 }
             }
-            // the defaultd schema and schemaVersion from predefined schem dict
-            var schemaName = schema!.name
-            var schemaVersion = schema!.version
-
-            if let schemaTextField = self.view.viewWithTag(200) as? UITextField {
-                schemaName = schemaTextField.text!
-            }
-            if let schemaVersionTextFiled = self.view.viewWithTag(201) as? UITextField {
-                schemaVersion = Int(schemaVersionTextFiled.text!)!
-            }
-
-            let form = CommandForm(schemaName: schemaName!, schemaVersion: schemaVersion!, actions: actions)
+            let form = CommandForm(actions)
             // call postNewCommand method
             iotAPI!.postNewCommand(form, completionHandler: { (command, error) -> Void in
                 if command != nil {

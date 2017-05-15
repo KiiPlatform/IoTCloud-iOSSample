@@ -11,15 +11,15 @@ import ThingIFSDK
 
 protocol AndOrClauseViewControllerDelegate {
 
-    func saveClause(_ newClause: Clause)
+    func saveClause(_ newClause: TriggerClause)
 }
 
 class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, AndOrClauseViewControllerDelegate, StatusTableViewCellDelegate, IntervalStatusCellDelegate {
 
-    var andOrClause: Clause!
+    var andOrClause: TriggerClause!
     var delegate: AndOrClauseViewControllerDelegate?
 
-    fileprivate var subClauses = [Clause]()
+    fileprivate var subClauses = [TriggerClause]()
 
     // 2 columns of picker view
     fileprivate var statusToSelect = [String]()
@@ -48,11 +48,11 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
 
         // init subClauses, the datas in table view
         if self.andOrClause != nil {
-            if andOrClause is AndClause {
-                let andClause = andOrClause as! AndClause
+            if andOrClause is AndClauseInTrigger {
+                let andClause = andOrClause as! AndClauseInTrigger
                 subClauses = andClause.clauses
             }else {
-                let orClause = andOrClause as! OrClause
+                let orClause = andOrClause as! OrClauseInTrigger
                 subClauses = orClause.clauses
             }
         }
@@ -66,7 +66,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row < subClauses.count {
-            if let clause = subClauses[indexPath.row] as? RangeClause {
+            if let clause = subClauses[indexPath.row] as? RangeClauseInTrigger {
                 if let clauseType = ClauseType.getClauseType(clause) {
                     if clauseType == ClauseType.LeftOpen || clauseType == ClauseType.RightOpen || clauseType == ClauseType.BothClose || clauseType == ClauseType.BothOpen {
                         return 100
@@ -83,12 +83,11 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
             return tableView.dequeueReusableCell(withIdentifier: "NewClauseButtonCell", for: indexPath)
         }else {
             let clause = subClauses[indexPath.row]
-            let clauseDict = clause.makeDictionary()
             let clauseType = ClauseType.getClauseType(clause)!
 
             var cell: UITableViewCell!
 
-            if clause is AndClause || clause is OrClause {
+            if clause is AndClauseInTrigger || clause is OrClauseInTrigger {
                 cell = tableView.dequeueReusableCell(withIdentifier: "AndOrClauseCell", for: indexPath)
                 cell.textLabel?.text = "\(clauseType.rawValue) Clause"
             }else {
@@ -100,22 +99,20 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
                 var upperLimitValue: Int?
 
                 switch clauseType {
-                case .Equals, .NotEquals:
-                    if clauseType == ClauseType.Equals{
-                        singleValue = clauseDict["value"]
-                    }else {
-                        singleValue = (clauseDict["clause"] as! Dictionary<String, AnyObject>)["value"]
-                    }
+                case .Equals:
+                    singleValue = (clause as! EqualsClauseInTrigger).value
+                case .NotEquals:
+                    singleValue = (clause as! NotEqualsClauseInTrigger).equals.value
 
                 case .LessThanOrEquals, .LessThan:
-                    singleValue = clauseDict["upperLimit"]
+                    singleValue = (clause as! RangeClauseInTrigger).upperLimit
 
                 case .GreaterThan, .GreaterThanOrEquals:
-                    singleValue = clauseDict["lowerLimit"]
+                    singleValue = (clause as! RangeClauseInTrigger).lowerLimit
 
                 case .LeftOpen, .RightOpen, .BothOpen, .BothClose:
-                    upperLimitValue = clauseDict["upperLimit"] as? Int
-                    lowerLimitValue = clauseDict["lowerLimit"] as? Int
+                    upperLimitValue = (clause as! RangeClauseInTrigger).upperLimit as? Int
+                    lowerLimitValue = (clause as! RangeClauseInTrigger).lowerLimit as? Int
 
                 default:
                     break
@@ -167,7 +164,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row < subClauses.count {
             let clauseSelected = subClauses[indexPath.row]
-            if clauseSelected is AndClause || clauseSelected is OrClause{
+            if clauseSelected is AndClauseInTrigger || clauseSelected is OrClauseInTrigger {
                 let storyBoard = UIStoryboard(name: "Triggers", bundle: nil)
                 if let andOrVC = storyBoard.instantiateViewController(withIdentifier: "AndOrClauseViewController") as? AndOrClauseViewController {
                     andOrVC.andOrClause = clauseSelected
@@ -255,14 +252,14 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
     //MARK: Custom methods
     func selectClauseAndStatus(_ sender: UIButton) {
         if let clauseTypeSelected = clauseTypeTempSelected {
-            var clauseSelected: Clause?
+            var clauseSelected: TriggerClause?
             if clauseTypeSelected == ClauseType.And {
-                clauseSelected = AndClause()
+                clauseSelected = AndClauseInTrigger()
             }else if clauseTypeSelected == ClauseType.Or {
-                clauseSelected = OrClause()
+                clauseSelected = OrClauseInTrigger()
             }
             if let statusSelected = statusTempSelected {
-                if let initializedClaue = ClauseHelper.getInitializedClause(clauseTypeSelected, statusSchema: schema?.getStatusSchema(statusSelected)) {
+                if let initializedClaue = ClauseHelper.getInitializedClause(AppConstants.DEFAULT_ALIAS, clauseType: clauseTypeSelected, statusSchema: schema?.getStatusSchema(statusSelected)) {
                     clauseSelected = initializedClaue
                 }
             }
@@ -319,14 +316,14 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
     //MARK: IBActions methods
     @IBAction func tapSave(_ sender: AnyObject) {
         if self.delegate != nil {
-            if andOrClause is AndClause {
-                let newClause = AndClause()
+            if andOrClause is AndClauseInTrigger {
+                var newClause = AndClauseInTrigger()
                 for subClause in subClauses {
                     newClause.add(subClause)
                 }
                 delegate!.saveClause(newClause)
             }else {
-                let newClause = OrClause()
+                var newClause = OrClauseInTrigger()
                 for subClause in subClauses {
                     newClause.add(subClause)
                 }
@@ -341,7 +338,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
     }
 
 
-    func saveClause(_ newClause: Clause) {
+    func saveClause(_ newClause: TriggerClause) {
         if subAndOrClauseSelected != nil {
             subClauses[subAndOrClauseSelected!.row] = newClause
         }
@@ -352,7 +349,7 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
         let clause = subClauses[indexPath.row]
         let status = ClauseHelper.getStatusFromClause(clause)
         if let statusSchema = schema?.getStatusSchema(status) {
-            if let newClause = ClauseHelper.getNewClause(clause, singleValue: value, statusSchema: statusSchema) {
+            if let newClause = ClauseHelper.getNewClause(AppConstants.DEFAULT_ALIAS, clause: clause, singleValue: value, statusSchema: statusSchema) {
                 subClauses[indexPath.row] = newClause
             }
         }
@@ -360,10 +357,10 @@ class AndOrClauseViewController: KiiBaseTableViewController, UIPickerViewDataSou
 
     func setIntervalStatus(_ sender: UITableViewCell, lowerLimitValue: AnyObject, upperLimitValue: AnyObject) {
         let indexPath = self.tableView.indexPath(for: sender)!
-        let clause = subClauses[indexPath.row] as! RangeClause
+        let clause = subClauses[indexPath.row] as! RangeClauseInTrigger
         let status = ClauseHelper.getStatusFromClause(clause)
         if let statusSchema = schema?.getStatusSchema(status) {
-            if let newClause = ClauseHelper.getNewClause(clause, lowerLimitValue: lowerLimitValue, upperLimitValue: upperLimitValue, statusSchema: statusSchema) {
+            if let newClause = ClauseHelper.getNewClause(AppConstants.DEFAULT_ALIAS, clause: clause, lowerLimitValue: lowerLimitValue, upperLimitValue: upperLimitValue, statusSchema: statusSchema) {
                 subClauses[indexPath.row] = newClause
             }
         }

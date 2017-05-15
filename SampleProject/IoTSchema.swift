@@ -32,20 +32,21 @@ enum StatusType: String{
 }
 
 struct ActionStruct {
-    let actionSchema: ActionSchema!
+    let actionName: String
     var value: Any!
 
     // the return Ditionary will be like: ["actionName": ["requiredStatus": value] ], where value can be Bool, Int or Double. ie. ["TurnPower": ["power": true]]
     func getActionDict() -> Dictionary<String, Any> {
-        let actionDict: Dictionary<String, Any> = [actionSchema.name: [actionSchema.status.name: value]]
+        let actionDict: Dictionary<String, Any> = [actionName: value]
         return actionDict
     }
 
-    init(actionSchema: ActionSchema, value: Any) {
-        self.actionSchema = actionSchema
+    init(actionName: String, value: Any) {
+        self.actionName = actionName
         self.value = value
     }
 
+    /*
     init?(actionSchema: ActionSchema, actionDict: Dictionary<String, Any>) {
         self.actionSchema = actionSchema
 
@@ -70,6 +71,7 @@ struct ActionStruct {
             return nil
         }
     }
+    */
 }
 
 
@@ -191,4 +193,10 @@ class IoTSchema: NSObject,NSCoding {
         return Array(statusSchemaDict.keys)
     }
 
+}
+
+class AppConstants {
+    public static let DEFAULT_THING_TYPE = "SmartLightDemo"
+    public static let DEFAULT_FIRMWARE_VERSION = "v1"
+    public static let DEFAULT_ALIAS = "SmartLightDemoAlias"
 }

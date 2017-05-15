@@ -10,9 +10,7 @@ import UIKit
 import ThingIFSDK
 
 protocol TriggerCommandEditViewControllerDelegate {
-    func saveCommands(_ schemaName: String,
-                      schemaVersion: Int,
-                      actions: [Dictionary<String, Any>],
+    func saveCommands(_ actions: [AliasAction],
                       targetID: String?,
                       title: String?,
                       commandDescription: String?,
@@ -119,23 +117,19 @@ class TriggerCommandEditViewController: CommandEditViewController {
 
     @IBAction func tapSaveCommand(_ sender: AnyObject) {
         // generate actions array
-        var actions = [Dictionary<String, Any>]()
-        if let actionsItems = sections[2].items {
+        var actions = [AliasAction]()
+        if let actionsItems = sections[0].items {
             for actionItem in actionsItems {
                 if let actionCellData = actionItem as? ActionStruct {
                     // action should be like: ["actionName": ["requiredStatus": value] ], where value can be Bool, Int or Double
-                    actions.append(actionCellData.getActionDict())
+                    actions.append(
+                        AliasAction(
+                            AppConstants.DEFAULT_ALIAS,
+                            actions: Action(actionCellData.actionName, value:actionCellData.value)))
                 }
             }
         }
         // the defaultd schema and schemaVersion from predefined schem dict
-        let schema: String? = (self.view.viewWithTag(200) as? UITextField)?.text
-        let schemaVersion: Int?
-        if let schemaVersionTextFiled = self.view.viewWithTag(201) as? UITextField {
-            schemaVersion = Int(schemaVersionTextFiled.text!)!
-        } else {
-            schemaVersion = nil
-        }
         let targetID: String?
         if let text = (self.view.viewWithTag(202) as? UITextField)?.text, !text.isEmpty {
             targetID = text
@@ -164,9 +158,7 @@ class TriggerCommandEditViewController: CommandEditViewController {
         }
 
         if self.delegate != nil {
-            delegate?.saveCommands(schema!,
-                                   schemaVersion: schemaVersion!,
-                                   actions: actions,
+            delegate?.saveCommands(actions,
                                    targetID: targetID,
                                    title: title,
                                    commandDescription: description,

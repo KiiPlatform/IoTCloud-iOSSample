@@ -33,20 +33,17 @@ class CommandEditViewController: KiiBaseTableViewController, UIPickerViewDataSou
         }
 
         if self.commandStruct == nil {
-            sections.append(SectionStruct(headerTitle: "Schema", items: [schema!.name]))
-            sections.append(SectionStruct(headerTitle: "Version", items: [schema!.version]))
             sections.append(SectionStruct(headerTitle: "Actions", items: [Any]()))
         }else {
-            sections.append(SectionStruct(headerTitle: "Schema", items: [commandStruct!.schemaName]))
-            sections.append(SectionStruct(headerTitle: "Version", items: [commandStruct!.schemaVersion]))
             var actionItems = [Any]()
             // construct actionsItems
-            for actionDict in commandStruct!.actions {
-                if actionDict.keys.count > 0 {
-                    let actionNameKey = (Array(actionDict.keys) as! [String])[0]
-                    if let actionSchema = schema?.getActionSchema(actionNameKey) {
-                        if let actionCellData = ActionStruct(actionSchema: actionSchema, actionDict: actionDict) {
-                            actionItems.append(actionCellData)
+            for aliasAction in commandStruct!.actions {
+                for action in aliasAction.actions {
+                    let actionDict = action.makeJsonObject()
+                    if actionDict.keys.count > 0 {
+                        let actionNameKey = Array(actionDict.keys)[0]
+                        if schema?.getActionSchema(actionNameKey) != nil {
+                            actionItems.append(ActionStruct(actionName: actionNameKey, value: actionDict))
                         }
                     }
                 }
@@ -98,23 +95,23 @@ class CommandEditViewController: KiiBaseTableViewController, UIPickerViewDataSou
             }else{
 
                 let actionsCellData = sections[indexPath.section].items[indexPath.row] as! ActionStruct
-                let requiredStatus = actionsCellData.actionSchema.status
+                let requiredStatus = schema!.getActionSchema(actionsCellData.actionName)!.status
 
                 var cell: UITableViewCell!
                 if requiredStatus.type == StatusType.BoolType { // if data type of required status is bool, then cell will contain switch
                     let boolTypecell = tableView.dequeueReusableCell(withIdentifier: "NewActionItemBoolCell", for: indexPath) as! StatusBoolTypeTableViewCell
                     boolTypecell.delegate = self
-                    boolTypecell.titleLabel.text = actionsCellData.actionSchema.name
-                    boolTypecell.statusNameLabel.text = actionsCellData.actionSchema.status.name
+                    boolTypecell.titleLabel.text = actionsCellData.actionName
+                    boolTypecell.statusNameLabel.text = requiredStatus.name
                     boolTypecell.value = actionsCellData.value as? Bool
                     cell = boolTypecell
                 }else {
                     let intCell = tableView.dequeueReusableCell(withIdentifier: "NewActionItemNumberCell", for: indexPath) as! StatusIntTypeTableViewCell
-                    intCell.titleLabel.text = actionsCellData.actionSchema.name
-                    intCell.statusNameLabel.text = actionsCellData.actionSchema.status.name
+                    intCell.titleLabel.text = actionsCellData.actionName
+                    intCell.statusNameLabel.text = requiredStatus.name
                     intCell.value = actionsCellData.value as? Int
-                    intCell.minValue = actionsCellData.actionSchema.status.minValue as? Int
-                    intCell.maxValue = actionsCellData.actionSchema.status.maxValue as? Int
+                    intCell.minValue = requiredStatus.minValue as? Int
+                    intCell.maxValue = requiredStatus.maxValue as? Int
                     intCell.delegate = self
                     cell = intCell
                 }
@@ -169,7 +166,8 @@ class CommandEditViewController: KiiBaseTableViewController, UIPickerViewDataSou
                     if let selectedIndexPath = self.tableView.indexPath(for: cell) {
                         var selectedAction = sections[selectedIndexPath.section].items[selectedIndexPath.row] as? ActionStruct
                         if  selectedAction != nil {
-                            if let statusType = selectedAction?.actionSchema.status.type{
+                            let requiredStatus = schema!.getActionSchema(selectedAction!.actionName)!.status
+                            if let statusType = requiredStatus.type{
                                 if statusType == StatusType.IntType {
                                     selectedAction!.value = Int(textField.text!)!
                                 }else {
@@ -266,8 +264,8 @@ class CommandEditViewController: KiiBaseTableViewController, UIPickerViewDataSou
                     }
 
                     if defaultedValue != nil {
-                        sections[2].items.append(ActionStruct(actionSchema: actionSchema, value: defaultedValue!))
-                        self.tableView.insertRows(at: [IndexPath(row: sections[2].items.count-1, section: 2)], with: UITableViewRowAnimation.automatic)
+                        sections[0].items.append(ActionStruct(actionName: selectedActionName, value: defaultedValue!))
+                        self.tableView.insertRows(at: [IndexPath(row: sections[0].items.count-1, section: 0)], with: UITableViewRowAnimation.automatic)
                     }
                 }
             }

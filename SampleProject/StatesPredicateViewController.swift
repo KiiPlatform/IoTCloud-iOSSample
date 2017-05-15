@@ -17,8 +17,9 @@ protocol StatesPredicateViewControllerDelegate {
 class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDataSource, UIPickerViewDelegate, StatusTableViewCellDelegate, IntervalStatusCellDelegate, AndOrClauseViewControllerDelegate {
 
     struct SectionStruct {
-        let headerTitle: String!
-        var items: [Any]!
+        let headerTitle: String
+        var items: [Any]
+        var clauses: [TriggerClause]
     }
 
     var statePredicate: StatePredicate?
@@ -45,16 +46,16 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     }
     fileprivate var triggersWhenTempSelected: TriggersWhen? // it is setted each time when user select item from pickerView, as soon as tapping "set" button of pickerview, it will be assigned to triggersWhenSelected
 
-    fileprivate var clauseSelected: Clause! {
+    fileprivate var clauseSelected: TriggerClause! {
         get {
-            var clause: Clause?
-            if sections[1].items.count > 0 {
-                clause = sections[1].items[0] as? Clause
+            var clause: TriggerClause?
+            if sections[1].clauses.count > 0 {
+                clause = sections[1].clauses[0]
             }
             return clause
         }
         set {
-            sections[1].items = [newValue]
+            sections[1].clauses = [newValue]
         }
     }
     fileprivate var clauseTypeTempSelected: ClauseType?
@@ -75,13 +76,13 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
         self.clauseTypeToSelect = ClauseType.getTypesArray()
 
         if self.statePredicate == nil {
-            sections.append(SectionStruct(headerTitle: "TriggersWhen", items: [triggersWhensToSelect[0]]))
-            sections.append(SectionStruct(headerTitle: "Condition", items: [Any]()))
+            sections.append(SectionStruct(headerTitle: "TriggersWhen", items: [triggersWhensToSelect[0]], clauses: [TriggerClause]()))
+            sections.append(SectionStruct(headerTitle: "Condition", items: [Any](), clauses: [TriggerClause]()))
             triggersWhenSelected = triggersWhensToSelect[0]
 
         }else {
-            sections.append(SectionStruct(headerTitle: "TriggersWhen", items: [statePredicate!.triggersWhen.rawValue]))
-            sections.append(SectionStruct(headerTitle: "Condition", items: [statePredicate!.condition.clause]))
+            sections.append(SectionStruct(headerTitle: "TriggersWhen", items: [statePredicate!.triggersWhen.rawValue], clauses: [TriggerClause]()))
+            sections.append(SectionStruct(headerTitle: "Condition", items: [Any](), clauses: [statePredicate!.condition.clause]))
             triggersWhenSelected = statePredicate!.triggersWhen
             clauseSelected = self.statePredicate!.condition.clause
         }
@@ -114,8 +115,8 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if sections[indexPath.section].headerTitle == "Condition" {
-            if sections[indexPath.section].items.count > 0 {
-                if let clause = sections[indexPath.section].items[indexPath.row] as? RangeClause {
+            if sections[indexPath.section].clauses.count > 0 {
+                if let clause = sections[indexPath.section].clauses[indexPath.row] as? RangeClauseInTrigger {
                     if let clauseType = ClauseType.getClauseType(clause) {
                         if clauseType == ClauseType.LeftOpen || clauseType == ClauseType.RightOpen || clauseType == ClauseType.BothClose || clauseType == ClauseType.BothOpen {
                             return 100
@@ -133,18 +134,17 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
 
         let section = sections[indexPath.section]
 
-        if section.headerTitle == "Condition"{
+        if section.headerTitle == "Condition" {
 
-            if section.items.count == 0 {
+            if section.clauses.count == 0 {
                  return tableView.dequeueReusableCell(withIdentifier: "NewClauseButtonCell", for: indexPath)
             }else {
-                let clause = section.items[0] as! Clause
-                let clauseDict = clause.makeDictionary()
+                let clause = section.clauses[0]
                 let clauseType = ClauseType.getClauseType(clause)!
 
                 var cell: UITableViewCell!
 
-                if clause is AndClause || clause is OrClause {
+                if clause is AndClauseInTrigger || clause is OrClauseInTrigger {
                     cell = tableView.dequeueReusableCell(withIdentifier: "AndOrClauseCell", for: indexPath)
                     cell.textLabel?.text = "\(clauseType.rawValue) Clause"
                 }else {
@@ -156,22 +156,20 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
                     let statusType = schema!.getStatusType(status)!
 
                     switch clauseType {
-                    case .Equals, .NotEquals:
-                        if clauseType == ClauseType.Equals{
-                            singleValue = clauseDict["value"]
-                        }else {
-                            singleValue = (clauseDict["clause"] as! Dictionary<String, AnyObject>)["value"]
-                        }
-
+                    case .Equals:
+                        singleValue = (clause as! EqualsClauseInTrigger).value
+                    case .NotEquals:
+                        singleValue = (clause as! NotEqualsClauseInTrigger).equals.value
                     case .LessThanOrEquals, .LessThan:
-                        singleValue = clauseDict["upperLimit"]
+                        singleValue = (clause as! RangeClauseInTrigger).upperLimit
 
                     case .GreaterThan, .GreaterThanOrEquals:
-                        singleValue = clauseDict["lowerLimit"]
+                        singleValue = (clause as! RangeClauseInTrigger).lowerLimit
 
                     case .LeftOpen, .RightOpen, .BothOpen, .BothClose:
-                        upperLimitValue = clauseDict["upperLimit"] as? Int
-                        lowerLimitValue = clauseDict["lowerLimit"] as? Int
+                        let range = clause as! RangeClauseInTrigger
+                        upperLimitValue = range.upperLimit as? Int
+                        lowerLimitValue = range.lowerLimit as? Int
 
                     default:
                         break
@@ -241,7 +239,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         if sections[indexPath.section].headerTitle == "Condition" {
-            if sections[indexPath.section].items.count == 0 {
+            if sections[indexPath.section].clauses.count == 0 {
                 return false
             }else{
                 return true
@@ -254,7 +252,11 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 
         if editingStyle == UITableViewCellEditingStyle.delete {
-            sections[indexPath.section].items.remove(at: indexPath.row)
+            if sections[indexPath.section].headerTitle == "Condition" {
+                sections[indexPath.section].clauses.remove(at: indexPath.row)
+            } else {
+                sections[indexPath.section].items.remove(at: indexPath.row)
+            }
             self.tableView.reloadData()
         }
     }
@@ -343,13 +345,16 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     func selectClauseAndStatus(_ sender: UIButton) {
         if let clauseTypeSelected = clauseTypeTempSelected {
             if clauseTypeSelected == ClauseType.And {
-                clauseSelected = AndClause()
+                clauseSelected = AndClauseInTrigger()
             }else if clauseTypeSelected == ClauseType.Or {
-                clauseSelected = OrClause()
+                clauseSelected = OrClauseInTrigger()
             }
 
             if let statusSelected = statusTempSelected {
-                if let initializedClaue = ClauseHelper.getInitializedClause(clauseTypeSelected, statusSchema: schema?.getStatusSchema(statusSelected)) {
+                if let initializedClaue = ClauseHelper.getInitializedClause(
+                        AppConstants.DEFAULT_ALIAS,
+                        clauseType: clauseTypeSelected,
+                        statusSchema: schema?.getStatusSchema(statusSelected)) {
                     clauseSelected = initializedClaue
                 }
             }
@@ -417,7 +422,7 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     @IBAction func tapSave(_ sender: AnyObject) {
         if self.delegate != nil {
             if triggersWhenSelected != nil && clauseSelected != nil {
-                delegate!.saveStatePredicate(StatePredicate(condition: Condition(clause: clauseSelected!), triggersWhen: triggersWhenSelected!))
+                delegate!.saveStatePredicate(StatePredicate(Condition(clauseSelected!), triggersWhen: triggersWhenSelected!))
             }
         }
         self.navigationController!.popViewController(animated: true)
@@ -431,11 +436,11 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     func setStatus(_ sender: UITableViewCell, value: Any) {
         let indexPath = self.tableView.indexPath(for: sender)!
         var section = sections[indexPath.section]
-        let clause = section.items[indexPath.row] as! Clause
+        let clause = section.clauses[indexPath.row]
         let status = ClauseHelper.getStatusFromClause(clause)
         if let statusSchema = schema?.getStatusSchema(status) {
-            if let newClause = ClauseHelper.getNewClause(clause, singleValue: value, statusSchema: statusSchema) {
-                section.items[indexPath.row] = newClause
+            if let newClause = ClauseHelper.getNewClause(AppConstants.DEFAULT_ALIAS, clause: clause, singleValue: value, statusSchema: statusSchema) {
+                section.clauses[indexPath.row] = newClause
                 sections[indexPath.section] = section
             }
         }
@@ -444,11 +449,11 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
     func setIntervalStatus(_ sender: UITableViewCell, lowerLimitValue: AnyObject, upperLimitValue: AnyObject) {
         let indexPath = self.tableView.indexPath(for: sender)!
         var section = sections[indexPath.section]
-        let clause = section.items[indexPath.row] as! RangeClause
+        let clause = section.clauses[indexPath.row] as! RangeClauseInTrigger
         let status = ClauseHelper.getStatusFromClause(clause)
         if let statusSchema = schema?.getStatusSchema(status) {
-            if let newClause = ClauseHelper.getNewClause(clause, lowerLimitValue: lowerLimitValue, upperLimitValue: upperLimitValue, statusSchema: statusSchema) {
-                section.items[indexPath.row] = newClause
+            if let newClause = ClauseHelper.getNewClause(AppConstants.DEFAULT_ALIAS, clause: clause, lowerLimitValue: lowerLimitValue, upperLimitValue: upperLimitValue, statusSchema: statusSchema) {
+                section.clauses[indexPath.row] = newClause
                 sections[indexPath.section] = section
             }
         }
@@ -460,16 +465,16 @@ class StatesPredicateViewController: KiiBaseTableViewController, UIPickerViewDat
             if let destVC = segue.destination as? AndOrClauseViewController {
                 let cell = sender as! UITableViewCell
                 let selectedIndexPath = self.tableView.indexPath(for: cell)!
-                let andOrClause = sections[1].items[selectedIndexPath.row] as? Clause
+                let andOrClause = sections[1].clauses[selectedIndexPath.row]
                 destVC.andOrClause = andOrClause
                 destVC.delegate = self
             }
         }
     }
 
-    func saveClause(_ newClause: Clause) {
+    func saveClause(_ newClause: TriggerClause) {
         var section = sections[1]
-        section.items = [newClause]
+        section.clauses = [newClause]
         sections[1] = section
     }
 

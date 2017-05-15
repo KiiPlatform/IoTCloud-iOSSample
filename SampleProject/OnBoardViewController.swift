@@ -24,7 +24,7 @@ class OnBoardViewController: KiiBaseTableViewController {
     @IBAction func tapOnboardWithVendorThingID(_ sender: AnyObject) {
         if let vendorThingID = vendorThingID.text, let thingPassword = thingPassTextField.text {
             showActivityView(true)
-            let options = OnboardWithVendorThingIDOptions(thingType: thingTypeTextField.text)
+            let options = OnboardWithVendorThingIDOptions(thingTypeTextField.text)
             self.iotAPI?.onboardWith(vendorThingID: vendorThingID, thingPassword: thingPassword, options: options, completionHandler: { (target, error) -> Void in
                 if target != nil {
                     self.navigationController?.dismiss(animated: true, completion: nil)

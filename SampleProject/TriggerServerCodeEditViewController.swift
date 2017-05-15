@@ -52,7 +52,7 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
             }
         }
         self.serverCode = ServerCode(
-          endpoint: fields["EndpointCell"]!,
+          fields["EndpointCell"]!,
           executorAccessToken: fields["ExecutorAccessTokenCell"],
           targetAppID: fields["TargetAppIDCell"],
           parameters: nil)
@@ -73,7 +73,7 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
           TriggerServerCodeEditViewController.parametersToDictionary(
             self.parameters)
         self.serverCode = ServerCode(
-          endpoint: fields["EndpointCell"]!,
+          fields["EndpointCell"]!,
           executorAccessToken: fields["ExecutorAccessTokenCell"],
           targetAppID: fields["TargetAppIDCell"],
           parameters: parameters)
@@ -148,7 +148,7 @@ class TriggerServerCodeEditViewController: KiiBaseTableViewController, TriggerSe
     func saveParameter(_ parameters: [ParameterStruct]) {
         self.parameters = parameters
         self.serverCode = ServerCode(
-          endpoint: self.serverCode!.endpoint,
+          self.serverCode!.endpoint,
           executorAccessToken: self.serverCode!.executorAccessToken,
           targetAppID: self.serverCode!.targetAppID,
           parameters:

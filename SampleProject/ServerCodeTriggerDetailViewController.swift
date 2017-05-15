@@ -58,7 +58,7 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
         if segue.identifier == "editTriggerServerCode" {
             if let destVC = segue.destination as? TriggerServerCodeEditViewController {
                 if self.serverCodeToSave == nil {
-                    destVC.serverCode = ServerCode(endpoint: "", executorAccessToken: "", targetAppID: "", parameters: nil)
+                    destVC.serverCode = ServerCode("", executorAccessToken: "", targetAppID: "", parameters: nil)
                 }else {
                     destVC.serverCode = serverCodeToSave
                 }
@@ -80,7 +80,7 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
                     destVC.options = options
                 } else if let trigger = self.trigger {
                     destVC.options = TriggerOptions(
-                      title: trigger.title,
+                      trigger.title,
                       triggerDescription: trigger.triggerDescription,
                       metadata: trigger.metadata)
                 }
@@ -103,7 +103,7 @@ class ServerCodeTriggerDetailViewController: KiiBaseTableViewController,
                             metadata: Dictionary<String, Any>?)
     {
         if title != nil || description != nil || metadata != nil {
-            self.options = TriggerOptions(title: title,
+            self.options = TriggerOptions(title,
                                           triggerDescription: description,
                                           metadata: metadata)
         }
