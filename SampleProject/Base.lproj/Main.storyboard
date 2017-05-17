@@ -115,11 +115,11 @@
             </objects>
             <point key="canvasLocation" x="-9503" y="-3622"/>
         </scene>
-        <!--Query-->
+        <!--History-->
         <scene sceneID="KKc-Rk-aZE">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="hfM-va-Lou" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Query" id="RUj-K1-c4L"/>
+                    <tabBarItem key="tabBarItem" title="History" id="RUj-K1-c4L"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Tpq-06-Wjz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -132,10 +132,10 @@
             </objects>
             <point key="canvasLocation" x="-8886" y="-4015"/>
         </scene>
-        <!--Query-->
+        <!--History-->
         <scene sceneID="uwN-vv-Pzb">
             <objects>
-                <viewControllerPlaceholder storyboardName="Query" id="hhh-Xe-Z8S" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="History" id="hhh-Xe-Z8S" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="STD-WP-KSn"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rmr-Xy-1fy" userLabel="First Responder" sceneMemberID="firstResponder"/>
