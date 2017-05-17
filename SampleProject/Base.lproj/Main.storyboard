@@ -1,7 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HCf-1e-8nq">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HCf-1e-8nq">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -30,6 +33,7 @@
                         <segue destination="vdG-ek-iwZ" kind="relationship" relationship="viewControllers" id="VXV-KU-Kms"/>
                         <segue destination="aMv-zW-u6h" kind="relationship" relationship="viewControllers" id="X9l-EL-T6c"/>
                         <segue destination="LkV-A7-gIH" kind="relationship" relationship="viewControllers" id="i9L-kk-Qom"/>
+                        <segue destination="hfM-va-Lou" kind="relationship" relationship="viewControllers" id="eyV-C0-kLf"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mlK-TH-b9e" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -110,6 +114,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0e-vY-FMd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-9503" y="-3622"/>
+        </scene>
+        <!--Query-->
+        <scene sceneID="KKc-Rk-aZE">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="hfM-va-Lou" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Query" id="RUj-K1-c4L"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Tpq-06-Wjz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="hhh-Xe-Z8S" kind="relationship" relationship="rootViewController" id="ywS-ZZ-7kJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Eg-Px-SQG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-8886" y="-4015"/>
+        </scene>
+        <!--Query-->
+        <scene sceneID="uwN-vv-Pzb">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Query" id="hhh-Xe-Z8S" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="STD-WP-KSn"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rmr-Xy-1fy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-8291" y="-4010"/>
         </scene>
         <!--State-->
         <scene sceneID="6eG-PV-vQb">

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2257C2541ECACB8F0023FD2B /* Query.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2257C2531ECACB8F0023FD2B /* Query.storyboard */; };
+		2257C2561ECAFDD10023FD2B /* QueryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2257C2551ECAFDD10023FD2B /* QueryViewController.swift */; };
 		32F0D076E95C4ECA320FABEC /* Pods_SampleProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B00E458EE1367B375F774C6 /* Pods_SampleProject.framework */; };
 		7D108ADB1B7210C8006EA12B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D108ADA1B7210C8006EA12B /* AppDelegate.swift */; };
 		7D108ADD1B7210C8006EA12B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D108ADC1B7210C8006EA12B /* ViewController.swift */; };
@@ -67,6 +69,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2257C2531ECACB8F0023FD2B /* Query.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Query.storyboard; sourceTree = "<group>"; };
+		2257C2551ECAFDD10023FD2B /* QueryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryViewController.swift; sourceTree = "<group>"; };
 		366B219C0F17187175414646 /* Pods-SampleProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-SampleProject/Pods-SampleProject.release.xcconfig"; sourceTree = "<group>"; };
 		3B00E458EE1367B375F774C6 /* Pods_SampleProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SampleProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5088C19B0BFE28D6D70A1EBF /* Pods-SampleProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SampleProject/Pods-SampleProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -183,6 +187,7 @@
 				7DCDBD851B90986700AB006B /* IoTSchema.swift */,
 				7D3314871B91B0B500A6DDFB /* ClauseHelper.swift */,
 				A52ECA311C86E6E700E9044F /* NSNumber+checkTypes.swift */,
+				2257C2551ECAFDD10023FD2B /* QueryViewController.swift */,
 			);
 			path = SampleProject;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 				7D44C18E1B8EEC9A00F19FA3 /* Commands.storyboard */,
 				7D3DFB5D1B8EF1B80055BE18 /* Triggers.storyboard */,
 				7D3DFB5F1B8EF2420055BE18 /* State.storyboard */,
+				2257C2531ECACB8F0023FD2B /* Query.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -334,6 +340,7 @@
 				7D44C18D1B8EEC3100F19FA3 /* Onboarding.storyboard in Resources */,
 				7D108AE01B7210C8006EA12B /* Main.storyboard in Resources */,
 				7D44C18F1B8EEC9A00F19FA3 /* Commands.storyboard in Resources */,
+				2257C2541ECACB8F0023FD2B /* Query.storyboard in Resources */,
 				7DB3F6E81B8B243600AE8254 /* Properties.plist in Resources */,
 				7D3DFB601B8EF2420055BE18 /* State.storyboard in Resources */,
 			);
@@ -395,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D3DFB691B8EFF650055BE18 /* StatesPredicateViewController.swift in Sources */,
+				2257C2561ECAFDD10023FD2B /* QueryViewController.swift in Sources */,
 				7DB3F6F71B8C5B0100AE8254 /* CommandViewController.swift in Sources */,
 				B65736891DB0CED00018C27C /* TriggerOptionsViewController.swift in Sources */,
 				D5351AAB1B8EDA8900E55807 /* NotificationViewController.swift in Sources */,
