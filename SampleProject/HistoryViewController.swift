@@ -8,7 +8,7 @@
 import UIKit
 import ThingIFSDK
 
-class HistoryViewController: KiiBaseTableViewController {
+class HistoryViewController: KiiBaseTableViewController, HistoryStateQueryEditViewControllerDelegate {
 
     var resultsArray = [HistoryState]()
     var query: HistoryStatesQuery = HistoryStatesQuery(AppConstants.DEFAULT_ALIAS, clause: AllClause())
@@ -58,12 +58,23 @@ class HistoryViewController: KiiBaseTableViewController {
         }
     }
 
-    @IBAction func tapRefresh(_ sender: AnyObject) {
-        getState()
-    }
     @IBAction func tapLogout(_ sender: AnyObject) {
         logout { () -> Void in
             self.tabBarController?.viewDidAppear(true)
         }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editHistoryStateQuery" {
+            if let destVC = segue.destination as? HistoryStateQueryEditViewController {
+                destVC.historyStateQuery = self.query
+                destVC.delegate = self
+            }
+        }
+    }
+
+    func saveHistoryStateQuery(_ newQuery: HistoryStatesQuery) {
+        self.query = newQuery
+        getState()
     }
 }

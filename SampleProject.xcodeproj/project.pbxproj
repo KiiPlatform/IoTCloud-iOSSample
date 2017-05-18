@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2218D1FB1ECD6AC4001A9D11 /* AndOrQueryClauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2218D1FA1ECD6AC4001A9D11 /* AndOrQueryClauseViewController.swift */; };
+		2218D1FD1ECD914A001A9D11 /* HistoryStateQueryEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2218D1FC1ECD914A001A9D11 /* HistoryStateQueryEditViewController.swift */; };
 		2257C2541ECACB8F0023FD2B /* History.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2257C2531ECACB8F0023FD2B /* History.storyboard */; };
 		2257C2561ECAFDD10023FD2B /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2257C2551ECAFDD10023FD2B /* HistoryViewController.swift */; };
 		32F0D076E95C4ECA320FABEC /* Pods_SampleProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B00E458EE1367B375F774C6 /* Pods_SampleProject.framework */; };
@@ -69,6 +71,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2218D1FA1ECD6AC4001A9D11 /* AndOrQueryClauseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndOrQueryClauseViewController.swift; sourceTree = "<group>"; };
+		2218D1FC1ECD914A001A9D11 /* HistoryStateQueryEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryStateQueryEditViewController.swift; sourceTree = "<group>"; };
 		2257C2531ECACB8F0023FD2B /* History.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = History.storyboard; sourceTree = "<group>"; };
 		2257C2551ECAFDD10023FD2B /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		366B219C0F17187175414646 /* Pods-SampleProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SampleProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-SampleProject/Pods-SampleProject.release.xcconfig"; sourceTree = "<group>"; };
@@ -188,6 +192,8 @@
 				7D3314871B91B0B500A6DDFB /* ClauseHelper.swift */,
 				A52ECA311C86E6E700E9044F /* NSNumber+checkTypes.swift */,
 				2257C2551ECAFDD10023FD2B /* HistoryViewController.swift */,
+				2218D1FA1ECD6AC4001A9D11 /* AndOrQueryClauseViewController.swift */,
+				2218D1FC1ECD914A001A9D11 /* HistoryStateQueryEditViewController.swift */,
 			);
 			path = SampleProject;
 			sourceTree = "<group>";
@@ -422,6 +428,8 @@
 				7D108ADD1B7210C8006EA12B /* ViewController.swift in Sources */,
 				A52ECA321C86E6E700E9044F /* NSNumber+checkTypes.swift in Sources */,
 				7D3314931B91C08B00A6DDFB /* StatusBoolTypeTableViewCell.swift in Sources */,
+				2218D1FB1ECD6AC4001A9D11 /* AndOrQueryClauseViewController.swift in Sources */,
+				2218D1FD1ECD914A001A9D11 /* HistoryStateQueryEditViewController.swift in Sources */,
 				7DB3F6F41B8C1DD400AE8254 /* CommandsListViewController.swift in Sources */,
 				7D45C07A1B91E84500378D6D /* IntervalStatusTableViewCell.swift in Sources */,
 				7DB3F6F21B8BFDA900AE8254 /* KiiBaseTableViewController.swift in Sources */,
