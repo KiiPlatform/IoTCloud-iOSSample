@@ -31,16 +31,18 @@ class HistoryStateQueryEditViewController: KiiBaseTableViewController, UIPickerV
     fileprivate var clauseTypeToSelect = [ClauseType]()
     fileprivate var clauseSelected: QueryClause! {
         get {
+            let index = getIndex(queryHeaderTitle)
             var clause: QueryClause
-            if sections[0].clauses.count > 0 {
-                clause = sections[0].clauses[0]
+            if sections[index].clauses.count > 0 {
+                clause = sections[index].clauses[0]
             } else {
                 clause = AllClause()
             }
             return clause
         }
         set {
-            sections[0].clauses = [newValue]
+            let index = getIndex(queryHeaderTitle)
+            sections[index].clauses = [newValue]
         }
     }
     fileprivate var clauseTypeTempSelected: ClauseType?
@@ -399,7 +401,8 @@ class HistoryStateQueryEditViewController: KiiBaseTableViewController, UIPickerV
             if let destVC = segue.destination as? AndOrQueryClauseViewController {
                 let cell = sender as! UITableViewCell
                 let selectedIndexPath = self.tableView.indexPath(for: cell)!
-                let andOrClause = sections[0].clauses[selectedIndexPath.row]
+                let queryIndex = getIndex(queryHeaderTitle)
+                let andOrClause = sections[queryIndex].clauses[selectedIndexPath.row]
                 destVC.andOrClause = andOrClause
                 destVC.delegate = self
             }
@@ -407,10 +410,19 @@ class HistoryStateQueryEditViewController: KiiBaseTableViewController, UIPickerV
     }
 
     func saveClause(_ newClause: QueryClause) {
-        var section = sections[0]
+        let index = getIndex(queryHeaderTitle)
+        var section = sections[index]
         section.clauses = [newClause]
         clauseSelected = section.clauses[0]
-        sections[0] = section
+        sections[index] = section
     }
 
+    fileprivate func getIndex(_ headerTitle: String) -> Int {
+        for (index, section) in sections.enumerated() {
+            if section.headerTitle == headerTitle {
+                return index
+            }
+        }
+        return -1
+    }
 }
